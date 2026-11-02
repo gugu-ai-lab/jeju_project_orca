@@ -1338,19 +1338,43 @@ h1, h2, h3, h4, .font-myth {
   background: #FFFFFF;
   color: var(--jeju-forest);
   border: 2px solid var(--jeju-sea);
+  border-bottom-width: 4px;
   border-radius: 999px;
-  padding: .24rem .62rem;
+  padding: .24rem .64rem;
   font-size: .76rem;
   font-weight: 800;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(47, 93, 80, .14);
+  box-shadow: 0 5px 12px rgba(47, 93, 80, .16);
   transition: background .16s, color .16s, border-color .16s;
 }
 .jeju-map-pin.is-selected .pin-marker-bubble {
   background: var(--jeju-forest);
   color: #FFFFFF;
-  border-color: var(--jeju-forest);
-  box-shadow: 0 0 0 4px rgba(169, 215, 243, .7), 0 6px 16px rgba(47, 93, 80, .22);
+  border-color: #1F4238;
+  box-shadow: 0 0 0 4px rgba(169, 215, 243, .75), 0 8px 18px rgba(47, 93, 80, .24);
+}
+.pin-ground-shadow {
+  position: absolute;
+  bottom: -4px;
+  width: 1.45rem;
+  height: .45rem;
+  border-radius: 50%;
+  background: rgba(47, 93, 80, .22);
+  pointer-events: none;
+}
+.svg-float-cloud {
+  animation: gentle-cloud-drift 4.2s infinite ease-in-out;
+}
+.svg-float-boat {
+  animation: gentle-boat-bob 3.4s infinite ease-in-out;
+}
+@keyframes gentle-cloud-drift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+@keyframes gentle-boat-bob {
+  0%, 100% { transform: translate(722px, 268px); }
+  50% { transform: translate(722px, 265px); }
 }
 .pin-emoji {
   font-size: .88rem;
@@ -1537,4 +1561,91 @@ h1, h2, h3, h4, .font-myth {
   text-align: center;
   font-size: .88rem;
   padding: .58rem .75rem;
+}
+
+/* ── 9. Three.js 3D 미니어처 제주 섬 탭 스타일 ─────────── */
+.mini3d-stage-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 22.5rem;
+  background: var(--jeju-sky-pastel);
+}
+.mini3d-guide-pill {
+  position: absolute;
+  top: .65rem;
+  left: .75rem;
+  z-index: 5;
+  background: rgba(255, 253, 247, .94);
+  border: 1.5px solid var(--jeju-sky);
+  border-radius: 999px;
+  padding: .25rem .75rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--jeju-forest);
+  pointer-events: none;
+}
+.mini3d-loading-box,
+.mini3d-fallback-box {
+  min-height: 21rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  font-size: .88rem;
+}
+
+.mini3d-pin-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .18s ease;
+}
+.mini3d-pin-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+.mini3d-pin-btn.is-selected {
+  transform: translateY(-4px) scale(1.1);
+}
+.mini3d-pin-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: .28rem;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  border: 2px solid var(--jeju-sea);
+  border-bottom-width: 3.5px;
+  border-radius: 999px;
+  padding: .2rem .58rem;
+  font-size: .74rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(47, 93, 80, .18);
+}
+.mini3d-pin-btn.is-selected .mini3d-pin-bubble {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+  border-color: #1F4238;
+  box-shadow: 0 0 0 3px rgba(169, 215, 243, .75), 0 6px 14px rgba(47, 93, 80, .25);
+}
+.mini3d-pin-sub {
+  margin-top: .1rem;
+  font-size: .64rem;
+  font-weight: 700;
+  background: rgba(255, 253, 247, .94);
+  color: #465257;
+  padding: .04rem .38rem;
+  border-radius: 999px;
+}
+.mini3d-pin-btn.is-selected .mini3d-pin-sub {
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  font-weight: 800;
 }
