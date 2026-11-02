@@ -16,6 +16,7 @@ const CELL_DEG = .0075
 const COLS = Math.round((LON1 - LON0) / CELL_DEG)
 const ROWS = Math.round(COLS * ((LAT1 - LAT0) * 111) / ((LON1 - LON0) * 93))
 const STEPS = 24
+const FRUSTUM = 40 // 카메라가 보는 세로 범위의 절반(월드 단위). 작을수록 지도가 크게 보인다
 const SEA_RING = 12 // 이 거리(칸) 안쪽 바다에만 물결 반짝임을 넣는다
 const SEA = [0xA6E3EA, 0x7CCBDD, 0x58B4CC]
 const FOAM = 0xF4FDFF
@@ -150,7 +151,7 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
   const scene = new THREE.Scene(); scene.background = new THREE.Color(SEA[2])
   scene.add(new THREE.AmbientLight(0xffffff, .55 * lk))
   const sun = new THREE.DirectionalLight(0xffffff, .45 * lk); sun.position.set(-.5, 10, .8); scene.add(sun)
-  const frustum = 50
+  const frustum = FRUSTUM
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -900, 900)
   // 칸마다 상자를 쌓으면 같은 높이로 붙은 칸 사이에 안 보여야 할 옆면이 생겨, 돌릴 때 모서리에서 어두운 점이 튄다.
   // 그래서 윗면 + "이웃보다 높은 쪽"의 옆면만 가진 지도 모양 하나를 만든다.
@@ -286,7 +287,7 @@ function makeCanvas2D({ canvas, data, getSize, getView }) {
     resize() {
       const [w, h] = getSize(), { px } = getView()
       sw = Math.max(80, Math.floor(w / px)); sh = Math.max(45, Math.floor(h / px)); canvas.width = sw; canvas.height = sh
-      scale = sh / (2 * 50)
+      scale = sh / (2 * FRUSTUM)
     },
     frame(t) {
       const { yaw, tilt, reduce, hScale } = getView()
