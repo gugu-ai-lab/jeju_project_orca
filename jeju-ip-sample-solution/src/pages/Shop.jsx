@@ -7,7 +7,7 @@ import { PRODUCTS } from '../data/shopProducts'
 import { formatWon, summarize } from '../lib/cart'
 import { useCartStore } from '../store/useCartStore'
 
-// 기념품 가게 — 가상 상품을 장바구니에 담는 화면. 결제는 없다.
+// 기념품 가게 — 상품을 장바구니에 담는 화면. 결제는 없다.
 export default function Shop() {
   const items = useCartStore((s) => s.items)
   const add = useCartStore((s) => s.add)

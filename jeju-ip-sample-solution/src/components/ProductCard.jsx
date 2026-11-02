@@ -1,14 +1,14 @@
 import { formatWon } from '../lib/cart'
+import { productImage } from '../lib/pixelProducts'
 import { storySymbol } from '../lib/pixelSymbols'
 
-// 상품 카드 — 표현 전용. 가상 상품이라는 표시를 항상 붙인다.
+// 상품 카드 — 표현 전용.
 export default function ProductCard({ product, inCart = 0, onAdd }) {
-  const art = storySymbol(product.symbol)
+  const art = productImage(product.id) || storySymbol(product.symbol) // 상품 그림이 없으면 이야기 상징으로 대체
   return (
     <article className="product-card">
       <div className="product-art" style={art ? { background: art.bg } : undefined} aria-hidden="true">
         {art && <span className="story-symbol" style={{ backgroundImage: art.url }} />}
-        <span className="preview-badge product-virtual">가상 상품</span>
       </div>
       <div className="product-body">
         <h3 className="product-name">{product.name}</h3>

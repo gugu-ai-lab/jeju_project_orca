@@ -1,9 +1,10 @@
 import { MAX_QTY, formatWon } from '../lib/cart'
+import { productImage } from '../lib/pixelProducts'
 import { storySymbol } from '../lib/pixelSymbols'
 
 // 장바구니 한 줄 — 표현 전용. 수량 조절과 삭제는 props 로 받는다.
 export default function CartLine({ product, qty, lineTotal, onQty, onRemove }) {
-  const art = storySymbol(product.symbol)
+  const art = productImage(product.id) || storySymbol(product.symbol)
   return (
     <li className="cart-line">
       <span className="cart-art" style={art ? { background: art.bg } : undefined} aria-hidden="true">{art && <span className="story-symbol" style={{ backgroundImage: art.url }} />}</span>

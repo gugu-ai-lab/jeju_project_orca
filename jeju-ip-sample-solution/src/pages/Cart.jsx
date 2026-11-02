@@ -49,7 +49,7 @@ export default function Cart() {
               <div className="ship-meter" aria-hidden="true"><span style={{ width: `${progress}%` }} /></div>
               <p className="small mb-3">{sum.freeShippingRemaining > 0 ? `${formatWon(sum.freeShippingRemaining)} 더 담으면 배송비가 무료예요` : '무료 배송 조건을 채웠어요'}</p>
               <button type="button" className="btn btn-citrus w-100" onClick={() => setTried(true)}><i className="bi bi-credit-card me-1" aria-hidden="true" />결제하기 (체험)</button>
-              {tried && <p className="shop-notice is-compact mt-3 mb-0" role="alert"><i className="bi bi-exclamation-circle-fill" aria-hidden="true" /><span>가상 상점이라 <strong>결제는 진행되지 않아요.</strong> 주문도 만들어지지 않았고, 아무 정보도 전송하지 않았어요.</span></p>}
+              {tried && <p className="shop-notice is-compact mt-3 mb-0" role="alert"><i className="bi bi-exclamation-circle-fill" aria-hidden="true" /><span>체험 화면이라 <strong>결제는 진행되지 않아요.</strong> 주문도 만들어지지 않았고, 아무 정보도 전송하지 않았어요.</span></p>}
             </aside>
           </Col>
         </Row>
