@@ -38,12 +38,12 @@ export default function Agent() {
   }
 
   return <>
-    <PageHeader icon="robot" title="신화 여행 안내원" subtitle="이야기의 근거와 장소를 공공데이터에서 찾습니다" />
+    <PageHeader icon="robot" title="신화안내원" subtitle="이야기의 근거와 장소를 공공데이터에서 찾습니다" />
     <div role="status">
       {!status && !statusError && <p>AI 설정 상태를 확인하고 있습니다…</p>}
       {statusError && <Alert variant="warning">{statusError}</Alert>}
       {status && !status.available && <Alert variant="info">
-        AI 안내원은 설정 대기 중입니다. {status.reason === 'key_missing' ? 'OpenAI API 키를 설정하면 활성화됩니다.' : 'AI 설정을 확인해 주세요.'}
+        신화안내원은 설정 대기 중입니다. {status.reason === 'key_missing' ? 'OpenAI API 키를 설정하면 활성화됩니다.' : 'AI 설정을 확인해 주세요.'}
         <div>다른 메뉴와 아래 직접 자료 조회는 계속 이용할 수 있습니다.</div>
       </Alert>}
     </div>

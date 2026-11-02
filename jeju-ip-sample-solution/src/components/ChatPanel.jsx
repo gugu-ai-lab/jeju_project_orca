@@ -21,11 +21,11 @@ export default function ChatPanel({ messages, loading, onSend, suggestions = [],
   }
 
   return (
-    <section className="chat-panel surface" aria-label="AI 관광 안내원">
+    <section className="chat-panel surface" aria-label="신화안내원">
       <header className="chat-head">
         <span className="chat-avatar" aria-hidden="true"><i className="bi bi-moon-stars" /></span>
         <div>
-          <h2 className="h6 mb-0">탐라 이야기 안내원</h2>
+          <h2 className="h6 mb-0">신화안내원</h2>
           {notice && <small className="text-secondary">{notice}</small>}
         </div>
       </header>
