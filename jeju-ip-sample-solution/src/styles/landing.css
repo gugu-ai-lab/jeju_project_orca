@@ -1,5 +1,4 @@
-/* 랜딩 전용 스타일 — 도트 게임 타이틀 화면. 한글 도트 폰트 Galmuri(SIL OFL 1.1). */
-@import url('https://cdn.jsdelivr.net/npm/galmuri@2.40.1/dist/galmuri.css');
+/* 랜딩 전용 스타일 — 도트 게임 타이틀 화면. 도트 폰트는 pixel-theme.css 에서 불러온다. */
 
 .landing {
   --px-font: 'Galmuri14', 'Galmuri11', ui-monospace, 'Apple SD Gothic Neo', monospace;

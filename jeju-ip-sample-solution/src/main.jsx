@@ -7,6 +7,7 @@ import { RouterProvider } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './styles/theme.css'
+import './styles/pixel-theme.css' // 도트 게임 테마 — 이 줄을 빼면 이전 디자인으로 돌아간다
 
 import { router } from './router'
 

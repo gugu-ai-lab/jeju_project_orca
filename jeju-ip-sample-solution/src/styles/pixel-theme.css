@@ -1,0 +1,85 @@
+/* 도트 게임 테마 — theme.css 위에 덮어쓴다. 한글 도트 폰트 Galmuri(SIL OFL 1.1). */
+@import url('https://cdn.jsdelivr.net/npm/galmuri@2.40.1/dist/galmuri.css');
+
+:root {
+  --px-font: 'Galmuri14', 'Galmuri11', ui-monospace, 'Apple SD Gothic Neo', monospace;
+  --px-ink: #1d4a45;
+  --px-deep: #0f2e2a;
+  --px-sky: #e6f4fc;
+  --px-grass: #69b84a;
+  --px-border: 3px solid var(--px-ink);
+  --px-shadow: 0 4px 0 var(--px-deep);
+  --bs-border-radius: 0;
+  --bs-border-radius-lg: 0;
+  --bs-border-color: var(--px-ink);
+  --jeju-shadow: 0 4px 0 var(--px-deep);
+}
+
+body { background: var(--px-sky); }
+h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 400; letter-spacing: 0; color: var(--px-ink); }
+
+/* 상단 바 */
+.jeju-nav { background: var(--px-ink); backdrop-filter: none; border-bottom: 4px solid var(--px-deep); font-family: var(--px-font); }
+.jeju-nav .navbar-brand, .jeju-nav .navbar-brand:hover { color: #fffdf7; }
+.jeju-nav .brand-mark { border-radius: 0; background: linear-gradient(#a9d7f3 50%, #69b84a 50%); border: 3px solid #fffdf7; }
+.jeju-nav .nav-link { color: #cfe9e3; border-radius: 0; }
+.jeju-nav .nav-link:hover { background: #2c6b63; color: #fff; }
+.jeju-nav .nav-link.active { background: #F28C28; color: #2b1a05; }
+.jeju-nav .navbar-toggler { border-color: #fffdf7; border-radius: 0; }
+.jeju-nav .navbar-toggler-icon { filter: invert(1); }
+
+/* 면(카드·패널) */
+.surface, .myth-card, .story-card, .chat-panel, .story-filters {
+  border: var(--px-border); border-radius: 0; box-shadow: var(--px-shadow); background: #fffdf7;
+}
+.myth-card:hover, .story-card:hover { transform: translateY(-3px); }
+.myth-card.is-selected, .story-card.is-selected { border-color: #F28C28; box-shadow: 0 0 0 3px #F28C28, var(--px-shadow); }
+.myth-art, .story-card-thumb { border-radius: 0; border-bottom: 3px solid var(--px-ink); }
+.story-card-thumb { border: 3px solid var(--px-ink); }
+.story-figure { background: #cfe9f6; border-right: 3px solid var(--px-ink); }
+.story-figure img { border: 3px solid var(--px-ink); background: #fff; }
+@media (max-width: 767px) { .story-figure { border-right: 0; border-bottom: 3px solid var(--px-ink); } }
+.myth-card.is-selected .myth-title { color: var(--px-ink); }
+
+/* 히어로: 하늘 띠(계단식 그라데이션) + 풀밭 줄 */
+.myth-hero {
+  border: var(--px-border); border-radius: 0; box-shadow: var(--px-shadow); border-bottom: 12px solid var(--px-grass);
+  background: linear-gradient(#4aa6ee 0 20%, #68bcf4 20% 40%, #8fd2f8 40% 60%, #b4e2fb 60% 80%, #d3effc 80%);
+}
+.myth-hero h1 { color: #fff; text-shadow: 3px 3px 0 var(--px-ink); }
+.myth-hero .lead { color: #fff; text-shadow: 2px 2px 0 var(--px-ink); max-width: 36rem; }
+.myth-hero .section-eyebrow { display: inline-block; padding: .1rem .6rem; background: var(--px-ink); color: #fffdf7; letter-spacing: 0; font-family: var(--px-font); }
+
+/* 버튼·칩·배지 */
+.btn { --bs-btn-border-radius: 0; font-family: var(--px-font); border-width: 3px; box-shadow: 0 3px 0 var(--px-deep); }
+.btn:active:not(:disabled) { transform: translateY(3px); box-shadow: none; }
+.btn:disabled { box-shadow: none; }
+.btn-primary { --bs-btn-bg: var(--px-ink); --bs-btn-border-color: var(--px-deep); --bs-btn-hover-bg: #2c6b63; --bs-btn-hover-border-color: var(--px-deep); --bs-btn-active-bg: #2c6b63; --bs-btn-active-border-color: var(--px-deep); }
+.btn-outline-sea { --bs-btn-border-color: var(--px-ink); --bs-btn-bg: #fffdf7; --bs-btn-hover-bg: #cfe9f6; --bs-btn-hover-border-color: var(--px-ink); }
+.btn-citrus { --bs-btn-border-color: #2b1a05; --bs-btn-disabled-bg: #f6c796; --bs-btn-disabled-border-color: #8a6a45; }
+.form-control, .input-group-text { border: var(--px-border); border-radius: 0; background: #fff; }
+.form-check-input { border: 2px solid var(--px-ink); border-radius: 0; }
+.form-check-input:checked { background-color: var(--px-ink); border-color: var(--px-ink); }
+.chip, .preview-badge, .section-eyebrow { border-radius: 0; font-family: var(--px-font); }
+.chip { background: #cfe9f6; border: 2px solid var(--px-ink); color: var(--px-ink); }
+.chip-ok { background: #c9efb8; } .chip-wait { background: #ffe2b8; }
+.preview-badge { border: 2px dashed #a85c10; }
+.scene-dot { border-radius: 0; border: 2px solid var(--px-ink); } .scene-dot.is-active { background: #F28C28; border-color: var(--px-ink); }
+.story-empty { border: 3px dashed var(--px-ink); border-radius: 0; background: #fffdf7; }
+
+/* 채팅 */
+.chat-head { background: #cfe9f6; border-bottom: var(--px-border); }
+.chat-avatar { border-radius: 0; border: 2px solid var(--px-deep); background: var(--px-ink); }
+.chat-bubble { border-radius: 0; border: 2px solid var(--px-ink); background: #eef8fd; }
+.chat-msg.is-user .chat-bubble { background: var(--px-ink); }
+.chat-input { border-top: var(--px-border); }
+.tool-steps { border-radius: 0; border: 2px dashed var(--px-ink); }
+.tool-name { border-radius: 0; }
+
+/* 푸터: 풀밭 줄 */
+.jeju-footer { background: var(--px-ink); color: #cfe9e3; border-top: 8px solid var(--px-grass); }
+.jeju-footer a { color: #fff6d8; }
+
+/* 대비 보정 */
+.jeju-nav .navbar-brand .font-myth { color: #fffdf7; }
+.myth-hero .lead { display: inline-block; padding: .35rem .8rem; background: var(--px-ink); border: 2px solid #fffdf7; text-shadow: none; }
