@@ -11,10 +11,10 @@
     "pinTone": "forest",
     "hasVerifiedLocation": true,
     "illustrationCoords": {
-      "svgX": 468,
-      "svgY": 208,
-      "xPercent": 58.5,
-      "yPercent": 43.3
+      "svgX": 428,
+      "svgY": 238,
+      "xPercent": 53.5,
+      "yPercent": 49.5
     },
     "realGeoCoords": {
       "lat": 33.4475,
@@ -35,10 +35,10 @@
     "pinTone": "sea",
     "hasVerifiedLocation": true,
     "illustrationCoords": {
-      "svgX": 356,
-      "svgY": 128,
-      "xPercent": 44.5,
-      "yPercent": 26.7
+      "svgX": 276,
+      "svgY": 132,
+      "xPercent": 34.5,
+      "yPercent": 27.5
     },
     "realGeoCoords": {
       "lat": 33.5043,
@@ -131,10 +131,10 @@
     "pinTone": "sky",
     "hasVerifiedLocation": true,
     "illustrationCoords": {
-      "svgX": 424,
-      "svgY": 106,
-      "xPercent": 53.0,
-      "yPercent": 22.1
+      "svgX": 468,
+      "svgY": 94,
+      "xPercent": 58.5,
+      "yPercent": 19.5
     },
     "realGeoCoords": {
       "lat": 33.5162,

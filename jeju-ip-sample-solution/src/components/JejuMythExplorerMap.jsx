@@ -377,7 +377,7 @@ export default function JejuMythExplorerMap({
 
               {/* 4. 신화 장소를 잇는 귀여운 점선 탐험 길 */}
               <path
-                d="M 356 128 Q 392 112 424 106 Q 455 152 468 208 Q 560 218 644 226 Q 480 325 252 352 Q 180 325 136 276 Q 230 190 356 128"
+                d="M 276 132 Q 372 104 468 94 Q 452 166 428 238 Q 540 232 644 226 Q 480 325 252 352 Q 180 325 136 276 Q 198 196 276 132"
                 fill="none"
                 stroke="#4FA3B7"
                 strokeWidth="2.5"
@@ -507,7 +507,7 @@ export default function JejuMythExplorerMap({
                 </g>
 
                 {/* 지역 방위 안내 캡션 */}
-                <text x="395" y="76" textAnchor="middle" fill="#2F5D50" fontSize="11.5" fontWeight="800">
+                <text x="285" y="68" textAnchor="middle" fill="#2F5D50" fontSize="11.5" fontWeight="800">
                   북쪽 바다 · 제주시
                 </text>
                 <text x="415" y="394" textAnchor="middle" fill="#2F5D50" fontSize="11.5" fontWeight="800">
