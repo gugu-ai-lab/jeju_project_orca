@@ -1162,6 +1162,24 @@ h1, h2, h3, h4, .font-myth {
   background: var(--jeju-forest);
   color: #FFFFFF;
 }
+.btn-kakao-route {
+  display: inline-flex;
+  align-items: center;
+  font-size: .76rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+  border: 1.5px solid var(--jeju-sea);
+  padding: .28rem .75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+}
+.btn-kakao-route:hover {
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  transform: translateY(-1px);
+}
 
 .explorer-map-stage {
   position: relative;
@@ -1272,6 +1290,45 @@ h1, h2, h3, h4, .font-myth {
 .jeju-map-pin.is-selected {
   transform: translate(-50%, -95%) scale(1.1);
   z-index: 5;
+  animation: pin-bounce-pop .44s cubic-bezier(.34, 1.56, .64, 1);
+}
+.jeju-map-pin.is-bouncing {
+  animation: pin-bounce-pop .44s cubic-bezier(.34, 1.56, .64, 1);
+}
+@keyframes pin-bounce-pop {
+  0% {
+    transform: translate(-50%, -85%) scale(.92);
+  }
+  45% {
+    transform: translate(-50%, -112%) scale(1.16);
+  }
+  75% {
+    transform: translate(-50%, -91%) scale(1.06);
+  }
+  100% {
+    transform: translate(-50%, -95%) scale(1.1);
+  }
+}
+
+.pin-pulse-ring {
+  position: absolute;
+  bottom: -4px;
+  width: 1.65rem;
+  height: .75rem;
+  border-radius: 50%;
+  background: rgba(79, 163, 183, .35);
+  animation: pin-ring-wave 1.8s infinite ease-out;
+  pointer-events: none;
+}
+@keyframes pin-ring-wave {
+  0% {
+    transform: scale(.7);
+    opacity: .85;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
 }
 
 .pin-marker-bubble {
@@ -1375,6 +1432,19 @@ h1, h2, h3, h4, .font-myth {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.spot-card-animate {
+  animation: spot-card-switch .3s cubic-bezier(.22, 1, .36, 1);
+}
+@keyframes spot-card-switch {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 @media (min-width: 768px) {
   .selected-spot-panel {

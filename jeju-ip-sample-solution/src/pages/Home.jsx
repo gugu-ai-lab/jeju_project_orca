@@ -5,8 +5,11 @@ import JejuMythExplorerMap from '../components/JejuMythExplorerMap'
 import MythCard from '../components/MythCard'
 import StoryPanel from '../components/StoryPanel'
 import MythQuizPuzzleSection from '../components/puzzle/MythQuizPuzzleSection'
+import mapPinsData from '../data/jejuMapPins.json'
 import { getMythQuizPuzzle } from '../data/mythQuizPuzzles'
 import { MYTH_SCENES, MYTH_SOURCE } from '../data/mythStories'
+
+const PIN_BY_MYTH_ID = Object.fromEntries(mapPinsData.map((p) => [p.mythId, p]))
 
 // Gemini 콘텐츠 검증 문서(MYTH_CONTENT_VERIFICATION.md) 기준 대표 신화·전설 7선
 // - 실제 좌표·유적지가 확인된 6개 이야기는 지도 핀(mapPin)으로 연결
@@ -356,7 +359,11 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState(STUDENT_MYTHS[0].id)
   const [sceneIndex, setSceneIndex] = useState(0)
   const selected = STUDENT_MYTHS.find((m) => m.id === selectedId) || STUDENT_MYTHS[0]
+  const selectedPin = PIN_BY_MYTH_ID[selected.id] || selected.mapPin
   const hasPuzzleForSelected = Boolean(getMythQuizPuzzle(selected.id))
+  const kakaoRouteUrl = selectedPin?.realGeoCoords
+    ? `https://map.kakao.com/link/to/${encodeURIComponent(selectedPin.realGeoCoords.kakaoPlaceName || selectedPin.placeName)},${selectedPin.realGeoCoords.lat},${selectedPin.realGeoCoords.lng}`
+    : null
 
   function handleSelectMyth(id) {
     setSelectedId(id)
@@ -394,30 +401,35 @@ export default function Home() {
 
       {/* 2. 메인 영역: 제주 탐험 지도 + 선택한 장소의 신화 요약 & 기능 이동 카드 */}
       <section aria-label="제주 신화 탐험 지도와 선택 장소 소개" className="explorer-main-grid">
-        {/* 왼쪽: 제주 신화 탐험 지도 (Kakao Maps 연동 + 파스텔 제주 일러스트 지도) */}
+        {/* 왼쪽: SVG 그림책 제주 탐험 지도 (jejuMapPins.json 기반 핀 + 카카오맵 연동) */}
         <JejuMythExplorerMap
-          myths={STUDENT_MYTHS}
-          selectedMyth={selected}
+          selectedMythId={selected.id}
           onSelectMyth={handleSelectMyth}
         />
 
-        {/* 오른쪽: 선택한 장소와 연결된 신화의 짧은 소개 & 바로가기 액션 */}
-        <aside className="selected-spot-panel surface" aria-live="polite">
+        {/* 오른쪽: 선택한 장소와 연결된 신화의 짧은 소개 & 바로가기 액션 (핀 클릭 시 전환 애니메이션) */}
+        <aside
+          key={selected.id}
+          className="selected-spot-panel surface spot-card-animate"
+          aria-live="polite"
+        >
           <div className="spot-panel-top">
             <span className="spot-tag-pill">{selected.tag}</span>
             <span className="spot-verified-pill">
-              {selected.mapPin?.hasLocation === false ? '🌾 제주 전역 전승' : '📍 실제 장소 확인됨'}
+              {selectedPin?.hasVerifiedLocation === false ? '🌾 제주 전역 전승' : '📍 실제 장소 확인됨'}
             </span>
           </div>
 
           <div className="spot-place-box mt-2">
             <span className="spot-place-emoji" aria-hidden="true">
-              {selected.mapPin?.emoji || '📍'}
+              {selectedPin?.emoji || '📍'}
             </span>
             <div>
-              <span className="spot-place-label">연결된 신화 장소</span>
+              <span className="spot-place-label">
+                {selectedPin?.regionLabel || '연결된 신화 장소'}
+              </span>
               <strong className="spot-place-title d-block">
-                {selected.mapPin?.fullPlace || selected.place}
+                {selectedPin?.fullPlaceName || selected.place}
               </strong>
             </div>
           </div>
@@ -426,14 +438,14 @@ export default function Home() {
           <p className="spot-myth-question mb-2">“{selected.question}”</p>
           <p className="spot-myth-intro mb-3">{selected.shortIntro}</p>
 
-          {selected.mapPin?.verifiedNote && (
+          {selectedPin?.verifiedNote && (
             <div className="spot-evidence-note mb-3">
               <i className="bi bi-patch-check-fill me-1" />
-              <span>{selected.mapPin.verifiedNote}</span>
+              <span>{selectedPin.verifiedNote}</span>
             </div>
           )}
 
-          {/* 핵심 기능 이동 버튼: 이야기 읽기 / 퀴즈 풀기 / AI에게 물어보기 */}
+          {/* 핵심 기능 이동 버튼: 이야기 읽기 / 퀴즈 풀기 / AI에게 물어보기 / 카카오맵 길찾기 */}
           <div className="spot-action-grid">
             <button
               type="button"
@@ -461,13 +473,23 @@ export default function Home() {
               AI에게 물어보기
             </Link>
 
-            {selected.mapPin?.hasLocation !== false && (
-              <Link
-                to="/places"
+            {kakaoRouteUrl ? (
+              <a
+                href={kakaoRouteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-outline-sea btn-round spot-action-btn"
               >
                 <i className="bi bi-geo-alt me-1" />
-                주변 관광·문화 보기
+                카카오맵 위치·길찾기
+              </a>
+            ) : (
+              <Link
+                to="/explore"
+                className="btn btn-outline-sea btn-round spot-action-btn"
+              >
+                <i className="bi bi-compass me-1" />
+                신화 도감 보기
               </Link>
             )}
           </div>
