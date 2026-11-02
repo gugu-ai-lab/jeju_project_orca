@@ -10,7 +10,7 @@ import { STORY_CATALOG } from '../data/storyCatalog'
 import { useAppStore } from '../store/useAppStore'
 
 const TYPES = { 12: '관광지', 14: '문화시설', 15: '축제·행사', 39: '음식점' }
-const PAGE_SIZE = 20
+const PAGE_SIZE = 9
 
 export default function Places() {
   const addFavorite = useAppStore((s) => s.addFavorite)   // STEP 5에서 사용

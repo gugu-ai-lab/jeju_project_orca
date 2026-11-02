@@ -44,7 +44,7 @@ function normalize(p) {
   }
 }
 // 기존 Places 화면이 사용하는 배열 형식을 유지한다.
-export async function searchTourPage({ keyword = '', contentTypeId = '12', pageNo = 1, rows = 20 } = {}) {
+export async function searchTourPage({ keyword = '', contentTypeId = '12', pageNo = 1, rows = 9 } = {}) {
   const page = Number(pageNo)
   const pageSize = Number(rows)
   if (typeof keyword !== 'string' || keyword.length > 80 || !['', '12', '14', '15', '39'].includes(String(contentTypeId)) || !Number.isInteger(page) || page < 1 || page > 10000 || !Number.isInteger(pageSize) || pageSize < 1 || pageSize > 20) throw new Error('INVALID_TOOL_INPUT')

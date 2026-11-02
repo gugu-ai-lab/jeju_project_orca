@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       const detail = await getTourDetail({ contentId: req.query.contentId })
       return detail ? res.status(200).json(detail) : res.status(404).json({ error: '상세 정보를 찾지 못했습니다.' })
     }
-    const { keyword = '', type = '', page = '1', rows = '20' } = req.query
+    const { keyword = '', type = '', page = '1', rows = '9' } = req.query
     return res.status(200).json(await searchTourPage({ keyword, contentTypeId: type, pageNo: page, rows }))
   } catch (error) {
     return res.status(error.message === 'INVALID_TOOL_INPUT' ? 400 : 503).json({

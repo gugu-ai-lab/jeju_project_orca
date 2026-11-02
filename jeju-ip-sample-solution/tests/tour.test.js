@@ -43,18 +43,18 @@ test('empty keyword and type search the full Jeju tourism and culture list',asyn
   assert.equal(results.length,2)
   assert.deepEqual(results.map(item=>item.type),['12','14'])
 })
-test('tour list returns 20-item pages, total count and restaurant category',async t=>{
+test('tour list returns nine-item pages, total count and restaurant category',async t=>{
   fixture(t,async url=>{
     const u=new URL(url)
     assert.ok(u.pathname.endsWith('/searchKeyword2'))
     assert.equal(u.searchParams.get('keyword'),'흑돼지')
     assert.equal(u.searchParams.get('contentTypeId'),'39')
     assert.equal(u.searchParams.get('pageNo'),'2')
-    assert.equal(u.searchParams.get('numOfRows'),'20')
+    assert.equal(u.searchParams.get('numOfRows'),'9')
     return {ok:true,status:200,text:async()=>JSON.stringify({response:{header:{resultCode:'0000'},body:{items:{item:[{...place,contentid:'39',contenttypeid:'39'}]},totalCount:43}}})}
   })
-  const result=await searchTourPage({keyword:'흑돼지',contentTypeId:'39',pageNo:2,rows:20})
-  assert.equal(result.items[0].type,'39');assert.equal(result.totalCount,43);assert.equal(result.page,2);assert.equal(result.pageSize,20)
+  const result=await searchTourPage({keyword:'흑돼지',contentTypeId:'39',pageNo:2,rows:9})
+  assert.equal(result.items[0].type,'39');assert.equal(result.totalCount,43);assert.equal(result.page,2);assert.equal(result.pageSize,9)
 })
 test('HTTP 200 with auth error is failure, not an empty successful list',async t=>{
   fixture(t,async()=>reply([],'30'))
