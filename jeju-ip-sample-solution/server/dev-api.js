@@ -9,7 +9,7 @@ export function localApi() {
       const env = loadEnv(server.config.mode, server.config.envDir, '')
       const localPath = resolve(server.config.envDir, '.env.local')
       const local = existsSync(localPath) ? parseEnv(readFileSync(localPath, 'utf8')) : {}
-      for (const name of ['DATA_GO_KR_KEY', 'OPENAI_API_KEY']) {
+      for (const name of ['DATA_GO_KR_KEY', 'OPENAI_API_KEY', 'OPENAI_MODEL']) {
         // 빈 로컬 설정도 존중: 코딩 CLI에서 상속된 런타임 키를 대신 사용하지 않는다.
         if (Object.hasOwn(local, name)) process.env[name] = local[name]
         else if (name === 'OPENAI_API_KEY') process.env[name] = ''

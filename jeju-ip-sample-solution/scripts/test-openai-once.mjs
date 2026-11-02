@@ -2,7 +2,6 @@
 import { readFileSync } from 'node:fs'
 import { parseEnv } from 'node:util'
 import { createOpenAIResponse } from '../server/openai.js'
-import { MODEL, SYSTEM, LIMITS, openAITools } from '../server/agent.js'
 import { executeTool, safeErrors } from '../server/myth-tools.js'
 
 const local = parseEnv(readFileSync(new URL('../.env.local', import.meta.url), 'utf8'))
@@ -12,6 +11,8 @@ if (!apiKey) {
   process.exit(2)
 }
 process.env.DATA_GO_KR_KEY = local.DATA_GO_KR_KEY || ''
+process.env.OPENAI_MODEL = local.OPENAI_MODEL?.trim() || 'gpt-6-luna'
+const { MODEL, SYSTEM, LIMITS, openAITools } = await import('../server/agent.js')
 let requests = 0
 try {
   const result = await createOpenAIResponse({
@@ -35,13 +36,13 @@ try {
     }
   }
   console.log(JSON.stringify({
-    status: calls.length ? 'function_call_tested' : 'no_function_call', model: MODEL, paidRequests: requests,
+    status: calls.length ? 'function_call_tested' : 'no_function_call', configuredModelUsed: true, paidRequests: requests,
     inputTokens: result.usage?.input_tokens ?? null, cachedInputTokens: result.usage?.input_tokens_details?.cached_tokens ?? 0,
     outputTokens: result.usage?.output_tokens ?? null, totalTokens: result.usage?.total_tokens ?? null,
     steps, followupModelRequests: 0, finalAnswerTested: false,
   }))
 } catch (error) {
-  console.log(JSON.stringify({ status: 'failed', model: MODEL, paidRequests: requests,
+  console.log(JSON.stringify({ status: 'failed', configuredModelUsed: true, paidRequests: requests,
     httpStatus: error.status || null, message: '호출에 실패했습니다. 자동 재시도하지 않았습니다. 키 또는 모델 접근 권한을 확인해 주세요.' }))
   process.exitCode = 1
 }

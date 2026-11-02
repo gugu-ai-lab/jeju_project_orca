@@ -1,7 +1,7 @@
 import { tools, executeTool, safeErrors, validateInput } from './myth-tools.js'
 
 export const LIMITS = Object.freeze({ modelCalls: 4, toolCalls: 3, history: 6, historyChars: 600, outputTokens: 600, resultChars: 5000 })
-export const MODEL = 'gpt-6-luna'
+export const MODEL = process.env.OPENAI_MODEL?.trim() || 'gpt-6-luna'
 export const SYSTEM = `너는 제주 신화·전설 여행 안내원이다.
 신화 자료·역사문화·날씨·좌표는 필요한 도구를 직접 선택해 확인한다.
 신화 목록의 제목만으로 줄거리나 신화와 장소의 관계를 지어내지 않는다.
