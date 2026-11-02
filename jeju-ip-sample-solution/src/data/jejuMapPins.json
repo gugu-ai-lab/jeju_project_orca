@@ -4,8 +4,8 @@
     "mythId": "seolmundae",
     "mythTitle": "설문대할망",
     "categoryTag": "창세 신화",
-    "placeName": "돌문화공원 · 영실",
-    "fullPlaceName": "제주돌문화공원 & 한라산 영실기암 (제주시 조천읍 남조로 2023)",
+    "placeName": "제주돌문화공원",
+    "fullPlaceName": "제주돌문화공원 (제주특별자치도 제주시 조천읍 남조로 2023)",
     "regionLabel": "조천 · 한라산",
     "emoji": "🏔️",
     "pinTone": "forest",
@@ -17,11 +17,18 @@
       "yPercent": 49.5
     },
     "realGeoCoords": {
-      "lat": 33.4475,
-      "lng": 126.6578,
+      "lat": 33.446621402,
+      "lng": 126.663992872,
       "kakaoPlaceName": "제주돌문화공원"
     },
-    "verifiedNote": "국가지정 명승 제84호(한라산 영실기암 오백장군) · 제주돌문화공원 설문대할망전시관 확인"
+    "verifiedNote": "국가지정 명승 제84호(한라산 영실기암 오백장군) · 제주돌문화공원 설문대할망전시관 확인",
+    "location": {
+      "name": "제주돌문화공원",
+      "address": "제주특별자치도 제주시 조천읍 남조로 2023",
+      "source": "한국관광공사 TourAPI",
+      "sourceUrl": "https://www.data.go.kr/data/15101578/openapi.do",
+      "recordId": "1544730"
+    }
   },
   {
     "pinId": "pin-samsinin",
@@ -29,7 +36,7 @@
     "mythTitle": "탐라 삼신인",
     "categoryTag": "개국 신화",
     "placeName": "제주 삼성혈",
-    "fullPlaceName": "제주 삼성혈 (제주시 삼성로 22)",
+    "fullPlaceName": "제주 삼성혈 (제주특별자치도 제주시 삼성로 22 (이도일동))",
     "regionLabel": "제주시 도심",
     "emoji": "🏹",
     "pinTone": "sea",
@@ -41,11 +48,18 @@
       "yPercent": 27.5
     },
     "realGeoCoords": {
-      "lat": 33.5043,
-      "lng": 126.5291,
-      "kakaoPlaceName": "삼성혈"
+      "lat": 33.5041459335,
+      "lng": 126.5289459792,
+      "kakaoPlaceName": "제주 삼성혈"
     },
-    "verifiedNote": "국가지정 사적 제134호 · 제주역사문화정보 #651 · 한국관광공사 TourAPI 확인"
+    "verifiedNote": "국가지정 사적 제134호 · 제주역사문화정보 #651 · 한국관광공사 TourAPI 확인",
+    "location": {
+      "name": "제주 삼성혈",
+      "address": "제주특별자치도 제주시 삼성로 22 (이도일동)",
+      "source": "한국관광공사 TourAPI",
+      "sourceUrl": "https://www.data.go.kr/data/15101578/openapi.do",
+      "recordId": "127744"
+    }
   },
   {
     "pinId": "pin-honinji",
@@ -53,7 +67,7 @@
     "mythTitle": "혼인지",
     "categoryTag": "개국·혼례 신화",
     "placeName": "성산 혼인지",
-    "fullPlaceName": "성산 온평리 혼인지 (서귀포시 성산읍 혼인지로 39-22)",
+    "fullPlaceName": "혼인지 (제주특별자치도 서귀포시 성산읍 혼인지로 39-14)",
     "regionLabel": "동쪽 성산·온평",
     "emoji": "🌺",
     "pinTone": "sky",
@@ -65,11 +79,18 @@
       "yPercent": 47.1
     },
     "realGeoCoords": {
-      "lat": 33.4310,
-      "lng": 126.8998,
+      "lat": 33.4147546599,
+      "lng": 126.8948368625,
       "kakaoPlaceName": "혼인지"
     },
-    "verifiedNote": "제주역사문화일반·위치정보 #2945 · 한국관광공사 TourAPI 확인"
+    "verifiedNote": "제주역사문화일반·위치정보 #2945 · 한국관광공사 TourAPI 확인",
+    "location": {
+      "name": "혼인지",
+      "address": "제주특별자치도 서귀포시 성산읍 혼인지로 39-14",
+      "source": "한국관광공사 TourAPI",
+      "sourceUrl": "https://www.data.go.kr/data/15101578/openapi.do",
+      "recordId": "126465"
+    }
   },
   {
     "pinId": "pin-suwolbong",
@@ -77,7 +98,7 @@
     "mythTitle": "수월봉과 녹고물",
     "categoryTag": "지명·효행 전설",
     "placeName": "한경 수월봉",
-    "fullPlaceName": "한경면 고산리 수월봉 · 녹고물 (제주시 한경면 노을해안로 1013)",
+    "fullPlaceName": "수월봉 (제주특별자치도 제주시 한경면 고산리 3760)",
     "regionLabel": "서쪽 한경·고산",
     "emoji": "💧",
     "pinTone": "sea",
@@ -89,11 +110,18 @@
       "yPercent": 57.5
     },
     "realGeoCoords": {
-      "lat": 33.2947,
-      "lng": 126.1636,
+      "lat": 33.2947589554,
+      "lng": 126.1634097074,
       "kakaoPlaceName": "수월봉"
     },
-    "verifiedNote": "국가지정 천연기념물 제513호 · 제주역사문화정보 #2872 확인"
+    "verifiedNote": "국가지정 천연기념물 제513호 · 제주역사문화정보 #2872 확인",
+    "location": {
+      "name": "수월봉",
+      "address": "제주특별자치도 제주시 한경면 고산리 3760",
+      "source": "한국관광공사 TourAPI",
+      "sourceUrl": "https://www.data.go.kr/data/15101578/openapi.do",
+      "recordId": "126434"
+    }
   },
   {
     "pinId": "pin-sanbangdeok",
@@ -101,7 +129,7 @@
     "mythTitle": "산방덕이",
     "categoryTag": "지명·여신 전설",
     "placeName": "산방산·산방굴사",
-    "fullPlaceName": "서귀포 안덕면 산방산 · 산방굴사 (안덕면 산방로 218-10)",
+    "fullPlaceName": "산방굴사(제주) (제주특별자치도 서귀포시 안덕면 산방로 218-12)",
     "regionLabel": "남서쪽 안덕",
     "emoji": "⛰️",
     "pinTone": "forest",
@@ -113,11 +141,18 @@
       "yPercent": 73.3
     },
     "realGeoCoords": {
-      "lat": 33.2415,
-      "lng": 126.3134,
-      "kakaoPlaceName": "산방산"
+      "lat": 33.2372263352,
+      "lng": 126.3133359411,
+      "kakaoPlaceName": "산방굴사(제주)"
     },
-    "verifiedNote": "국가지정 명승 제77호 · 제주역사문화위치정보 확인"
+    "verifiedNote": "국가지정 명승 제77호 · 제주역사문화위치정보 확인",
+    "location": {
+      "name": "산방굴사(제주)",
+      "address": "제주특별자치도 서귀포시 안덕면 산방로 218-12",
+      "source": "한국관광공사 TourAPI",
+      "sourceUrl": "https://www.data.go.kr/data/15101578/openapi.do",
+      "recordId": "126457"
+    }
   },
   {
     "pinId": "pin-yeongdeung",
@@ -125,7 +160,7 @@
     "mythTitle": "영등할망",
     "categoryTag": "바다·해녀 신화",
     "placeName": "건입동 칠머리당",
-    "fullPlaceName": "제주시 건입동 칠머리당 영등굿 전수관 (사라봉동길 58)",
+    "fullPlaceName": "건입동 칠머리당 (제주특별자치도 제주시 건입동 387-6)",
     "regionLabel": "제주시 건입동",
     "emoji": "🌬️",
     "pinTone": "sky",
@@ -137,11 +172,18 @@
       "yPercent": 19.5
     },
     "realGeoCoords": {
-      "lat": 33.5162,
-      "lng": 126.5407,
-      "kakaoPlaceName": "칠머리당영등굿전수관"
+      "lat": 33.519063,
+      "lng": 126.548024,
+      "kakaoPlaceName": "건입동 칠머리당"
     },
-    "verifiedNote": "국가무형유산 · 유네스코 인류무형문화유산 · 제주역사문화정보 #1635 확인"
+    "verifiedNote": "국가무형유산 · 유네스코 인류무형문화유산 · 제주역사문화정보 #1635 확인",
+    "location": {
+      "name": "건입동 칠머리당",
+      "address": "제주특별자치도 제주시 건입동 387-6",
+      "source": "제주역사문화위치정보",
+      "sourceUrl": "https://www.jeju.go.kr/culture/digitalContents/directory.htm?act=view&seq=1635",
+      "recordId": "1635"
+    }
   },
   {
     "pinId": "pin-jacheongbi",

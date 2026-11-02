@@ -5,8 +5,8 @@ const SKY = { 1: '맑음', 3: '구름많음', 4: '흐림' };
 const PTY = { 0: '없음', 1: '비', 2: '비/눈', 3: '눈', 4: '소나기' };
 
 // 발표시각: 02·05·08·11·14·17·20·23시 (발표 후 약 10분 뒤부터 조회 가능)
-function baseDateTime() {
-  const kst = new Date(Date.now() + 9 * 3600e3 - 15 * 60e3); // 한국시간, 15분 여유
+export function baseDateTime(now = Date.now()) {
+  const kst = new Date(now + 9 * 3600e3 - 15 * 60e3); // 한국시간, 15분 여유
   let h = [23, 20, 17, 14, 11, 8, 5, 2].find((x) => x <= kst.getUTCHours());
   let day = kst;
   if (h === undefined) { day = new Date(kst.getTime() - 24 * 3600e3); h = 23; }
@@ -16,17 +16,19 @@ function baseDateTime() {
   };
 }
 
-export async function getWeather({ place = '제주시' } = {}) {
-  const [nx, ny] = GRID[place] ?? GRID['제주시'];
+export async function getWeather({ place = '제주시', grid, now = Date.now(), fetchImpl = globalThis.fetch, withMetadata = false } = {}) {
+  const [nx, ny] = grid ? [grid.nx, grid.ny] : GRID[place] ?? GRID['제주시'];
+  if (!Number.isInteger(nx) || !Number.isInteger(ny) || nx < 1 || nx > 149 || ny < 1 || ny > 253) throw new Error('INVALID_LOCATION')
+  const base = baseDateTime(now)
   const key = process.env.DATA_GO_KR_KEY?.trim()
   if (!key) throw new Error('DATA_KEY_MISSING')
   const params = new URLSearchParams({
     serviceKey: key,
     dataType: 'JSON', numOfRows: '300', pageNo: '1',
-    nx: String(nx), ny: String(ny), ...baseDateTime(),
+    nx: String(nx), ny: String(ny), ...base,
   });
   let r
-  try { r = await fetch(BASE + '?' + params, { signal: AbortSignal.timeout(12000) }) }
+  try { r = await fetchImpl(BASE + '?' + params, { signal: AbortSignal.timeout(12000) }) }
   catch { throw new Error('UPSTREAM_UNAVAILABLE') }
   if (!r.ok) throw new Error(r.status === 401 || r.status === 403 ? 'DATA_AUTH_REQUIRED' : 'UPSTREAM_UNAVAILABLE')
   const text = await r.text();
@@ -37,9 +39,11 @@ export async function getWeather({ place = '제주시' } = {}) {
   if (String(data?.response?.header?.resultCode) !== '00') throw new Error('UPSTREAM_UNAVAILABLE')
   const items = data?.response?.body?.items?.item ?? [];
   if (!items.length) throw new Error('UPSTREAM_UNAVAILABLE')
-  const forecast = normalizeForecast(items, place)
+  const forecast = normalizeForecast(items, place, now)
   if (!forecast.length) throw new Error('UPSTREAM_UNAVAILABLE')
-  return forecast
+  return withMetadata ? { items: forecast, grid: { nx, ny }, baseDate: base.base_date, baseTime: base.base_time,
+    kind: 'forecast', source: '기상청 단기예보', sourceUrl: 'https://www.data.go.kr/data/15084084/openapi.do',
+    fetchedAt: new Date().toISOString(), timezone: 'Asia/Seoul' } : forecast
 }
 
 // 기상청은 과거 시간대도 포함할 수 있으므로 현재 KST 시간대 이후만 제공한다.
