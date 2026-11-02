@@ -50,10 +50,15 @@ export default function PixelBackdrop() {
       raf = 0
       const allowed = !systemReducesMotion() || document.documentElement.classList.contains('allow-motion')
       const H = innerHeight, max = Math.max(0, document.documentElement.scrollHeight - H), y = allowed ? scrollY : 0
-      const d = Math.min(1, y / (0.8 * H))
-      const p = max > 0 ? Math.min(1, y / Math.max(max, 0.8 * H)) : 0
-      const e = max > 0.8 * H ? Math.min(1, Math.max(0, (y - (max - 0.6 * H)) / (0.6 * H))) : 0
-      el.style.setProperty('--d', d.toFixed(3)); el.style.setProperty('--p', allowed ? p.toFixed(3) : '0'); el.style.setProperty('--e', allowed ? e.toFixed(3) : '0')
+      // 페이지 길이에 맞춰 연출 속도를 정한다: 어떤 페이지든 끝까지 내려가면 바다 밑바닥에 도착해야 한다.
+      // 잠수는 (화면 높이의 80% | 페이지 스크롤 길이의 60%) 중 짧은 거리에 걸쳐 끝나고, 바닥은 그 뒤 남은 구간에서 올라온다.
+      // 스크롤이 화면 높이의 25%도 안 되는 페이지는 움직임이 급해 보이므로 수면에 머문다.
+      const active = allowed && max >= 0.25 * H
+      const diveLen = Math.min(0.8 * H, 0.6 * max), bedLen = Math.min(0.6 * H, 0.4 * max)
+      const d = active ? Math.min(1, y / diveLen) : 0
+      const p = active ? Math.min(1, y / max) : 0
+      const e = active ? Math.min(1, Math.max(0, (y - (max - bedLen)) / bedLen)) : 0
+      el.style.setProperty('--d', d.toFixed(3)); el.style.setProperty('--p', p.toFixed(3)); el.style.setProperty('--e', e.toFixed(3))
       el.style.setProperty('--foot', `${Math.max(0, (document.querySelector('footer')?.offsetHeight ?? 50) - 6)}px`) // 푸터에 밑바닥이 가리지 않게
       document.documentElement.classList.toggle('px-deep', d > 0.55)
     }

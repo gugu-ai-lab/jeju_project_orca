@@ -196,8 +196,10 @@ body { background: #cfe9f8; }
 /* ── 스크롤 잠수 연출: --d(잠수 0~1), --p(깊이 0~1), --e(바다 밑바닥 0~1)는 PixelBackdrop 이 스크롤에 맞춰 갱신한다 ── */
 .px-skygroup { position: absolute; inset: 0; opacity: calc(1 - var(--d, 0)); }
 .px-surface { position: absolute; inset: 0; transform: translateY(calc(var(--d, 0) * -100%)); will-change: transform; }
-.px-deep { position: absolute; left: 0; width: 100%; top: calc(100% - var(--cs) * 36px); height: 300%;
-  background: linear-gradient(#3aa9c9 0, #2386ac 5%, #1b6b94 12%, #14507c 24%, #0d3a64 40%, #0a2c52 100%); }
+/* 높이는 "표면 띠부터 잠수했을 때의 화면 맨 아래까지"만 필요하다. 이보다 길게(예: 300%) 두면 맨 아래로 곧바로 점프할 때
+   문서 높이(scrollHeight)가 부풀어 푸터 아래 빈 공간까지 스크롤되는 버그가 난다. */
+.px-deep { position: absolute; left: 0; width: 100%; top: calc(100% - var(--cs) * 36px); height: calc(100% + var(--cs) * 36px + 4px);
+  background: linear-gradient(#3aa9c9 0, #2386ac 12%, #1b6b94 30%, #14507c 55%, #0d3a64 80%, #0a2c52 100%); }
 .px-dark { position: absolute; inset: 0; background: #06182e; opacity: calc(var(--d, 0) * var(--p, 0) * .7); }
 .px-rays { position: absolute; top: 0; bottom: 0; left: -10%; width: 120%; opacity: calc(var(--d, 0) * (1 - var(--p, 0)) * .55);
   background: repeating-linear-gradient(105deg, rgba(255, 255, 255, .2) 0 calc(var(--cs) * 6px), transparent calc(var(--cs) * 6px) calc(var(--cs) * 22px));
