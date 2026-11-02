@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Alert, Button } from 'react-bootstrap'
 import { useAppStore } from '../store/useAppStore'
 export default function StoryFavoriteButton({ storyId, storyTitle }) {
-  const save = useAppStore(s => s.addFavorite)
+  const toggleFavorite = useAppStore(s => s.toggleFavorite)
   const load = useAppStore(s => s.loadFavorites)
   const favorites = useAppStore(s => s.favorites)
   const busy = useAppStore(s => s.favLoading)
@@ -14,8 +14,8 @@ export default function StoryFavoriteButton({ storyId, storyTitle }) {
   }, [load, storyId])
 
   return <div className="my-3">
-    <Button variant="outline-primary" className={`story-favorite-button${isSaved ? ' is-saved' : ''}`} aria-pressed={isSaved} disabled={busy} onClick={() => save({ storyId, storyTitle })}>
-      <i className={`bi ${isSaved ? 'bi-star-fill favorite-star' : 'bi-star'} me-1`} aria-hidden="true" />{isSaved ? '즐겨찾기 저장됨' : '이야기 즐겨찾기'}
+    <Button variant="outline-primary" className={`story-favorite-button${isSaved ? ' is-saved' : ''}`} aria-pressed={isSaved} disabled={busy} onClick={() => toggleFavorite({ storyId, storyTitle })}>
+      <i className={`bi ${isSaved ? 'bi-star-fill favorite-star' : 'bi-star'} me-1`} aria-hidden="true" />{isSaved ? '즐겨찾기 취소' : '이야기 즐겨찾기'}
     </Button>
     {error && <Alert variant="warning" className="mt-2" role="alert">{error}</Alert>}
   </div>

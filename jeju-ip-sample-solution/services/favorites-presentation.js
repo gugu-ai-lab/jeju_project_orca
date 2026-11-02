@@ -30,12 +30,19 @@ export function createFavoritesSlice(set, get, service) {
       } catch (error) { failure(error); return false }
       finally { set({ favLoading: false }) }
     },
+    toggleFavorite: input => {
+      const favorite = favoriteInput(input)
+      return get().favorites.some(item => item.storyId === favorite.storyId)
+        ? get().removeFavorite(favorite.storyId)
+        : get().addFavorite(favorite)
+    },
     removeFavorite: async storyId => {
       if (get().favLoading) return false
       set({ favLoading: true, favError: null })
       try {
         await service.remove(storyId)
         set({ favorites: get().favorites.filter(f => f.storyId !== storyId) })
+        get().toast('즐겨찾기를 취소했어요')
         return true
       } catch (error) { failure(error); return false }
       finally { set({ favLoading: false }) }

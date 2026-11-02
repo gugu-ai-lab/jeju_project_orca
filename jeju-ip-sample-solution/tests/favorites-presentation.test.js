@@ -23,6 +23,19 @@ test('save, duplicate, reload and delete use the injected service without any ne
   assert.deepEqual(refreshed.favorites, [row])
   await refreshed.removeFavorite('seolmundae'); assert.deepEqual(refreshed.favorites, [])
 })
+test('toggle saves an unsaved favorite and cancels it on the next press', async () => {
+  let rows = []
+  const service = {
+    save: async input => { const saved = { ...row, storyId: input.storyId, storyTitle: input.storyTitle }; rows = [saved]; return { favorite: saved, created: true } },
+    remove: async storyId => { rows = rows.filter(item => item.storyId !== storyId); return { deleted: true } },
+    list: async () => [...rows],
+  }
+  const s = state(service)
+  assert.equal(await s.toggleFavorite({ storyId: 'tour:123', storyTitle: '관광지' }), true)
+  assert.equal(s.favorites[0].storyId, 'tour:123')
+  assert.equal(await s.toggleFavorite({ storyId: 'tour:123', storyTitle: '관광지' }), true)
+  assert.deepEqual(s.favorites, [])
+})
 test('failed delete retains visible rows; unknown raw errors are not exposed', async () => {
   const s = state({ list: async () => [row], remove: async () => { throw new Error('private upstream detail') } })
   await s.loadFavorites(); assert.equal(await s.removeFavorite('seolmundae'), false)

@@ -13,7 +13,7 @@ const TYPES = { 12: '관광지', 14: '문화시설', 15: '축제·행사', 39: '
 const PAGE_SIZE = 9
 
 export default function Places() {
-  const addFavorite = useAppStore((s) => s.addFavorite)   // STEP 5에서 사용
+  const toggleFavorite = useAppStore((s) => s.toggleFavorite)
   const favorites = useAppStore((s) => s.favorites)
   const loadFavorites = useAppStore((s) => s.loadFavorites)
   const [keyword, setKeyword] = useState('')
@@ -90,7 +90,7 @@ export default function Places() {
             <Col key={p.id}>
               <ItemCard title={p.title} subtitle={p.addr} image={p.image} badge={TYPES[p.type]} onOpen={() => openDetail(p)}
                 isFavorite={favorites.some(favorite => favorite.storyId === `tour:${p.id}`)}
-                onSave={() => addFavorite({ source: 'tour', id: p.id, title: p.title })} />
+                onSave={() => toggleFavorite({ source: 'tour', id: p.id, title: p.title })} />
             </Col>
           ))}
         </Row>

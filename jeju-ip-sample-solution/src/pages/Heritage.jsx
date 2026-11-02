@@ -11,7 +11,7 @@ import { useAppStore } from '../store/useAppStore'
 
 export default function Heritage() {
   const pageSize = 9
-  const addFavorite = useAppStore((s) => s.addFavorite)
+  const toggleFavorite = useAppStore((s) => s.toggleFavorite)
   const favorites = useAppStore((s) => s.favorites)
   const loadFavorites = useAppStore((s) => s.loadFavorites)
   const [keyword, setKeyword] = useState('')
@@ -83,7 +83,7 @@ export default function Heritage() {
                   {' · '}<a href={h.imageLicenseUrl} target="_blank" rel="noopener noreferrer">{h.imageLicense}</a>
                 </>}</>} badge={h.kind} onOpen={() => openDetail(h)}
                 isFavorite={favorites.some(favorite => favorite.storyId === `heritage:${h.name}`)}
-                onSave={() => addFavorite({ source: 'heritage', id: h.name, title: h.name })} />
+                onSave={() => toggleFavorite({ source: 'heritage', id: h.name, title: h.name })} />
             </Col>
           ))}
         </Row>

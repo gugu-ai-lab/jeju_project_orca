@@ -29,7 +29,7 @@ export default function ItemCard({ title, subtitle, image, badge, onSave, onOpen
         {subtitle && <Card.Text className={`small text-muted${onOpen ? ' item-card-subtitle-trigger' : ''}`}>{subtitle}</Card.Text>}
         {onSave && (
           <Button size="sm" variant="outline-primary" className="mt-auto" aria-pressed={isFavorite} onClick={onSave}>
-            <i className={`bi ${isFavorite ? 'bi-star-fill favorite-star' : 'bi-star'} me-1`} aria-hidden="true" />{isFavorite ? '즐겨찾기 저장됨' : '즐겨찾기'}
+            <i className={`bi ${isFavorite ? 'bi-star-fill favorite-star' : 'bi-star'} me-1`} aria-hidden="true" />{isFavorite ? '즐겨찾기 취소' : '즐겨찾기'}
           </Button>
         )}
       </Card.Body>
