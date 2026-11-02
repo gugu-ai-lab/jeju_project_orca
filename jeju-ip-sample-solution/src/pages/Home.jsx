@@ -1,3 +1,4 @@
+import SelectedPlaceDetails from '../components/SelectedPlaceDetails'
 import StoryFavoriteButton from '../components/StoryFavoriteButton'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -430,7 +431,7 @@ export default function Home() {
                 {selectedPin?.regionLabel || '연결된 신화 장소'}
               </span>
               <strong className="spot-place-title d-block">
-                {selectedPin?.fullPlaceName || selected.place}
+                {selectedPin?.location?.name || selectedPin?.fullPlaceName || selected.place}
               </strong>
             </div>
           </div>
@@ -445,6 +446,8 @@ export default function Home() {
               <span>{selectedPin.verifiedNote}</span>
             </div>
           )}
+
+          <SelectedPlaceDetails key={selected.id} pin={selectedPin} />
 
           {/* 핵심 기능 이동 버튼: 이야기 읽기 / 퀴즈 풀기 / AI에게 물어보기 / 카카오맵 길찾기 */}
           <div className="spot-action-grid">

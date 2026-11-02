@@ -1,3 +1,4 @@
+import { loadKakaoMaps } from '../lib/kakaoMaps'
 import { useEffect, useRef, useState } from 'react'
 import mapPinsData from '../data/jejuMapPins.json'
 
@@ -103,23 +104,7 @@ export default function JejuMythExplorerMap({
       })
     }
 
-    if (window.kakao && window.kakao.maps) {
-      initKakaoMap()
-    } else {
-      const existingScript = document.getElementById('kakao-map-sdk-script')
-      if (existingScript) {
-        existingScript.addEventListener('load', initKakaoMap)
-        existingScript.addEventListener('error', () => !cancelled && setKakaoStatus('error'))
-      } else {
-        const script = document.createElement('script')
-        script.id = 'kakao-map-sdk-script'
-        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${encodeURIComponent(kakaoKey)}&autoload=false`
-        script.async = true
-        script.onload = initKakaoMap
-        script.onerror = () => !cancelled && setKakaoStatus('error')
-        document.head.appendChild(script)
-      }
-    }
+    loadKakaoMaps(kakaoKey).then(initKakaoMap).catch(() => { if (!cancelled) setKakaoStatus('error') })
 
     return () => {
       cancelled = true
@@ -199,7 +184,7 @@ export default function JejuMythExplorerMap({
 
       {/* 메인 지도 스테이지 */}
       <div className="explorer-map-stage">
-        {mapMode === 'kakao' && kakaoStatus === 'ready' ? (
+        {mapMode === 'kakao' && kakaoKey && kakaoStatus !== 'error' && !isGlobalMythSelected ? (
           <div
             ref={mapContainerRef}
             className="kakao-map-canvas"
