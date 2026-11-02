@@ -205,6 +205,18 @@ h1, h2, h3, h4, .font-myth {
   border-radius: 999px;
   border: 1px solid var(--jeju-line);
 }
+.myth-loc-badge {
+  position: absolute;
+  top: .55rem;
+  right: .6rem;
+  font-size: .68rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-sea);
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
 .pastel-illo {
   width: 82%;
   height: 82%;
@@ -1064,4 +1076,395 @@ h1, h2, h3, h4, .font-myth {
 .puzzle-lightbox-source {
   font-size: .76rem;
   color: #687378;
+}
+
+/* ── 8. 제주 신화 탐험 지도 (Home 메인 레이아웃) ─────── */
+.map-home-header {
+  padding: .75rem .5rem 0;
+}
+.section-cute-sub {
+  font-size: .88rem;
+  color: #5C676C;
+}
+
+.explorer-main-grid {
+  display: grid;
+  gap: 1.35rem;
+  align-items: stretch;
+}
+@media (min-width: 992px) {
+  .explorer-main-grid {
+    grid-template-columns: minmax(0, 1.32fr) minmax(0, .88fr);
+    gap: 1.5rem;
+  }
+}
+
+/* 왼쪽 지도 카드 */
+.explorer-map-card {
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sky);
+  border-radius: 1.6rem;
+  padding: 1.15rem;
+  box-shadow: var(--jeju-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 768px) {
+  .explorer-map-card {
+    padding: 1.35rem 1.5rem;
+  }
+}
+
+.explorer-map-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: .85rem;
+}
+.map-badge-pill {
+  font-size: .8rem;
+  font-weight: 700;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .25rem .75rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.map-hint-text {
+  font-size: .84rem;
+  color: #586368;
+  font-weight: 600;
+}
+
+.map-mode-switch {
+  display: inline-flex;
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 999px;
+  padding: .18rem;
+  gap: .2rem;
+}
+.map-mode-btn {
+  border: 0;
+  background: transparent;
+  color: #556065;
+  font-size: .76rem;
+  font-weight: 700;
+  padding: .28rem .75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.map-mode-btn.is-active {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+}
+
+.explorer-map-stage {
+  position: relative;
+  width: 100%;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-sky-pastel);
+}
+
+.kakao-map-canvas {
+  width: 100%;
+  height: 22rem;
+}
+.kakao-map-canvas.is-loading {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pastel-jeju-map-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 20.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--jeju-sky-pastel);
+}
+.pastel-jeju-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 23rem;
+  user-select: none;
+}
+
+/* API 키 미설정/오류 안내 배너 */
+.map-fallback-notice {
+  position: absolute;
+  top: .65rem;
+  left: .65rem;
+  right: .65rem;
+  z-index: 6;
+  background: #FFFFFF;
+  border: 1.5px solid var(--jeju-sea);
+  border-radius: .9rem;
+  padding: .55rem .85rem;
+  font-size: .78rem;
+  color: var(--jeju-basalt);
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  box-shadow: var(--jeju-shadow);
+}
+.map-fallback-notice strong {
+  color: var(--jeju-forest);
+}
+
+/* 전역 전승 신화(자청비) 선택 안내 배너 */
+.map-global-myth-banner {
+  position: absolute;
+  bottom: .65rem;
+  left: .65rem;
+  right: .65rem;
+  z-index: 6;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sea);
+  border-radius: 1rem;
+  padding: .65rem .9rem;
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  font-size: .82rem;
+  color: var(--jeju-basalt);
+  box-shadow: var(--jeju-shadow);
+}
+.map-global-myth-banner strong {
+  color: var(--jeju-forest);
+  display: block;
+}
+
+/* 지도 위 귀여운 핀 레이어 */
+.pastel-map-pins-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.jeju-map-pin {
+  position: absolute;
+  transform: translate(-50%, -85%);
+  pointer-events: auto;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform .18s ease, z-index 0s;
+}
+.jeju-map-pin:hover {
+  transform: translate(-50%, -92%) scale(1.06);
+  z-index: 4;
+}
+.jeju-map-pin.is-selected {
+  transform: translate(-50%, -95%) scale(1.1);
+  z-index: 5;
+}
+
+.pin-marker-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  border: 2px solid var(--jeju-sea);
+  border-radius: 999px;
+  padding: .24rem .62rem;
+  font-size: .76rem;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(47, 93, 80, .14);
+  transition: background .16s, color .16s, border-color .16s;
+}
+.jeju-map-pin.is-selected .pin-marker-bubble {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+  border-color: var(--jeju-forest);
+  box-shadow: 0 0 0 4px rgba(169, 215, 243, .7), 0 6px 16px rgba(47, 93, 80, .22);
+}
+.pin-emoji {
+  font-size: .88rem;
+  line-height: 1;
+}
+.pin-place-sub {
+  margin-top: .12rem;
+  font-size: .66rem;
+  font-weight: 700;
+  background: rgba(255, 253, 247, .92);
+  color: #465257;
+  padding: .05rem .42rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.jeju-map-pin.is-selected .pin-place-sub {
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  font-weight: 800;
+}
+.pin-tail {
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--jeju-sea);
+  border: 2px solid #FFFFFF;
+  margin-top: .1rem;
+}
+.jeju-map-pin.is-selected .pin-tail {
+  background: var(--jeju-forest);
+  transform: scale(1.25);
+}
+
+/* 지도 하단 빠른 장소 선택 칩 */
+.explorer-map-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: .85rem;
+}
+.map-place-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .32rem .7rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-ivory);
+  color: var(--jeju-basalt);
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.map-place-chip small {
+  font-size: .72rem;
+  color: #636F74;
+  font-weight: 600;
+}
+.map-place-chip:hover {
+  background: var(--jeju-sky-pastel);
+  border-color: var(--jeju-sky);
+}
+.map-place-chip.is-active {
+  background: var(--jeju-mint-pastel);
+  border-color: var(--jeju-sea);
+  color: var(--jeju-forest);
+}
+.map-place-chip.is-active small {
+  color: var(--jeju-forest);
+}
+
+/* 오른쪽 선택된 장소 & 신화 요약 카드 */
+.selected-spot-panel {
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-line);
+  border-radius: 1.6rem;
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 768px) {
+  .selected-spot-panel {
+    padding: 1.5rem 1.65rem;
+  }
+}
+
+.spot-panel-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+}
+.spot-tag-pill {
+  font-size: .78rem;
+  font-weight: 800;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.spot-verified-pill {
+  font-size: .76rem;
+  font-weight: 800;
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+}
+
+.spot-place-box {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem .95rem;
+  border-radius: 1.1rem;
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+}
+.spot-place-emoji {
+  font-size: 1.65rem;
+  line-height: 1;
+}
+.spot-place-label {
+  font-size: .72rem;
+  font-weight: 800;
+  color: var(--jeju-sea);
+}
+.spot-place-title {
+  font-size: .92rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+
+.spot-myth-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.spot-myth-question {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+}
+.spot-myth-intro {
+  font-size: .94rem;
+  line-height: 1.68;
+  color: var(--jeju-basalt);
+}
+.spot-evidence-note {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+  padding: .5rem .75rem;
+  border-radius: .85rem;
+}
+
+.spot-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+.spot-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: .88rem;
+  padding: .58rem .75rem;
 }

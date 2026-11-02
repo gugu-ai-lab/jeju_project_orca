@@ -91,6 +91,13 @@ export default function MythCard({ myth, selected, onSelect }) {
     >
       <span className="myth-art" aria-hidden="true">
         {myth.tag && <span className="myth-mini-tag">{myth.tag}</span>}
+        {myth.mapPin ? (
+          <span className="myth-loc-badge">
+            {myth.mapPin.hasLocation === false
+              ? '🌾 전역 전승'
+              : `📍 ${myth.mapPin.shortPlace}`}
+          </span>
+        ) : null}
         <PastelMythIllustration id={myth.id} icon={myth.icon} />
       </span>
       <span className="myth-body">
