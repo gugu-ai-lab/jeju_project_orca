@@ -25,7 +25,8 @@ export default function PixelBackdrop() {
     const el = root.current, url = birdSprite()
     el.querySelectorAll('.px-bird').forEach((b) => { b.style.backgroundImage = `url(${url})` })
     el.querySelector('.px-sea-base').style.backgroundImage = seaTileUrl()
-    el.querySelector('.px-sea-waves').style.backgroundImage = waveTileUrl()
+    el.querySelector('.px-sea-waves').style.backgroundImage = waveTileUrl(0)
+    el.querySelector('.px-sea-waves2').style.backgroundImage = waveTileUrl(1)
   }, [])
   const sparkles = useMemo(() => { const r = seeded(11); return Array.from({ length: 16 }, () => ({ x: r() * 100, y: r() * 60, d: r() * 4 })) }, [])
 
@@ -37,6 +38,7 @@ export default function PixelBackdrop() {
       {[0, 1, 2].map((i) => <span key={i} className={`px-bird px-bird-${i}`} />)}
       <div className="px-sea px-sea-base" />
       <div className="px-sea px-sea-waves" />
+      <div className="px-sea px-sea-waves2" />
     </div>
   )
 }

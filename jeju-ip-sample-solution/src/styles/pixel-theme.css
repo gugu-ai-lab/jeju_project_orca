@@ -179,8 +179,11 @@ body { background: #cfe9f8; }
 
 /* ── 아래쪽 바다·섬·돛단배 ── */
 .px-sea { position: absolute; left: 0; bottom: 0; width: 100%; height: calc(40px * var(--cs)); background-repeat: repeat-x; background-size: calc(80px * var(--cs)) calc(40px * var(--cs)); image-rendering: pixelated; }
-.px-sea-waves { animation: px-waves 14s linear infinite; opacity: .9; }
+.px-sea-waves { animation: px-waves 18s linear infinite, px-swell 4s steps(2, jump-none) infinite alternate; }
+.px-sea-waves2 { animation: px-waves-rev 26s linear infinite, px-swell 5.5s steps(2, jump-none) infinite alternate-reverse; opacity: .85; }
 @keyframes px-waves { from { background-position-x: 0; } to { background-position-x: calc(80px * var(--cs)); } }
+@keyframes px-waves-rev { from { background-position-x: calc(80px * var(--cs)); } to { background-position-x: 0; } }
+@keyframes px-swell { from { transform: translateY(0); } to { transform: translateY(calc(var(--cs) * 1px)); } }
 .px-island { position: absolute; image-rendering: pixelated; animation: px-bob 5s steps(2, jump-none) infinite alternate; }
 .px-island-big { right: 5%; bottom: calc(10px * var(--cs)); width: calc(72px * var(--cs)); height: calc(32px * var(--cs)); }
 .px-island-small { left: 6%; bottom: calc(14px * var(--cs)); width: calc(40px * var(--cs)); height: calc(28px * var(--cs)); animation-duration: 6.5s; animation-delay: -2s; }

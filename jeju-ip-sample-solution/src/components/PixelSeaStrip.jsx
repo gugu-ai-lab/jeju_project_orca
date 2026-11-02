@@ -12,7 +12,8 @@ export default function PixelSeaStrip() {
     drawIsland(small.current, { cx: 20, hw: 17, H: 11, seed: 9, crater: false })
     drawBoat(boat.current)
     root.current.querySelector('.px-sea-base').style.backgroundImage = seaTileUrl()
-    root.current.querySelector('.px-sea-waves').style.backgroundImage = waveTileUrl()
+    root.current.querySelector('.px-sea-waves').style.backgroundImage = waveTileUrl(0)
+    root.current.querySelector('.px-sea-waves2').style.backgroundImage = waveTileUrl(1)
   }, [])
   return (
     <div className="px-seastrip" aria-hidden="true" ref={root}>
@@ -21,6 +22,7 @@ export default function PixelSeaStrip() {
       <canvas ref={small} className="px-island px-island-small" width={40} height={28} />
       <canvas ref={big} className="px-island px-island-big" width={72} height={32} />
       <canvas ref={boat} className="px-boat" width={14} height={8} />
+      <div className="px-sea px-sea-waves2" /> {/* 앞쪽 물결: 섬 밑동·배 앞을 지나간다 */}
     </div>
   )
 }
