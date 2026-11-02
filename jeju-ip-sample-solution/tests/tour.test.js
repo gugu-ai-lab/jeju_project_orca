@@ -30,6 +30,19 @@ test('Jeju search and detail share one normalized tool; legacy array preserved',
   assert.equal(requested.length,3)
   assert.ok(tools.some(t=>t.name==='get_weather'));assert.ok(tools.some(t=>t.name==='search_myths'))
 })
+test('empty keyword and type search the full Jeju tourism and culture list',async t=>{
+  fixture(t,async url=>{
+    const u=new URL(url)
+    assert.ok(u.pathname.endsWith('/areaBasedList2'))
+    assert.equal(u.searchParams.get('lDongRegnCd'),'50')
+    assert.equal(u.searchParams.has('keyword'),false)
+    assert.equal(u.searchParams.has('contentTypeId'),false)
+    return reply([place,{...place,contentid:'200',contenttypeid:'14',title:'제주 문화시설'}])
+  })
+  const results=await searchTour({keyword:'',contentTypeId:''})
+  assert.equal(results.length,2)
+  assert.deepEqual(results.map(item=>item.type),['12','14'])
+})
 test('HTTP 200 with auth error is failure, not an empty successful list',async t=>{
   fixture(t,async()=>reply([],'30'))
   await assert.rejects(searchTour({keyword:'삼성혈'}),error=>error.message==='TOUR_AUTH_ERROR'&&error.upstreamCode==='30'&&error.httpStatus===200)

@@ -13,8 +13,8 @@ const TYPES = { 12: '관광지', 14: '문화시설', 15: '축제·행사' }
 
 export default function Places() {
   const addFavorite = useAppStore((s) => s.addFavorite)   // STEP 5에서 사용
-  const [keyword, setKeyword] = useState('해녀')
-  const [type, setType] = useState('12')
+  const [keyword, setKeyword] = useState('')
+  const [type, setType] = useState('')
   const [places, setPlaces] = useState([])               // ① 데이터
   const [loading, setLoading] = useState(true)           // ② 로딩
   const [error, setError] = useState('')                 // ③ 에러
@@ -54,13 +54,14 @@ export default function Places() {
 
   return (
     <>
-      <PageHeader icon="geo-alt" title="관광·문화" subtitle="한국관광공사 TourAPI" />
+      <PageHeader icon="geo-alt" title="관광·문화" subtitle="제주 전체 관광·문화 정보" />
       <Form onSubmit={search} className="mb-4">
         <InputGroup>
           <Form.Select value={type} onChange={(e) => setType(e.target.value)} style={{ maxWidth: 140 }}>
+            <option value="">전체</option>
             {Object.entries(TYPES).map(([v, label]) => <option key={v} value={v}>{label}</option>)}
           </Form.Select>
-          <Form.Control value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="검색어" />
+          <Form.Control value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="검색어 (선택)" />
           <Button type="submit"><i className="bi bi-search" /></Button>
         </InputGroup>
       </Form>
