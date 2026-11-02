@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 import MythCard from '../components/MythCard'
 import StoryPanel from '../components/StoryPanel'
@@ -32,6 +33,9 @@ export default function Home() {
             </Col>
           ))}
         </Row>
+        <div className="mt-3">
+          <Link to="/explore" className="btn btn-outline-sea"><i className="bi bi-compass me-1" />제주 이야기 탐험하기</Link>
+        </div>
       </section>
 
       <section className="mt-4" aria-live="polite" aria-label="선택한 이야기">

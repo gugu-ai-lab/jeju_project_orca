@@ -181,3 +181,17 @@ h1, h2, h3, .font-myth {
 .tool-args { font-family: ui-monospace, monospace; color: #5b6468; word-break: break-all; }
 .tool-count { color: var(--jeju-basalt); }
 .chat-input .btn { flex: none; white-space: nowrap; }
+
+/* ── 이야기 탐험: 카드 목록·필터 ────────────────── */
+.story-card { display: flex; gap: .85rem; width: 100%; height: 100%; padding: .75rem; text-align: left; color: inherit;
+  background: #fff; border: 1px solid var(--jeju-line); border-radius: var(--bs-border-radius-lg); transition: transform .18s, border-color .18s; }
+.story-card:hover { transform: translateY(-2px); }
+.story-card.is-selected { border-color: var(--jeju-forest); box-shadow: 0 0 0 2px var(--jeju-forest); }
+.story-card-thumb { flex: none; width: 4.5rem; height: 4.5rem; border-radius: .75rem; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  background: var(--jeju-mist); color: var(--jeju-sea); font-size: 1.6rem; }
+.story-card-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.story-card-body { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+.story-card-title { font-size: 1.1rem; font-weight: 700; color: var(--jeju-forest); }
+.story-card-meta { font-size: .82rem; color: #5b6468; }
+.chip { font-size: .7rem; font-weight: 700; padding: .1rem .5rem; border-radius: 999px; background: var(--jeju-mist); color: var(--jeju-forest); }
+.chip-ok { background: #e3f1ec; } .chip-wait { background: #fff3e3; color: #8a4b05; }
