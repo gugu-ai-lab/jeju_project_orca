@@ -44,14 +44,19 @@ function normalize(p) {
   }
 }
 // 기존 Places 화면이 사용하는 배열 형식을 유지한다.
-export async function searchTour({ keyword = '', contentTypeId = '12', rows = 10 } = {}) {
-  if (typeof keyword !== 'string' || keyword.length > 80 || !['', '12', '14', '15'].includes(String(contentTypeId))) throw new Error('INVALID_TOOL_INPUT')
+export async function searchTourPage({ keyword = '', contentTypeId = '12', pageNo = 1, rows = 20 } = {}) {
+  const page = Number(pageNo)
+  const pageSize = Number(rows)
+  if (typeof keyword !== 'string' || keyword.length > 80 || !['', '12', '14', '15', '39'].includes(String(contentTypeId)) || !Number.isInteger(page) || page < 1 || page > 10000 || !Number.isInteger(pageSize) || pageSize < 1 || pageSize > 20) throw new Error('INVALID_TOOL_INPUT')
   keyword = keyword.trim()
-  const params = { numOfRows: String(Math.max(1, Math.min(Number(rows) || 10, 10))), lDongRegnCd: '50' }
+  const params = { numOfRows: String(pageSize), pageNo: String(page), lDongRegnCd: '50' }
   if (contentTypeId) params.contentTypeId = String(contentTypeId)
   if (keyword) params.keyword = keyword
   const result = await requestTour(keyword ? 'searchKeyword2' : 'areaBasedList2', params)
-  return result.items.map(normalize)
+  return { items: result.items.map(normalize), totalCount: result.totalCount, page, pageSize }
+}
+export async function searchTour({ keyword = '', contentTypeId = '12', rows = 10 } = {}) {
+  return (await searchTourPage({ keyword, contentTypeId, pageNo: 1, rows: Math.min(Number(rows) || 10, 10) })).items
 }
 // AI와 직접 조회가 공유한다. 상세 호출은 상위 3건으로 제한한다.
 export async function getTourDetail({ contentId } = {}) {

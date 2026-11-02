@@ -31,8 +31,8 @@ export async function post(path, body) {
 export const ping = () => get('/api/hello')
 
 // STEP 2~4: 공공데이터 API
-export const fetchPlaces = (keyword = '', type = '12') =>
-  get(`/api/tour?keyword=${encodeURIComponent(keyword)}&type=${type}`)
+export const fetchPlaces = (keyword = '', type = '', page = 1, rows = 20) =>
+  get(`/api/tour?keyword=${encodeURIComponent(keyword)}&type=${encodeURIComponent(type)}&page=${page}&rows=${rows}`)
 export const fetchTourDetail = contentId =>
   get(`/api/tour?contentId=${encodeURIComponent(contentId)}`)
 export const fetchWeather = (place = '제주시') =>
