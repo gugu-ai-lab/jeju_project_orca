@@ -7,8 +7,10 @@
   --jeju-ivory: #FFFDF7;
   --jeju-basalt: #3A3F42;
   --jeju-mist: #E6F2F6;
+  --jeju-paper: #F7F3E8;
   --jeju-line: rgba(47, 93, 80, .16);
   --jeju-shadow: 0 .75rem 2rem rgba(47, 93, 80, .10);
+  --jeju-shadow-lg: 0 1.25rem 3rem rgba(31, 61, 53, .14);
 
   --bs-body-bg: var(--jeju-ivory);
   --bs-body-color: var(--jeju-basalt);
@@ -22,12 +24,14 @@
   --bs-border-color: var(--jeju-line);
 }
 
-body { background: var(--jeju-ivory); line-height: 1.7; }
-h1, h2, h3, .font-myth {
-  font-family: 'Noto Serif KR', 'Nanum Myeongjo', 'AppleMyungjo', serif;
+html { scroll-behavior: smooth; }
+body { background: var(--jeju-ivory); line-height: 1.7; color: var(--jeju-basalt); }
+h1, h2, h3, h4, .font-myth {
+  font-family: 'Noto Serif KR', 'Nanum Myeongjo', 'AppleMyungjo', Georgia, serif;
   color: var(--jeju-forest);
-  letter-spacing: -.01em;
+  letter-spacing: -.015em;
 }
+.text-forest { color: var(--jeju-forest); }
 
 /* 버튼 — 감귤색은 가장 중요한 행동 하나에만 */
 .btn-primary {
@@ -38,6 +42,7 @@ h1, h2, h3, .font-myth {
 .btn-citrus {
   --bs-btn-color: #2b1a05; --bs-btn-bg: var(--jeju-citrus); --bs-btn-border-color: var(--jeju-citrus);
   --bs-btn-hover-bg: #dd7d1c; --bs-btn-hover-border-color: #dd7d1c; --bs-btn-hover-color: #2b1a05;
+  font-weight: 700;
 }
 .btn-outline-sea {
   --bs-btn-color: var(--jeju-forest); --bs-btn-border-color: var(--jeju-sea);
@@ -47,8 +52,8 @@ h1, h2, h3, .font-myth {
 
 /* 상단 바 */
 .jeju-nav {
-  background: rgba(255, 253, 247, .88);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 253, 247, .90);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--jeju-line);
 }
 .jeju-nav .navbar-brand { display: flex; align-items: center; gap: .6rem; color: var(--jeju-forest); font-weight: 700; }
@@ -65,7 +70,22 @@ h1, h2, h3, .font-myth {
   background: #fff; border: 1px solid var(--jeju-line);
   border-radius: var(--bs-border-radius-lg); box-shadow: var(--jeju-shadow);
 }
-.section-eyebrow { font-size: .8rem; letter-spacing: .14em; color: var(--jeju-sea); font-weight: 700; }
+.section-eyebrow {
+  font-size: .78rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--jeju-sea);
+  font-weight: 700;
+}
+.section-head-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--jeju-line);
+}
 
 .jeju-footer { border-top: 1px solid var(--jeju-line); background: var(--jeju-mist); color: var(--jeju-forest); }
 
@@ -85,69 +105,635 @@ h1, h2, h3, .font-myth {
 .jeju-nav .navbar-toggler { border-color: var(--jeju-sea); }
 .jeju-nav .navbar-toggler:focus { box-shadow: 0 0 0 3px rgba(79, 163, 183, .35); }
 
-/* ── 메인: 히어로, 신화 카드 ───────────────────── */
+/* ── 메인: 몰입형 신화 화첩 히어로 (A+B 결합) ───────────── */
 .myth-hero {
-  position: relative; overflow: hidden; padding: 3rem 1.5rem; border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  padding: 2.25rem 1.5rem;
+  border-radius: 1.75rem;
   background:
-    radial-gradient(60% 90% at 85% 0%, rgba(169, 215, 243, .75), transparent 70%),
-    linear-gradient(180deg, var(--jeju-mist), var(--jeju-ivory));
-  border: 1px solid var(--jeju-line);
+    radial-gradient(55% 80% at 12% 10%, rgba(169, 215, 243, .52), transparent 70%),
+    radial-gradient(50% 75% at 88% 15%, rgba(79, 163, 183, .22), transparent 72%),
+    linear-gradient(165deg, #f3f9fc 0%, var(--jeju-ivory) 58%, var(--jeju-paper) 100%);
+  border: 1px solid rgba(47, 93, 80, .2);
+  box-shadow: var(--jeju-shadow-lg);
 }
-.myth-hero .lead { color: var(--jeju-basalt); max-width: 36rem; }
-@media (min-width: 768px) { .myth-hero { padding: 4rem 3rem; } }
+@media (min-width: 992px) {
+  .myth-hero { padding: 3.5rem 3.25rem; }
+}
 
+.myth-hero-grid {
+  display: grid;
+  gap: 2.25rem;
+  align-items: center;
+}
+@media (min-width: 992px) {
+  .myth-hero-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .95fr);
+    gap: 3rem;
+  }
+}
+
+.myth-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: 1rem;
+}
+.hero-verify-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: .76rem;
+  font-weight: 700;
+  padding: .25rem .75rem;
+  border-radius: 999px;
+  background: rgba(47, 93, 80, .1);
+  color: var(--jeju-forest);
+  border: 1px solid rgba(47, 93, 80, .22);
+}
+
+.myth-hero-title {
+  font-size: clamp(1.85rem, 3.3vw, 2.85rem);
+  font-weight: 700;
+  line-height: 1.32;
+  margin-bottom: 1.15rem;
+  color: var(--jeju-forest);
+}
+.myth-hero .lead,
+.myth-hero-lead {
+  color: var(--jeju-basalt);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  max-width: 39rem;
+  margin-bottom: 1.75rem;
+}
+
+.myth-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: 2rem;
+}
+.myth-hero-actions .btn-lg {
+  font-size: .98rem;
+  padding: .68rem 1.35rem;
+  border-radius: 999px;
+}
+
+.myth-hero-pillars {
+  display: grid;
+  gap: .75rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--jeju-line);
+}
+@media (min-width: 576px) {
+  .myth-hero-pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.myth-pillar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  padding: .65rem .75rem;
+  border-radius: .9rem;
+  background: rgba(255, 253, 247, .78);
+  border: 1px solid rgba(47, 93, 80, .12);
+}
+.myth-pillar-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--jeju-forest);
+  border-radius: .45rem;
+  padding: .1rem .42rem;
+  line-height: 1.4;
+}
+.myth-pillar-item strong {
+  display: block;
+  font-size: .86rem;
+  color: var(--jeju-forest);
+  line-height: 1.35;
+}
+.myth-pillar-item span {
+  display: block;
+  font-size: .76rem;
+  color: #5b6468;
+  line-height: 1.4;
+  margin-top: .15rem;
+}
+
+/* 히어로 우측 화첩 표지 액자 */
+.hero-codex-card {
+  background: var(--jeju-ivory);
+  border: 1px solid rgba(47, 93, 80, .24);
+  border-radius: 1.35rem;
+  padding: 1.1rem;
+  box-shadow: 0 1rem 2.5rem rgba(47, 93, 80, .15);
+}
+.hero-codex-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .75rem;
+  font-size: .78rem;
+}
+.hero-codex-chapter {
+  font-weight: 700;
+  color: var(--jeju-forest);
+  background: var(--jeju-mist);
+  padding: .2rem .65rem;
+  border-radius: 999px;
+}
+.hero-codex-dim {
+  color: #5b6468;
+  font-size: .74rem;
+}
+.hero-codex-mat {
+  background: linear-gradient(165deg, #24473d 0%, var(--jeju-forest) 55%, #1d3830 100%);
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 19rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 247, .18);
+}
+.hero-codex-mat img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 22rem;
+  height: auto;
+  object-fit: contain;
+  border-radius: .5rem;
+  box-shadow: 0 .6rem 1.6rem rgba(0, 0, 0, .28);
+  animation: scene-zoom .55s ease-out;
+}
+.hero-codex-caption {
+  padding: .85rem .25rem .15rem;
+}
+.hero-codex-scene-name {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+}
+.hero-codex-quick-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.hero-switch-chip {
+  border: 1px solid var(--jeju-line);
+  background: var(--jeju-paper);
+  color: var(--jeju-basalt);
+  font-size: .76rem;
+  font-weight: 600;
+  padding: .22rem .65rem;
+  border-radius: 999px;
+  transition: background .18s, color .18s, border-color .18s;
+}
+.hero-switch-chip:hover {
+  background: var(--jeju-mist);
+  color: var(--jeju-forest);
+}
+.hero-switch-chip.is-active {
+  background: var(--jeju-forest);
+  border-color: var(--jeju-forest);
+  color: #fff;
+}
+
+/* 배지 공통 */
 .preview-badge {
   display: inline-block; align-self: flex-start; font-size: .72rem; font-weight: 700;
   padding: .15rem .6rem; border-radius: 999px;
   background: #fff3e3; color: #8a4b05; border: 1px dashed var(--jeju-citrus);
 }
+.verified-badge {
+  display: inline-block; align-self: flex-start; font-size: .72rem; font-weight: 700;
+  padding: .15rem .6rem; border-radius: 999px;
+  background: #e3f1ec; color: var(--jeju-forest); border: 1px solid rgba(47, 93, 80, .25);
+}
 
+/* ── 대표 이야기 3선 카드 (MythCard: 원본 비율 화첩 액자) ─── */
 .myth-card {
   display: flex; flex-direction: column; width: 100%; height: 100%; padding: 0; text-align: left;
   background: #fff; border: 1px solid var(--jeju-line); border-radius: var(--bs-border-radius-lg);
-  overflow: hidden; color: inherit; box-shadow: var(--jeju-shadow); transition: transform .18s, border-color .18s;
+  overflow: hidden; color: inherit; box-shadow: var(--jeju-shadow);
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
 }
-.myth-card:hover { transform: translateY(-3px); }
-.myth-card.is-selected { border-color: var(--jeju-forest); box-shadow: 0 0 0 2px var(--jeju-forest), var(--jeju-shadow); }
-.myth-art { overflow: hidden;
-  display: flex; align-items: center; justify-content: center; height: 8rem; font-size: 2.6rem; color: #fff;
+.myth-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--jeju-shadow-lg);
 }
-.tone-sea .myth-art { background: linear-gradient(150deg, var(--jeju-sky), var(--jeju-sea)); }
-.tone-forest .myth-art { background: linear-gradient(150deg, var(--jeju-sea), var(--jeju-forest)); }
-.tone-sky .myth-art { background: linear-gradient(150deg, #cfe9f8, var(--jeju-sky) 50%, var(--jeju-sea)); }
-.myth-body { display: flex; flex-direction: column; gap: .35rem; padding: 1rem 1.1rem 1.2rem; }
-.myth-title { font-size: 1.3rem; font-weight: 700; color: var(--jeju-forest); }
-.myth-place { font-size: .88rem; color: var(--jeju-basalt); }
-.myth-note { font-size: .8rem; color: #6b7377; }
+.myth-card.is-selected {
+  border-color: var(--jeju-forest);
+  box-shadow: 0 0 0 2px var(--jeju-forest), var(--jeju-shadow-lg);
+}
+
+.myth-art {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 14rem;
+  padding: 2.3rem 1rem .9rem;
+  color: #fff;
+}
+.tone-sea .myth-art {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 253, 247, .28), transparent 55%),
+    linear-gradient(155deg, var(--jeju-sky), var(--jeju-sea) 65%, var(--jeju-forest));
+}
+.tone-forest .myth-art {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(169, 215, 243, .25), transparent 55%),
+    linear-gradient(155deg, var(--jeju-sea), var(--jeju-forest) 75%, #1d3b32);
+}
+.tone-sky .myth-art {
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255, 253, 247, .45), transparent 60%),
+    linear-gradient(155deg, #cfe9f8, var(--jeju-sky) 50%, var(--jeju-sea));
+}
+
+.myth-chapter-pill,
+.myth-scene-pill {
+  position: absolute;
+  top: .65rem;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: .18rem .58rem;
+  border-radius: 999px;
+  z-index: 2;
+}
+.myth-chapter-pill {
+  left: .75rem;
+  background: rgba(31, 61, 53, .82);
+  color: var(--jeju-ivory);
+  backdrop-filter: blur(4px);
+}
+.myth-scene-pill {
+  right: .75rem;
+  background: rgba(255, 253, 247, .9);
+  color: var(--jeju-forest);
+}
+
+.myth-art-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: .35rem;
+  background: rgba(255, 253, 247, .92);
+  border-radius: .75rem;
+  box-shadow: 0 .45rem 1.2rem rgba(24, 48, 41, .22);
+}
+.myth-art img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 9.8rem;
+  object-fit: contain;
+  display: block;
+  border-radius: .4rem;
+}
+.myth-art-symbol {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: rgba(255, 253, 247, .24);
+  border: 1px solid rgba(255, 253, 247, .55);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.1rem;
+  color: var(--jeju-forest);
+}
+
+.myth-body {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  padding: 1.15rem 1.2rem 1.3rem;
+  flex-grow: 1;
+}
+.myth-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem;
+}
+.myth-genre-tag {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+  background: var(--jeju-mist);
+  padding: .14rem .55rem;
+  border-radius: 999px;
+}
+.myth-title { font-size: 1.35rem; font-weight: 700; color: var(--jeju-forest); }
+.myth-subtitle {
+  font-size: .88rem;
+  color: var(--jeju-basalt);
+  line-height: 1.5;
+}
+.myth-place {
+  font-size: .84rem;
+  font-weight: 600;
+  color: var(--jeju-forest);
+  background: var(--jeju-paper);
+  padding: .35rem .65rem;
+  border-radius: .6rem;
+  margin-top: .2rem;
+}
+.myth-note { font-size: .78rem; color: #6b7377; margin-top: auto; padding-top: .25rem; }
+
+.stage-place-indicator {
+  font-size: .86rem;
+  color: var(--jeju-forest);
+  background: var(--jeju-mist);
+  border: 1px solid var(--jeju-line);
+  padding: .35rem .85rem;
+  border-radius: 999px;
+}
 
 .story-empty {
   padding: 1.25rem; border-radius: var(--bs-border-radius); background: var(--jeju-mist);
   border: 1px dashed var(--jeju-sea); color: var(--jeju-forest);
 }
 
-/* ── 이야기 영역 ───────────────────────────────── */
-.story-panel { display: grid; gap: 0; overflow: hidden; }
-@media (min-width: 768px) { .story-panel { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
-.story-figure { background: var(--jeju-mist); display: flex; align-items: center; justify-content: center; min-height: 12rem; }
-.story-figure img { display: block; width: 100%; height: auto; }
-.story-figure-empty { display: flex; flex-direction: column; align-items: center; gap: .4rem; color: var(--jeju-sea); padding: 2rem; }
-.story-figure-empty .bi { font-size: 2rem; }
-.story-copy { padding: 1.5rem; }
-.story-caption { font-size: .8rem; color: var(--jeju-sea); font-weight: 700; }
-.story-text { white-space: pre-line; }
-.source-credit { margin: 1rem 0 0; font-size: .78rem; color: #6b7377; }
-.myth-art img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-.story-figure img { width: auto; max-width: 100%; max-height: 32rem; object-fit: contain; }
+/* ── 이야기 영역 (StoryPanel: 펼침면 그림책 + 장소 브리지) ─── */
+.story-panel {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(47, 93, 80, .22);
+  box-shadow: var(--jeju-shadow-lg);
+}
+@media (min-width: 992px) {
+  .story-panel {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.1fr);
+  }
+}
+
+.story-figure {
+  background:
+    radial-gradient(circle at 50% 15%, rgba(169, 215, 243, .38), transparent 70%),
+    linear-gradient(180deg, var(--jeju-mist) 0%, var(--jeju-paper) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.35rem;
+  border-bottom: 1px solid var(--jeju-line);
+}
+@media (min-width: 992px) {
+  .story-figure {
+    padding: 1.75rem;
+    border-bottom: 0;
+    border-right: 1px solid var(--jeju-line);
+  }
+}
+
+.story-figure-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .85rem;
+}
+.story-plate-badge {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--jeju-forest);
+  background: rgba(255, 253, 247, .9);
+  border: 1px solid var(--jeju-line);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+}
+.story-plate-ratio {
+  font-size: .74rem;
+  color: #5b6468;
+}
+
+.story-figure-mat {
+  background: var(--jeju-ivory);
+  border: 1px solid rgba(47, 93, 80, .18);
+  border-radius: 1rem;
+  padding: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20rem;
+  box-shadow: inset 0 0 0 4px var(--jeju-paper), 0 .6rem 1.5rem rgba(47, 93, 80, .08);
+}
+.story-figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 31rem;
+  height: auto;
+  object-fit: contain;
+  border-radius: .5rem;
+}
+.story-figure-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  color: var(--jeju-sea);
+  padding: 2.25rem 1.5rem;
+  max-width: 24rem;
+}
+.story-figure-emblem {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  background: var(--jeju-mist);
+  color: var(--jeju-forest);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+}
+
+.story-plate-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: .55rem;
+  margin-top: .95rem;
+}
+.story-plate-tab {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  border-radius: .75rem;
+  border: 1px solid var(--jeju-line);
+  background: rgba(255, 253, 247, .85);
+  color: var(--jeju-basalt);
+  text-align: left;
+  font-size: .8rem;
+  transition: background .18s, border-color .18s, color .18s;
+}
+.story-plate-tab:hover {
+  background: #fff;
+  border-color: var(--jeju-sea);
+}
+.story-plate-tab.is-active {
+  background: var(--jeju-forest);
+  border-color: var(--jeju-forest);
+  color: #fff;
+}
+.story-plate-tab-num {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: .75rem;
+  opacity: .85;
+}
+.story-plate-tab-label {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.story-copy {
+  padding: 1.6rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--jeju-ivory);
+}
+@media (min-width: 992px) {
+  .story-copy { padding: 2.1rem 2.25rem; }
+}
+
+.story-chapter-tag {
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--jeju-forest);
+  background: var(--jeju-paper);
+  border: 1px solid var(--jeju-line);
+  padding: .15rem .6rem;
+  border-radius: 999px;
+}
+.story-caption { font-size: .82rem; color: var(--jeju-sea); font-weight: 700; }
+.story-heading { font-size: clamp(1.45rem, 2.2vw, 1.85rem); font-weight: 700; }
+.story-subheading { font-size: .94rem; color: #5b6468; }
+
+.story-narrative-box {
+  background: #fff;
+  border: 1px solid var(--jeju-line);
+  border-left: 4px solid var(--jeju-forest);
+  border-radius: .9rem;
+  padding: 1.15rem 1.25rem;
+  box-shadow: 0 .35rem 1rem rgba(47, 93, 80, .05);
+}
+.story-narrative-label {
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+  margin-bottom: .45rem;
+}
+.story-text {
+  white-space: pre-line;
+  font-size: 1.03rem;
+  line-height: 1.9;
+  color: var(--jeju-basalt);
+}
+
+/* 이야기 패널 내부 장소·탐험 브리지 카드 */
+.story-place-bridge {
+  background: linear-gradient(160deg, var(--jeju-mist), #f4f9fb);
+  border: 1px solid rgba(79, 163, 183, .35);
+  border-radius: 1rem;
+  padding: 1.1rem 1.2rem;
+}
+.story-place-bridge-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: .5rem;
+  margin-bottom: .45rem;
+}
+.story-place-eyebrow {
+  display: block;
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+}
+.story-place-title {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--jeju-forest);
+}
+.story-region-pill {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--jeju-forest);
+  background: rgba(255, 253, 247, .9);
+  border: 1px solid var(--jeju-line);
+  padding: .18rem .6rem;
+  border-radius: 999px;
+}
+.story-place-desc {
+  font-size: .88rem;
+  line-height: 1.65;
+  color: var(--jeju-basalt);
+}
+.story-place-evidence {
+  color: var(--jeju-forest);
+  background: rgba(255, 253, 247, .75);
+  padding: .45rem .7rem;
+  border-radius: .6rem;
+  border: 1px dashed rgba(47, 93, 80, .25);
+}
+.story-place-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.source-credit { margin: 1.1rem 0 0; font-size: .78rem; color: #5b6468; }
+
+/* 하단 3단계 탐험 여정 스트립 */
+.journey-step-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.35rem 1.4rem;
+  border-radius: 1.15rem;
+  background: #fff;
+  border: 1px solid var(--jeju-line);
+  box-shadow: var(--jeju-shadow);
+}
+.journey-step-card.is-highlight {
+  background: linear-gradient(160deg, #fffdf7 0%, #f3f9fc 100%);
+  border-color: rgba(79, 163, 183, .45);
+}
+.journey-step-badge {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--jeju-sea);
+  background: var(--jeju-mist);
+  padding: .2rem .6rem;
+  border-radius: 999px;
+}
 
 /* ── 장면 전환·가벼운 애니메이션 ───────────────── */
 @keyframes scene-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-@keyframes scene-zoom { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
-.story-figure img { animation: scene-zoom .6s ease-out; }
+@keyframes scene-zoom { from { opacity: 0; transform: scale(1.035); } to { opacity: 1; transform: none; } }
+.story-figure img { animation: scene-zoom .55s ease-out; }
 .story-copy { animation: scene-fade .45s ease-out; }
 .myth-card:active { transform: scale(.985); }
 .myth-card.is-selected .myth-title { color: var(--jeju-sea); }
 
-.scene-nav { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1.25rem; }
+.scene-nav { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1.15rem; }
 .scene-dots { display: inline-flex; gap: .5rem; }
 .scene-dot { width: .7rem; height: .7rem; padding: 0; border-radius: 50%; border: 1px solid var(--jeju-sea); background: transparent; transition: background .2s, transform .2s; }
 .scene-dot.is-active { background: var(--jeju-forest); border-color: var(--jeju-forest); transform: scale(1.25); }
