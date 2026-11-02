@@ -4,7 +4,6 @@ import { NAV_ITEMS } from '../router'
 import { useAppStore } from '../store/useAppStore'
 import PixelBackdrop from '../components/PixelBackdrop'
 import MotionToggle from '../components/MotionToggle'
-import PixelSeaStrip from '../components/PixelSeaStrip'
 
 export default function RootLayout() {
   const toasts = useAppStore((s) => s.toasts)
@@ -40,8 +39,6 @@ export default function RootLayout() {
           <Outlet />   {/* ← 여기에 주소에 맞는 페이지가 들어갑니다 */}
         </Container>
       </main>
-
-      <PixelSeaStrip />
 
       <footer className="py-3 jeju-footer">
         <Container className="small">

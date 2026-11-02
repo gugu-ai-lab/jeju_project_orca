@@ -178,23 +178,17 @@ body { background: #cfe9f8; }
 .jeju-footer .container { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; justify-content: space-between; }
 
 /* ── 아래쪽 바다·섬·돛단배 ── */
-.px-sea { position: absolute; left: 0; bottom: 0; width: 100%; height: calc(40px * var(--cs)); background-repeat: repeat-x; background-size: calc(80px * var(--cs)) calc(40px * var(--cs)); image-rendering: pixelated; }
+.px-sea { position: absolute; left: 0; bottom: 0; width: 100%; height: calc(36px * var(--cs)); background-repeat: repeat-x; background-size: calc(80px * var(--cs)) calc(40px * var(--cs)); image-rendering: pixelated; }
 .px-sea-waves { animation: px-waves 18s linear infinite, px-swell 4s steps(2, jump-none) infinite alternate; }
 .px-sea-waves2 { animation: px-waves-rev 26s linear infinite, px-swell 5.5s steps(2, jump-none) infinite alternate-reverse; opacity: .85; }
 @keyframes px-waves { from { background-position-x: 0; } to { background-position-x: calc(80px * var(--cs)); } }
 @keyframes px-waves-rev { from { background-position-x: calc(80px * var(--cs)); } to { background-position-x: 0; } }
 @keyframes px-swell { from { transform: translateY(0); } to { transform: translateY(calc(var(--cs) * 1px)); } }
 .px-island { position: absolute; image-rendering: pixelated; animation: px-bob 5s steps(2, jump-none) infinite alternate; }
-.px-island-big { right: 5%; bottom: calc(10px * var(--cs)); width: calc(72px * var(--cs)); height: calc(32px * var(--cs)); }
-.px-island-small { left: 6%; bottom: calc(14px * var(--cs)); width: calc(40px * var(--cs)); height: calc(28px * var(--cs)); animation-duration: 6.5s; animation-delay: -2s; }
+.px-island-big { right: 1%; bottom: calc(10px * var(--cs)); width: calc(72px * var(--cs)); height: calc(32px * var(--cs)); }
+.px-island-small { left: 1%; bottom: calc(14px * var(--cs)); width: calc(40px * var(--cs)); height: calc(28px * var(--cs)); animation-duration: 6.5s; animation-delay: -2s; }
 @keyframes px-bob { from { transform: translateY(0); } to { transform: translateY(calc(var(--cs) * -1px)); } }
 .px-boat { position: absolute; bottom: calc(7px * var(--cs)); left: -60px; width: calc(14px * var(--cs)); height: calc(8px * var(--cs)); image-rendering: pixelated;
   animation: px-sail 110s linear infinite, px-bob 3s steps(2, jump-none) infinite alternate; }
 @keyframes px-sail { from { left: -10%; } to { left: 110%; } }
 @media (max-width: 575.98px) { .px-island-big { right: -6%; } .px-island-small { display: none; } }
-
-/* 페이지 끝 바다 풍경 띠: 고정 배경이 아니라 문서 흐름 안에 있어 어느 페이지에서나 끝까지 내리면 온전히 보인다 */
-.px-seastrip { --cs: 4; position: relative; z-index: 1; height: calc(58px * var(--cs)); margin-top: 1.5rem; overflow: hidden; pointer-events: none; }
-.px-seastrip .px-sea { height: calc(36px * var(--cs)); }
-.px-seastrip .px-boat { bottom: calc(6px * var(--cs)); }
-@media (max-width: 575.98px) { .px-seastrip { --cs: 3; } .px-seastrip .px-island-big { right: -4%; } .px-seastrip .px-island-small { display: block; left: 2%; } }
