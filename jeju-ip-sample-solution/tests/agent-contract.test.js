@@ -48,6 +48,17 @@ test('empty and failed tools retain sources; ungrounded final text is replaced',
   assert.doesNotMatch(JSON.stringify(result), /private upstream|줄거리를 만들어/)
 })
 
+test('all empty tool results produce a short friendly answer without fabricated details', async () => {
+  let turn = 0
+  const result = await runAgent({ message: '에펠탑 제주', runTool: async () => ({ items: [], count: 0, complete: true }), createResponse: async () => {
+    if (turn++ === 0) return { output: [call('search_locations', { keyword: '에펠탑' }, 'a'), call('search_tour_places', { keyword: '에펠탑 제주' }, 'b')] }
+    return final('자료가 있다고 가정한 잘못된 답변')
+  } })
+  assert.equal(result.answer, '질문하신 정보를 찾지 못했어요. 다시 검색해 주세요.')
+  assert.equal(result.answerOrigin, 'safe_fallback')
+  assert.deepEqual(result.steps.map(step => step.outcome), ['empty', 'empty'])
+})
+
 test('bounded payload counts and cached usage are accurate', async () => {
   let turn = 0
   const result = await runAgent({ message: '자료', runTool: async () => ({ items: Array.from({ length: 3 }, () => ({ title: '가'.repeat(500), description: '나'.repeat(900), publisher: '다'.repeat(500), address: '라'.repeat(500), id: '마'.repeat(500), copyright: '바'.repeat(500) })), count: 10, complete: false }), createResponse: async request => {

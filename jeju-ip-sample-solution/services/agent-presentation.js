@@ -7,5 +7,8 @@ export function presentToolStep(step, index = 0) {
   }
 }
 export function presentAgentMessage(message) {
+  const allEmpty = message.steps?.length > 0 && message.steps.every(step =>
+    (step.outcome || (step.status === 'error' ? 'error' : step.count === 0 ? 'empty' : 'success')) === 'empty')
+  if (allEmpty) return { ...message, text: '질문하신 정보를 찾지 못했어요. 다시 검색해 주세요.', steps: [] }
   return { ...message, steps: message.steps?.map(presentToolStep) }
 }

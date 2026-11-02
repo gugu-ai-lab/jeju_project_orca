@@ -55,6 +55,7 @@ function notices(steps) {
   }))
 }
 function safeNoDataAnswer(steps) {
+  if (steps.length && steps.every(s => s.outcome === 'empty')) return '질문하신 정보를 찾지 못했어요. 다시 검색해 주세요.'
   const empty = steps.filter(s => s.outcome === 'empty').map(s => s.source)
   const failed = steps.filter(s => s.outcome === 'error').map(s => s.source)
   return [
