@@ -12,6 +12,7 @@ export default function Home() {
     return { ...m, scenes, thumb: scenes?.[0]?.image, source: scenes ? MYTH_SOURCE : undefined, preview: !scenes }
   })
   const [selectedId, setSelectedId] = useState(myths[0].id)
+  const [sceneIndex, setSceneIndex] = useState(0)
   const selected = myths.find((m) => m.id === selectedId)
 
   return (
@@ -27,14 +28,15 @@ export default function Home() {
         <Row className="g-3">
           {myths.map((m) => (
             <Col key={m.id} xs={12} md={4}>
-              <MythCard myth={m} selected={m.id === selectedId} onSelect={setSelectedId} />
+              <MythCard myth={m} selected={m.id === selectedId} onSelect={(id) => { setSelectedId(id); setSceneIndex(0) }} />
             </Col>
           ))}
         </Row>
       </section>
 
       <section className="mt-4" aria-live="polite" aria-label="선택한 이야기">
-        <StoryPanel title={selected.title} scene={selected.scenes?.[0]} source={selected.source} preview={selected.preview} />
+        <StoryPanel title={selected.title} scene={selected.scenes?.[sceneIndex]} source={selected.source} preview={selected.preview}
+          sceneIndex={sceneIndex} sceneCount={selected.scenes?.length ?? 0} onSceneChange={setSceneIndex} />
       </section>
     </>
   )

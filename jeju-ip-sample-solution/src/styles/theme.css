@@ -138,3 +138,16 @@ h1, h2, h3, .font-myth {
 .source-credit { margin: 1rem 0 0; font-size: .78rem; color: #6b7377; }
 .myth-art img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 .story-figure img { width: auto; max-width: 100%; max-height: 32rem; object-fit: contain; }
+
+/* ── 장면 전환·가벼운 애니메이션 ───────────────── */
+@keyframes scene-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes scene-zoom { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+.story-figure img { animation: scene-zoom .6s ease-out; }
+.story-copy { animation: scene-fade .45s ease-out; }
+.myth-card:active { transform: scale(.985); }
+.myth-card.is-selected .myth-title { color: var(--jeju-sea); }
+
+.scene-nav { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1.25rem; }
+.scene-dots { display: inline-flex; gap: .5rem; }
+.scene-dot { width: .7rem; height: .7rem; padding: 0; border-radius: 50%; border: 1px solid var(--jeju-sea); background: transparent; transition: background .2s, transform .2s; }
+.scene-dot.is-active { background: var(--jeju-forest); border-color: var(--jeju-forest); transform: scale(1.25); }
