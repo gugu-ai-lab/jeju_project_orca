@@ -6,7 +6,6 @@ import { Col, Row } from 'react-bootstrap'
 import JejuMythExplorerMap from '../components/JejuMythExplorerMap'
 import MythCard from '../components/MythCard'
 import StoryPanel from '../components/StoryPanel'
-import MythQuizPuzzleSection from '../components/puzzle/MythQuizPuzzleSection'
 import mapPinsData from '../data/jejuMapPins.json'
 import { getMythQuizPuzzle } from '../data/mythQuizPuzzles'
 import { STORY_CATALOG, HOME_STORIES, VERIFIED_PLACE_COUNT } from '../data/storyCatalog'
@@ -30,18 +29,6 @@ export default function Home() {
 
   function handleJumpToStory() {
     document.getElementById('story-reader-section')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  function handleJumpToQuiz() {
-    if (!hasPuzzleForSelected) {
-      setSelectedId('seolmundae')
-      setSceneIndex(0)
-      setTimeout(() => {
-        document.getElementById('myth-quiz-puzzle')?.scrollIntoView({ behavior: 'smooth' })
-      }, 80)
-      return
-    }
-    document.getElementById('myth-quiz-puzzle')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -116,14 +103,13 @@ export default function Home() {
               이야기 읽기
             </button>
 
-            <button
-              type="button"
+            <Link
+              to={`/explore/${hasPuzzleForSelected ? selected.id : 'seolmundae'}`}
               className="btn btn-outline-sea btn-round spot-action-btn"
-              onClick={handleJumpToQuiz}
             >
               <i className="bi bi-puzzle me-1" />
               {hasPuzzleForSelected ? '퀴즈 풀기 (3조각 퍼즐)' : '설문대할망 퀴즈 풀기'}
-            </button>
+            </Link>
 
             <Link
               to="/agent"
@@ -213,20 +199,10 @@ export default function Home() {
           onSceneChange={setSceneIndex}
           placeBridge={selected.placeBridge}
           preferPastelArt
-          hasQuizPuzzle={hasPuzzleForSelected}
         />
       </section>
 
       <StoryFavoriteButton storyId={selected.id} storyTitle={selected.title} />
-
-      {/* 5. 제주 신화 퀴즈로 그림 퍼즐 완성하기 (설문대할망 3문제·3조각 보존) */}
-      {hasPuzzleForSelected && (
-        <MythQuizPuzzleSection
-          key={selected.id}
-          storyId={selected.id}
-          storyTitle={selected.title}
-        />
-      )}
     </div>
   )
 }

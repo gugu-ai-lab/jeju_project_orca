@@ -50,6 +50,9 @@ try {
   await page.locator('.jeju-map-pin.is-selected').waitFor()
   record('SVG 지도와 장소 선택', { passed: true })
   await page.getByRole('button', { name: /돌문화공원.*신화 선택/ }).click()
+  assert.equal(await page.locator('#myth-quiz-puzzle').count(), 0)
+  await page.getByRole('link', { name: /퀴즈 풀기/ }).click()
+  assert.equal(new URL(page.url()).pathname, '/explore/seolmundae')
   const config = getMythQuizPuzzle('seolmundae')
   for (const i of [1, 0, 2]) {
     const q = config.questions[i]

@@ -80,6 +80,8 @@ try {
   await failed.goto(origin)
   await failed.getByText('예보를 불러오지 못했어요. 이야기와 퀴즈는 계속 즐길 수 있어요.', { exact: true }).waitFor()
   await failed.getByText('지도를 불러오지 못했어요. 아래 길찾기에서 위치를 확인해 주세요.', { exact: true }).waitFor()
+  assert.equal(await failed.locator('#myth-quiz-puzzle').count(), 0)
+  await failed.getByRole('link', { name: /퀴즈 풀기/ }).click()
   const config = getMythQuizPuzzle('seolmundae')
   for (let i = 0; i < 3; i++) {
     const q = config.questions[i]
