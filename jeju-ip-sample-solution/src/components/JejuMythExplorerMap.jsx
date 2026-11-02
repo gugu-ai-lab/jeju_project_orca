@@ -481,8 +481,7 @@ export default function JejuMythExplorerMap({
               onClick={() => { setFocusOnly(true); handlePinClick(pin) }}
             >
               <span>{pin.emoji}</span>
-              <span>{pin.placeName}</span>
-              <small>({pin.mythTitle})</small>
+              <span>{pin.mythTitle}</span>
             </button>
           )
         })}
