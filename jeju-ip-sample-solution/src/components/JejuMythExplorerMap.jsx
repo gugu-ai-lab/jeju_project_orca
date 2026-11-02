@@ -1,6 +1,7 @@
 import { loadKakaoMaps } from '../lib/kakaoMaps'
 import { useEffect, useRef, useState } from 'react'
 import mapPinsData from '../data/jejuMapPins.json'
+const verifiedPins = mapPinsData.filter(p => p.hasVerifiedLocation && p.illustrationCoords)
 
 /**
  * JejuMythExplorerMap — 2.5D 그림책 스타일 SVG 제주 신화 탐험 지도(기본) + 카카오맵 연동
@@ -33,9 +34,10 @@ export default function JejuMythExplorerMap({
   }, [onSelectMyth])
 
   // JSON에서 실제 위치가 검증된 핀(6곳)만 필터링
-  const verifiedPins = mapPinsData.filter((p) => p.hasVerifiedLocation && p.illustrationCoords)
   const selectedPin = mapPinsData.find((p) => p.mythId === selectedMythId) || verifiedPins[0]
   const isGlobalMythSelected = selectedPin && !selectedPin.hasVerifiedLocation
+  const selectedPinRef = useRef(selectedPin)
+  useEffect(() => { selectedPinRef.current = selectedPin }, [selectedPin])
 
   function handlePinClick(pin) {
     setBouncingPinId(pin.pinId)
@@ -55,7 +57,7 @@ export default function JejuMythExplorerMap({
 
   // 실제 위치 및 길 찾기용 카카오맵 SDK 로드 (realGeoCoords 사용)
   useEffect(() => {
-    if (mapMode !== 'kakao' || !kakaoKey) return
+    if (mapMode !== 'kakao' || !kakaoKey || isGlobalMythSelected) return
 
     let cancelled = false
 
@@ -69,8 +71,8 @@ export default function JejuMythExplorerMap({
       window.kakao.maps.load(() => {
         if (cancelled || !mapContainerRef.current) return
         try {
-          const centerLat = selectedPin?.realGeoCoords?.lat || 33.3846
-          const centerLng = selectedPin?.realGeoCoords?.lng || 126.5535
+          const centerLat = selectedPinRef.current?.realGeoCoords?.lat || 33.3846
+          const centerLng = selectedPinRef.current?.realGeoCoords?.lng || 126.5535
           const map = new window.kakao.maps.Map(mapContainerRef.current, {
             center: new window.kakao.maps.LatLng(centerLat, centerLng),
             level: 10,
@@ -108,8 +110,11 @@ export default function JejuMythExplorerMap({
 
     return () => {
       cancelled = true
+      markersRef.current.forEach(marker => marker.setMap(null))
+      markersRef.current = []
+      kakaoMapInstanceRef.current = null
     }
-  }, [mapMode, kakaoKey])
+  }, [mapMode, kakaoKey, isGlobalMythSelected])
 
   // 선택한 핀이 바뀌면 카카오맵 중심 이동
   useEffect(() => {
@@ -195,9 +200,9 @@ export default function JejuMythExplorerMap({
             {/* 카카오맵 모드를 선택했으나 API 키가 없거나 로드 전인 경우 안내 배너 */}
             {mapMode === 'kakao' && kakaoStatus === 'no-key' && (
               <div className="map-fallback-notice" role="status">
-                <strong>💡 카카오맵 API 키 미설정 안내</strong>
+                <strong>💡 실제 지도는 잠시 준비 중이에요</strong>
                 <span>
-                  현재 환경에 <code>VITE_KAKAO_MAP_KEY</code>가 없어 2.5D 그림책 지도로 표시 중입니다. 상단 <strong>‘실제 위치·길찾기’</strong> 버튼으로 카카오맵 실제 좌표를 바로 열 수 있어요!
+                  그림책 지도는 계속 이용할 수 있어요. 길찾기를 누르면 실제 위치가 열려요.
                 </span>
               </div>
             )}
@@ -205,7 +210,7 @@ export default function JejuMythExplorerMap({
               <div className="map-fallback-notice" role="status">
                 <strong>💡 카카오맵 연결 안내</strong>
                 <span>
-                  카카오맵 SDK 도메인 확인이 필요하여 2.5D 그림책 지도로 대체 표시 중입니다.
+                  실제 지도를 불러오지 못해 그림책 지도를 보여드려요. 이야기와 길찾기는 계속 이용할 수 있어요.
                 </span>
               </div>
             )}

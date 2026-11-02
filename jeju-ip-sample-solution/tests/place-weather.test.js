@@ -35,3 +35,18 @@ test('each selected place sends its own grid and returns forecast issue metadata
 test('global or unknown myths make no weather request', async () => {
   for(const id of ['jacheongbi','unknown']) await assert.rejects(getPlaceWeather(id,{fetchImpl:()=>{throw new Error('network must not run')}}),/LOCATION_UNAVAILABLE/)
 })
+
+test('forecast cache refreshes at hour and publication changes', async () => {
+  const oldFetch=globalThis.fetch, oldKey=process.env.DATA_GO_KR_KEY
+  process.env.DATA_GO_KR_KEY='test-only'
+  let requests=0
+  globalThis.fetch=async()=>{requests++;return Response.json({response:{header:{resultCode:'00'},body:{items:{item:[{fcstDate:'20261102',fcstTime:'2100',category:'TMP',fcstValue:'18'}]}}}})}
+  try {
+    await getPlaceWeather('samsinin',{now:Date.parse('2026-11-02T05:59:00Z')})
+    await getPlaceWeather('samsinin',{now:Date.parse('2026-11-02T05:59:30Z')});assert.equal(requests,1)
+    await getPlaceWeather('samsinin',{now:Date.parse('2026-11-02T06:00:00Z')});assert.equal(requests,2)
+    await getPlaceWeather('samsinin',{now:Date.parse('2026-11-02T08:14:00Z')});assert.equal(requests,3)
+    const fresh=await getPlaceWeather('samsinin',{now:Date.parse('2026-11-02T08:15:00Z')})
+    assert.equal(requests,4);assert.equal(fresh.baseTime,'1700')
+  } finally {globalThis.fetch=oldFetch;if(oldKey===undefined)delete process.env.DATA_GO_KR_KEY;else process.env.DATA_GO_KR_KEY=oldKey}
+})
