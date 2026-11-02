@@ -6,7 +6,10 @@ export function favoriteInput(input) {
   return { storyId: `${input.source}:${String(input.id).trim()}`, storyTitle: input.title }
 }
 export function createFavoritesSlice(set, get, service) {
-  const failure = error => set({ favError: error instanceof FavoritesError ? error.message : '즐겨찾기 요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.' })
+  const failure = error => {
+    const message = error instanceof FavoritesError ? error.message : '즐겨찾기 요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.'
+    set({ favError: message }); get().toast(message, 'warning')
+  }
   return {
     favorites: [], favLoading: false, favError: null,
     loadFavorites: async () => {
