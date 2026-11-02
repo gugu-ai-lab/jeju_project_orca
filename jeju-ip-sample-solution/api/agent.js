@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   } catch (error) {
     return res.status(error.status === 429 ? 429 : 502).json({
       error: error.status === 429 ? 'AI 사용량 또는 잔액 한도를 확인해 주세요. 자동 재시도하지 않습니다.' : 'AI 응답을 받지 못했습니다. 설정을 확인하거나 잠시 후 다시 시도해 주세요.',
-      steps,
+      steps, usage: error.agentUsage, modelCalls: error.agentModelCalls, usageIncomplete: true,
     })
   }
 }

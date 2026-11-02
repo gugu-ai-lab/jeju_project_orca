@@ -24,9 +24,16 @@ tools.push({
   input_schema: { type: 'object', properties: { keyword: { type: 'string', maxLength: 80 } }, required: ['keyword'], additionalProperties: false },
 })
 definitions.push(['search_tour_places', '한국관광공사 TourAPI'])
+const sourceUrls = {
+  search_myths: 'https://www.data.go.kr/data/15058603/openapi.do',
+  search_culture: 'https://www.data.go.kr/data/15109587/fileData.do',
+  search_locations: 'https://www.data.go.kr/data/15109570/fileData.do',
+  get_weather: 'https://www.data.go.kr/data/15084084/openapi.do',
+  search_tour_places: 'https://www.data.go.kr/data/15101578/openapi.do',
+}
 export function catalog() {
   return definitions.map(([name, source]) => ({
-    name, source, configured: name === 'search_myths' || Boolean(process.env.DATA_GO_KR_KEY?.trim()),
+    name, source, sourceUrl: sourceUrls[name], configured: name === 'search_myths' || Boolean(process.env.DATA_GO_KR_KEY?.trim()),
   }))
 }
 export function validateInput(input, name = 'search_myths') {
