@@ -61,49 +61,46 @@ export default function JejuMythExplorerMap({
 
     let cancelled = false
 
-    function initKakaoMap() {
+    function initKakaoMap(maps) {
       if (cancelled || !mapContainerRef.current) return
       if (!window.kakao || !window.kakao.maps) {
         setKakaoStatus('error')
         return
       }
 
-      window.kakao.maps.load(() => {
-        if (cancelled || !mapContainerRef.current) return
-        try {
-          const centerLat = selectedPinRef.current?.realGeoCoords?.lat || 33.3846
-          const centerLng = selectedPinRef.current?.realGeoCoords?.lng || 126.5535
-          const map = new window.kakao.maps.Map(mapContainerRef.current, {
-            center: new window.kakao.maps.LatLng(centerLat, centerLng),
-            level: 10,
+      try {
+        const centerLat = selectedPinRef.current?.realGeoCoords?.lat || 33.3846
+        const centerLng = selectedPinRef.current?.realGeoCoords?.lng || 126.5535
+        const map = new maps.Map(mapContainerRef.current, {
+          center: new maps.LatLng(centerLat, centerLng),
+          level: 10,
+        })
+        kakaoMapInstanceRef.current = map
+
+        markersRef.current.forEach((m) => m.setMap(null))
+        markersRef.current = []
+
+        verifiedPins.forEach((pin) => {
+          if (!pin.realGeoCoords) return
+          const pos = new maps.LatLng(
+            pin.realGeoCoords.lat,
+            pin.realGeoCoords.lng
+          )
+          const marker = new maps.Marker({
+            position: pos,
+            title: `${pin.mythTitle} · ${pin.placeName}`,
           })
-          kakaoMapInstanceRef.current = map
-
-          markersRef.current.forEach((m) => m.setMap(null))
-          markersRef.current = []
-
-          verifiedPins.forEach((pin) => {
-            if (!pin.realGeoCoords) return
-            const pos = new window.kakao.maps.LatLng(
-              pin.realGeoCoords.lat,
-              pin.realGeoCoords.lng
-            )
-            const marker = new window.kakao.maps.Marker({
-              position: pos,
-              title: `${pin.mythTitle} · ${pin.placeName}`,
-            })
-            marker.setMap(map)
-            window.kakao.maps.event.addListener(marker, 'click', () => {
-              onSelectRef.current?.(pin.mythId)
-            })
-            markersRef.current.push(marker)
+          marker.setMap(map)
+          maps.event.addListener(marker, 'click', () => {
+            onSelectRef.current?.(pin.mythId)
           })
+          markersRef.current.push(marker)
+        })
 
-          setKakaoStatus('ready')
-        } catch {
-          setKakaoStatus('error')
-        }
-      })
+        setKakaoStatus('ready')
+      } catch {
+        setKakaoStatus('error')
+      }
     }
 
     loadKakaoMaps(kakaoKey).then(initKakaoMap).catch(() => { if (!cancelled) setKakaoStatus('error') })
@@ -632,7 +629,7 @@ export default function JejuMythExplorerMap({
         )}
 
         {mapMode === 'kakao' && kakaoStatus === 'loading' && (
-          <div ref={mapContainerRef} className="kakao-map-canvas is-loading" />
+          <p className="small text-secondary" role="status">실제 지도를 준비하고 있어요.</p>
         )}
       </div>
 
