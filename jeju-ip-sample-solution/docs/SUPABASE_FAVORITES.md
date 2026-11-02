@@ -5,7 +5,7 @@
 - 실제 Publishable key와 익명 사용자 JWT로 검증했다. Secret/service_role 키를 사용하지 않는다.
 - DB 스키마·RLS 정책을 추가/변경하지 않았다. 기존 수업 DB에는 접속하지 않았다.
 - 기존 src/ 프론트엔드, Store, 라우트, Supabase 클라이언트 파일은 수정하지 않았다.
-- 따라서 현재 기존 화면의 favorites 예제는 그대로다. Claude가 아래 새 함수를 연결해야 제품 화면에서도 새 테이블을 사용한다.
+- 따라서 현재 기존 화면의 favorites 예제는 그대로다. Gemini 4 Argon이 아래 새 함수를 연결해야 제품 화면에서도 새 테이블을 사용한다.
 
 ## 파일
 - services/supabase-session.js: 새 프로젝트 URL/Publishable key 검사, 세션 생성·재사용, 요청 대상 제한.
@@ -19,7 +19,7 @@ VITE_SUPABASE_ANON_KEY 값은 Publishable key만 허용한다. 키 값은 코드
 허용 프로젝트는 https://bhmffgtvdtfpneotjrty.supabase.co로 고정한다.
 실행 중인 개발 서버에서 환경변수가 바뀌면 재시작한다.
 
-## Claude 화면에서 사용
+## Gemini 화면에서 사용
 아래 경로는 src/pages 또는 src/store 안의 파일을 기준으로 한다.
 
 ~~~js
@@ -130,3 +130,6 @@ node --use-system-ca scripts/test-favorites-live.mjs
 이 명령은 실행할 때마다 새 프로젝트에 익명 사용자 2명을 만들고 테스트 행을 저장·조회·삭제한 뒤 정리한다.
 사용자 ID/키/토큰을 출력하지 않는다. DB 마이그레이션이나 관리자 API는 호출하지 않는다.
 실제 브라우저 새로고침 검증은 별도로 수행한 결과이며, Node 스크립트의 SDK 인스턴스 재생성 테스트와 구분한다.
+
+## 프론트엔드 통합 대기
+Gemini 4 Argon의 gugu-ai-lab/제미나이 브랜치에서 디자인 개선과 테스트를 마친 커밋 번호가 전달된 뒤 Codex가 통합한다. 지금은 다른 브랜치를 병합하거나 기존 프론트엔드 코드를 수정하지 않는다. Claude의 기존 코드는 보존한다.
