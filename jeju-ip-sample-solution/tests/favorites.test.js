@@ -14,6 +14,7 @@ function fakeClient(results) {
     const builder={}
     for(const method of ['insert','select','eq','order','delete']) builder[method]=(...args)=>{calls.push({method,args});return builder}
     builder.single=async()=>results.shift()
+    builder.then=(resolve,reject)=>Promise.resolve(results.shift()).then(resolve,reject)
     return builder
   }}
   return {client,calls}
@@ -43,4 +44,21 @@ test('database error message is sanitized',async()=>{
 })
 test('client of another project is rejected',()=>{
   assert.throws(()=>createMythFavorites({supabaseUrl:'https://old-project.supabase.co'}),e=>e.code==='WRONG_PROJECT')
+})
+
+test('list filters by authenticated owner and orders newest first',async()=>{
+  const {client,calls}=fakeClient([{data:[row]}])
+  const result=await createMythFavorites(client).list()
+  assert.equal(result[0].storyId,'story-a')
+  assert.ok(calls.some(c=>c.method==='eq'&&c.args[0]==='user_id'&&c.args[1]==='user-a'))
+  assert.ok(calls.some(c=>c.method==='order'&&c.args[0]==='created_at'&&c.args[1].ascending===false))
+})
+test('empty list is returned only on successful query',async()=>{
+  const empty=fakeClient([{data:[]}]);assert.deepEqual(await createMythFavorites(empty.client).list(),[])
+  const failed=fakeClient([{error:{code:'42501',message:'private data'}}])
+  await assert.rejects(createMythFavorites(failed.client).list(),e=>e.code==='ACCESS_DENIED')
+})
+test('list refuses an unexpected foreign owner in response',async()=>{
+  const {client}=fakeClient([{data:[{...row,user_id:'user-b'}]}])
+  await assert.rejects(createMythFavorites(client).list(),e=>e.code==='ACCESS_DENIED')
 })

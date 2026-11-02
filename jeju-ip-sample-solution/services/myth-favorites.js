@@ -23,6 +23,19 @@ export function createMythFavorites(client) {
   if (client?.supabaseUrl?.replace(/\/$/, '') !== FAVORITES_PROJECT_URL) throw new FavoritesError('WRONG_PROJECT')
   return {
     ensureSession: () => ensureFavoritesSession(client),
+    async list() {
+      const { userId } = await ensureFavoritesSession(client)
+      let result
+      try {
+        result = await client.from(FAVORITES_TABLE).select(FAVORITE_COLUMNS)
+          .eq('user_id', userId).order('created_at', { ascending: false }).order('id', { ascending: false })
+      } catch (error) { throw databaseError(error) }
+      if (result.error) throw databaseError(result.error)
+      const rows = result.data || []
+      if (rows.some(row => row.user_id !== userId)) throw new FavoritesError('ACCESS_DENIED', messages.ACCESS_DENIED)
+      return rows.map(mapRow)
+    },
+
     async save(input) {
       if (!input || Object.keys(input).some(k => !['storyId', 'storyTitle'].includes(k))) throw new FavoritesError('INVALID_STORY', messages.INVALID_STORY)
       const storyId = validStoryId(input.storyId)
