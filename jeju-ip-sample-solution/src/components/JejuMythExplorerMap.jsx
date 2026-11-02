@@ -97,7 +97,6 @@ export default function JejuMythExplorerMap({
                 <g transform="translate(68, 66)" filter="url(#popup-piece-shadow)">
                   <circle cx="0" cy="4" r="26" fill="#A9D7F3" />
                   <circle cx="0" cy="0" r="26" fill="#FFFDF7" stroke="#4FA3B7" strokeWidth="2.5" />
-                  <circle cx="0" cy="0" r="20" fill="none" stroke="#DCEAEF" strokeWidth="1.5" strokeDasharray="3 3" />
                   <polygon points="0,-16 -5,0 5,0" fill="#2F5D50" />
                   <polygon points="0,16 -5,0 5,0" fill="#A9D7F3" />
                   <circle cx="0" cy="0" r="3" fill="#FFFDF7" stroke="#2F5D50" strokeWidth="2" />
@@ -284,17 +283,6 @@ export default function JejuMythExplorerMap({
                 <ellipse cx="408" cy="236" rx="132" ry="56" fill="#A8DDD2" />
                 <ellipse cx="408" cy="232" rx="132" ry="56" fill="#C4EAE2" stroke="#FFFDF7" strokeWidth="1.5" />
               </g>
-
-              {/* 4. 신화 장소를 잇는 귀여운 점선 탐험 길 */}
-              <path
-                d="M 276 132 Q 372 104 468 94 Q 452 166 428 238 Q 540 232 644 226 Q 480 325 252 352 Q 180 325 136 276 Q 198 196 276 132"
-                fill="none"
-                stroke="#4FA3B7"
-                strokeWidth="2.8"
-                strokeDasharray="6 6"
-                strokeLinecap="round"
-                opacity="0.72"
-              />
 
               {/* 5. 제주 자연·문화 팝업 피스 요소 (한라산·백록담·오름·현무암·산방산·성산일출봉) */}
               <g className="svg-jeju-landmarks" aria-hidden="true">
