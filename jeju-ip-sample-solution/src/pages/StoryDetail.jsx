@@ -1,0 +1,31 @@
+import { useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import StoryPanel from '../components/StoryPanel'
+import { STORY_CATALOG } from '../data/storyCatalog'
+import { CATEGORY_LABEL, isVerified } from '../lib/storyFilter'
+
+// 이야기 상세 — /explore/:storyId. 카탈로그에 있는 항목만 보여주고, 없으면 안내한다.
+export default function StoryDetail() {
+  const { storyId } = useParams()
+  const story = STORY_CATALOG.find((s) => s.id === storyId)
+  const [sceneIndex, setSceneIndex] = useState(0)
+
+  return (
+    <>
+      <Link to="/explore" className="btn btn-outline-sea btn-sm mb-3"><i className="bi bi-arrow-left me-1" />이야기 목록</Link>
+      {!story ? (
+        <div className="story-empty"><i className="bi bi-question-circle me-2" />찾을 수 없는 이야기입니다. 목록에서 다시 골라 주세요.</div>
+      ) : (
+        <>
+          <div className="d-flex flex-wrap gap-2 mb-2">
+            <span className="chip">{CATEGORY_LABEL[story.category]}</span>
+            <span className={`chip ${isVerified(story) ? 'chip-ok' : 'chip-wait'}`}>{isVerified(story) ? '출처 확인됨' : '출처 검증 대기'}</span>
+            {story.place && <span className="chip"><i className="bi bi-geo-alt me-1" />{story.place}</span>}
+          </div>
+          <StoryPanel title={story.title} scene={story.scenes[sceneIndex]} source={story.source}
+            sceneIndex={sceneIndex} sceneCount={story.scenes.length} onSceneChange={setSceneIndex} />
+        </>
+      )}
+    </>
+  )
+}
