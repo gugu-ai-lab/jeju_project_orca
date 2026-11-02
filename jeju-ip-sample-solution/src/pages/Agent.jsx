@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Alert, Badge, Button, Card, Form, InputGroup } from 'react-bootstrap'
 import PageHeader from '../components/PageHeader'
-import ToolSteps from '../components/ToolSteps'
 import ChatPanel from '../components/ChatPanel'
 import { presentAgentMessage } from '../../services/agent-presentation'
 import { useAppStore } from '../store/useAppStore'
@@ -65,7 +64,7 @@ export default function Agent() {
         onSend={text => { rememberQuestion(text); sendMessage(text) }}
         notice={status?.available ? '공공데이터를 확인한 뒤 출처와 함께 답합니다.' : '실제 AI 호출은 현재 비활성화되어 있습니다.'} />
     </div>
-    {chatError && <Alert variant="warning" role="alert">{chatError.message}<ToolSteps steps={chatError.steps} /></Alert>}
+    {chatError && <Alert variant="warning" role="alert">{chatError.message}</Alert>}
     <Card><Card.Body>
       <Card.Title>직접 자료 조회</Card.Title>
       <p>OpenAI 키 없이 공공데이터 도구를 직접 조회합니다. AI의 자율 호출과는 별개입니다.</p>
