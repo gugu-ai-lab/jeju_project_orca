@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader'
 import ItemCard from '../components/ItemCard'
 import { Empty, Loading } from '../components/Status'
 import { useAppStore } from '../store/useAppStore'
+import { STORY_CATALOG } from '../data/storyCatalog'
 export default function My() {
   const { favorites, favLoading, favError, loadFavorites, removeFavorite } = useAppStore()
   useEffect(() => { loadFavorites() }, [loadFavorites])
@@ -16,7 +17,7 @@ export default function My() {
       <Row xs={1} sm={2} lg={3} className="g-3">{favorites.map(f => <Col key={f.id}>
         <ItemCard title={f.storyTitle} badge={f.storyId.startsWith('tour:') || f.storyId.startsWith('heritage:') ? '장소' : '이야기'}
           subtitle={new Date(f.createdAt).toLocaleString('ko-KR')} />
-        {!f.storyId.includes(':') && <Link className="btn btn-link btn-sm" to={`/explore/${encodeURIComponent(f.storyId)}`}>이야기 보기</Link>}
+        {STORY_CATALOG.some(story => story.id === f.storyId) && <Link className="btn btn-link btn-sm" to={`/explore/${encodeURIComponent(f.storyId)}`}>이야기 보기</Link>}
         <Button size="sm" variant="outline-secondary" disabled={favLoading} onClick={() => removeFavorite(f.storyId)}>즐겨찾기 삭제</Button>
       </Col>)}</Row>}
   </>
