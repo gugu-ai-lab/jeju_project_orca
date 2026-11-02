@@ -71,7 +71,7 @@ export default function Places() {
             <option value="">전체</option>
             {Object.entries(TYPES).map(([v, label]) => <option key={v} value={v}>{label}</option>)}
           </Form.Select>
-          <Form.Control value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="검색어 (선택)" />
+          <Form.Control value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="검색어를 입력하세요" />
           <Button type="submit" aria-label="검색"><i className="bi bi-search" /></Button>
         </InputGroup>
       </Form>
