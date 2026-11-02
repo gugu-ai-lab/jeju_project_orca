@@ -3,6 +3,17 @@ import assert from 'node:assert/strict'
 import { STORY_CATALOG, HOME_STORIES } from '../src/data/storyCatalog.js'
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
 const origin = process.env.INTEGRATION_PREVIEW_URL || 'http://127.0.0.1:5181'
+async function assertSingleActiveMenu(page, label) {
+  const state = await page.locator('.jeju-nav .nav-link').evaluateAll(links => links.map(link => ({
+    label: link.innerText.trim(), active: link.classList.contains('active'),
+    background: getComputedStyle(link).backgroundColor, color: getComputedStyle(link).color,
+    transition: getComputedStyle(link).transitionDuration,
+  })))
+  assert.deepEqual(state.filter(link => link.active).map(link => link.label), [label])
+  assert.ok(state.every(link => link.transition === '0s'), '메뉴 활성 색상이 겹쳐 보이지 않도록 전환은 즉시 적용')
+  assert.equal(state.find(link => link.active).background, 'rgb(47, 93, 80)')
+  assert.ok(state.filter(link => !link.active).every(link => link.background === 'rgba(0, 0, 0, 0)'))
+}
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true })
 try {
   const page = await browser.newPage()
@@ -17,7 +28,7 @@ try {
   assert.equal(await page.locator('.myth-card').count(), HOME_STORIES.length)
   assert.deepEqual(await page.locator('.myth-title').allTextContents(), HOME_STORIES.map(s => s.title))
   await page.getByRole('heading', { name: '신화전설이야기', exact: true }).waitFor()
-  assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['홈'])
+  await assertSingleActiveMenu(page, '홈')
   await page.getByText(/실제 지도 장소 6곳과 전체 이야기 수는 달라요/).waitFor()
   for (const story of HOME_STORIES) {
     const link = page.getByRole('link', { name: `${story.title} 자세히 보기`, exact: true })
@@ -51,7 +62,7 @@ try {
   assert.equal(new URL(page.url()).pathname, '/explore/jacheongbi')
   await page.locator('.story-heading').getByText('자청비', { exact: true }).waitFor()
   await page.waitForFunction(() => window.scrollY === 0)
-  assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
+  await assertSingleActiveMenu(page, '이야기 탐험')
   assert.equal(await page.locator('.jeju-nav .navbar-brand.active').count(), 0)
 
   for (const story of HOME_STORIES) {
@@ -60,7 +71,7 @@ try {
     assert.equal(new URL(page.url()).pathname, `/explore/${story.id}`)
     await page.locator('.story-heading').getByText(story.title, { exact: true }).waitFor()
     await page.waitForFunction(() => window.scrollY === 0)
-    assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
+    await assertSingleActiveMenu(page, '이야기 탐험')
   }
 
   // 설문대할망은 상세 첫 장면부터 열고, 사용자가 퀴즈 링크를 누를 때만 퍼즐로 이동한다.
@@ -87,7 +98,7 @@ try {
   await page.getByRole('link', { name: /전체 이야기 보기/ }).click()
   assert.equal(new URL(page.url()).pathname, '/explore')
   await page.locator('.story-card').first().waitFor()
-  assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
+  await assertSingleActiveMenu(page, '이야기 탐험')
   assert.deepEqual(await page.locator('.story-card-title').allTextContents(), STORY_CATALOG.map(s => s.title))
   assert.equal(await page.locator('.story-card').count(), 7)
   await page.getByText('전체 7개 중 7개 표시', { exact: true }).waitFor()
@@ -102,7 +113,7 @@ try {
     assert.equal(new URL(page.url()).pathname, `/explore/${story.id}`)
     await page.locator('.story-heading').getByText(story.title, { exact: true }).waitFor()
     await page.waitForFunction(() => window.scrollY === 0)
-    assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
+    await assertSingleActiveMenu(page, '이야기 탐험')
     assert.equal(await page.locator('.story-easy-p').count(), story.scenes[0].studentLines.length)
     await page.getByRole('button', { name: '장면 2', exact: true }).click()
     await page.locator('.story-caption').getByText(story.scenes[1].caption, { exact: true }).waitFor()

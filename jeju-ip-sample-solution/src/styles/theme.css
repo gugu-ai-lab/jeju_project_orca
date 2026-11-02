@@ -72,7 +72,7 @@ h1, h2, h3, h4, .font-myth {
   background: var(--jeju-sea);
   box-shadow: inset 0 0 0 4px var(--jeju-sky);
 }
-.jeju-nav .nav-link { color: var(--jeju-basalt); border-radius: 999px; padding: .4rem .9rem; font-weight: 600; }
+.jeju-nav .nav-link { color: var(--jeju-basalt); border-radius: 999px; padding: .4rem .9rem; font-weight: 600; transition: none; }
 .jeju-nav .nav-link:hover { background: var(--jeju-sky-pastel); }
 .jeju-nav .nav-link.active { background: var(--jeju-forest); color: #fff; }
 .jeju-nav .navbar-toggler { border-color: var(--jeju-sea); }
