@@ -286,3 +286,15 @@ body { background: #cfe9f8; }
 .cart-badge { display: inline-block; min-width: 1.35rem; margin-left: .35rem; padding: 0 .3rem; text-align: center; font-size: .78rem; line-height: 1.35rem; background: #F28C28; color: #2b1a05; border: 2px solid #fffdf7; }
 .cart-toast { position: fixed; top: 4.6rem; right: .9rem; z-index: 1040; display: flex; align-items: center; gap: .25rem; max-width: calc(100vw - 1.8rem); padding: .6rem .8rem; background: #fffdf7; border: var(--px-border); box-shadow: var(--px-shadow); animation: scene-fade .25s ease-out; }
 .btn-close-px { border: 0; background: transparent; color: var(--px-ink); padding: .2rem .4rem; margin-left: .25rem; }
+
+/* ── 도트 3D 지도(three.js) ── */
+.map3d-stage { position: absolute; inset: 0; touch-action: pan-y; cursor: grab; user-select: none; }
+.map3d-stage:active { cursor: grabbing; }
+.map3d-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
+.map3d-controls { position: absolute; left: .5rem; bottom: .5rem; z-index: 7; display: flex; gap: .4rem; flex-wrap: wrap; }
+.map3d-btn, .map-mode-tab { font-family: var(--px-font); font-weight: 700; font-size: .8rem; color: var(--px-ink); background: #fffdf7; border: 3px solid var(--px-ink); padding: .15rem .55rem; box-shadow: 2px 2px 0 var(--px-ink); cursor: pointer; }
+.map3d-btn:disabled { opacity: .5; cursor: not-allowed; }
+.map3d-btn:active, .map-mode-tab:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--px-ink); }
+.map3d-engine { position: absolute; right: .5rem; bottom: .5rem; z-index: 7; font-family: var(--px-font); font-size: .65rem; color: var(--px-ink); background: rgba(255, 253, 247, .85); border: 2px solid var(--px-ink); padding: 0 .35rem; }
+.map-mode-tabs { display: flex; gap: .35rem; }
+.map-mode-tab[aria-pressed="true"], .map-mode-tab.is-active { background: #F28C28; color: #fff; }
