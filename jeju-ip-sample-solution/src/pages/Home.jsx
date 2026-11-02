@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import MythCard from '../components/MythCard'
+import StoryPanel from '../components/StoryPanel'
 import { MYTH_PREVIEW } from '../data/mythPreview'
 
 export default function Home() {
@@ -27,14 +28,8 @@ export default function Home() {
         </Row>
       </section>
 
-      <section className="surface myth-detail mt-4 p-4" aria-live="polite">
-        <span className="preview-badge">예시 데이터 · 미리보기</span>
-        <h3 className="h5 mt-2 mb-1">{selected.title}</h3>
-        <p className="text-secondary mb-3">연결 후보 장소: {selected.place} (설화와 장소의 연결은 출처 확인 전)</p>
-        <div className="story-empty">
-          <i className="bi bi-journal-text me-2" />
-          이야기 본문은 제주신화정보 API 연결과 출처 검증 후 이곳에 표시됩니다.
-        </div>
+      <section className="mt-4" aria-live="polite" aria-label="선택한 이야기">
+        <StoryPanel title={selected.title} scene={selected.scenes?.[0]} source={selected.source} preview={selected.preview} />
       </section>
     </>
   )

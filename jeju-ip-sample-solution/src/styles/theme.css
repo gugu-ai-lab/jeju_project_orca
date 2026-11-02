@@ -124,3 +124,15 @@ h1, h2, h3, .font-myth {
   padding: 1.25rem; border-radius: var(--bs-border-radius); background: var(--jeju-mist);
   border: 1px dashed var(--jeju-sea); color: var(--jeju-forest);
 }
+
+/* ── 이야기 영역 ───────────────────────────────── */
+.story-panel { display: grid; gap: 0; overflow: hidden; }
+@media (min-width: 768px) { .story-panel { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+.story-figure { background: var(--jeju-mist); display: flex; align-items: center; justify-content: center; min-height: 12rem; }
+.story-figure img { display: block; width: 100%; height: auto; }
+.story-figure-empty { display: flex; flex-direction: column; align-items: center; gap: .4rem; color: var(--jeju-sea); padding: 2rem; }
+.story-figure-empty .bi { font-size: 2rem; }
+.story-copy { padding: 1.5rem; }
+.story-caption { font-size: .8rem; color: var(--jeju-sea); font-weight: 700; }
+.story-text { white-space: pre-line; }
+.source-credit { margin: 1rem 0 0; font-size: .78rem; color: #6b7377; }
