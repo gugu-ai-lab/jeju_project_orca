@@ -9,11 +9,11 @@ export default function RootLayout() {
 
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Navbar expand="md" bg="primary" data-bs-theme="dark" collapseOnSelect sticky="top">
+      <Navbar expand="md" className="jeju-nav" collapseOnSelect sticky="top">
         <Container>
-          {/* TODO: 자신의 서비스 이름으로 바꾸세요 */}
           <Navbar.Brand as={NavLink} to="/">
-            <i className="bi bi-flower1 me-2" />제주 IP 프로젝트
+            <span className="brand-mark" aria-hidden="true" />
+            <span className="font-myth">탐라 이야기길</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="main-nav" />
           <Navbar.Collapse id="main-nav">
@@ -37,9 +37,9 @@ export default function RootLayout() {
         </Container>
       </main>
 
-      <footer className="py-3 border-top bg-light">
-        <Container className="small text-muted">
-          제주대 청년도약 부트캠프 1기 · 데이터 출처: 공공데이터포털 외
+      <footer className="py-3 jeju-footer">
+        <Container className="small">
+          제주 신화·전설 AI 관광 안내 · 데이터 출처: 공공데이터포털 외
         </Container>
       </footer>
 

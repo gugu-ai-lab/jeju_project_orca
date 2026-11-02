@@ -1,20 +1,86 @@
-/* 테마 위에 덧입히는 우리 앱 스타일 — 색은 Bootstrap 변수(--bs-*)를 써서 테마를 바꿔도 어울리게 */
-body { font-family: 'Pretendard', system-ui, sans-serif; background: var(--bs-tertiary-bg); }
+/* 제주 신화·전설 테마 — 바다와 곶자왈, 아이보리 바탕. Bootstrap 변수를 덮어써서 구조는 그대로 유지한다. */
+:root {
+  --jeju-sky: #A9D7F3;
+  --jeju-sea: #4FA3B7;
+  --jeju-forest: #2F5D50;
+  --jeju-citrus: #F28C28; /* 포인트(CTA)에만 */
+  --jeju-ivory: #FFFDF7;
+  --jeju-basalt: #3A3F42;
+  --jeju-mist: #E6F2F6;
+  --jeju-line: rgba(47, 93, 80, .16);
+  --jeju-shadow: 0 .75rem 2rem rgba(47, 93, 80, .10);
 
-.hero {
-  background: linear-gradient(135deg, var(--bs-primary), var(--bs-info));
-  color: #fff;
+  --bs-body-bg: var(--jeju-ivory);
+  --bs-body-color: var(--jeju-basalt);
+  --bs-body-font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif;
+  --bs-primary: var(--jeju-sea);
+  --bs-primary-rgb: 79, 163, 183;
+  --bs-link-color: var(--jeju-forest);
+  --bs-link-hover-color: var(--jeju-sea);
+  --bs-border-radius: .75rem;
+  --bs-border-radius-lg: 1.25rem;
+  --bs-border-color: var(--jeju-line);
 }
-.hero h1, .hero .lead { color: #fff; }
 
+body { background: var(--jeju-ivory); line-height: 1.7; }
+h1, h2, h3, .font-myth {
+  font-family: 'Noto Serif KR', 'Nanum Myeongjo', 'AppleMyungjo', serif;
+  color: var(--jeju-forest);
+  letter-spacing: -.01em;
+}
+
+/* 버튼 — 감귤색은 가장 중요한 행동 하나에만 */
+.btn-primary {
+  --bs-btn-bg: var(--jeju-forest); --bs-btn-border-color: var(--jeju-forest);
+  --bs-btn-hover-bg: #264b41; --bs-btn-hover-border-color: #264b41;
+  --bs-btn-active-bg: #1f3d35; --bs-btn-active-border-color: #1f3d35;
+}
+.btn-citrus {
+  --bs-btn-color: #2b1a05; --bs-btn-bg: var(--jeju-citrus); --bs-btn-border-color: var(--jeju-citrus);
+  --bs-btn-hover-bg: #dd7d1c; --bs-btn-hover-border-color: #dd7d1c; --bs-btn-hover-color: #2b1a05;
+}
+.btn-outline-sea {
+  --bs-btn-color: var(--jeju-forest); --bs-btn-border-color: var(--jeju-sea);
+  --bs-btn-hover-bg: var(--jeju-mist); --bs-btn-hover-color: var(--jeju-forest); --bs-btn-hover-border-color: var(--jeju-sea);
+}
+:focus-visible { outline: 3px solid var(--jeju-citrus); outline-offset: 2px; }
+
+/* 상단 바 */
+.jeju-nav {
+  background: rgba(255, 253, 247, .88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--jeju-line);
+}
+.jeju-nav .navbar-brand { display: flex; align-items: center; gap: .6rem; color: var(--jeju-forest); font-weight: 700; }
+.jeju-nav .brand-mark {
+  width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--jeju-sky), var(--jeju-sea) 60%, var(--jeju-forest));
+}
+.jeju-nav .nav-link { color: var(--jeju-basalt); border-radius: 999px; padding: .4rem .9rem; }
+.jeju-nav .nav-link:hover { background: var(--jeju-mist); }
+.jeju-nav .nav-link.active { background: var(--jeju-forest); color: #fff; }
+
+/* 공통 면 */
+.surface {
+  background: #fff; border: 1px solid var(--jeju-line);
+  border-radius: var(--bs-border-radius-lg); box-shadow: var(--jeju-shadow);
+}
+.section-eyebrow { font-size: .8rem; letter-spacing: .14em; color: var(--jeju-sea); font-weight: 700; }
+
+.jeju-footer { border-top: 1px solid var(--jeju-line); background: var(--jeju-mist); color: var(--jeju-forest); }
+
+/* 샘플 컴포넌트(ItemCard 등)가 새 톤에 맞도록 */
+.hero { background: linear-gradient(160deg, var(--jeju-sky), var(--jeju-sea) 55%, var(--jeju-forest)); color: #fff; }
+.hero h1, .hero .lead { color: #fff; }
 .item-card { transition: transform .15s, box-shadow .15s; }
-.item-card:hover { transform: translateY(-3px); box-shadow: 0 .5rem 1rem rgba(0,0,0,.08); }
+.item-card:hover { transform: translateY(-3px); box-shadow: var(--jeju-shadow); }
 .item-card-img { height: 160px; object-fit: cover; }
 .placeholder-img {
   display: flex; align-items: center; justify-content: center;
-  background: var(--bs-secondary-bg); color: var(--bs-secondary-color); font-size: 2rem;
+  background: var(--jeju-mist); color: var(--jeju-sea); font-size: 2rem;
 }
 
-.chat-box .msg { max-width: 80%; padding: .6rem .9rem; border-radius: 1rem; margin-bottom: .5rem; }
-.chat-box .msg.assistant { background: var(--bs-secondary-bg); }
-.chat-box .msg.user { background: var(--bs-primary); color: #fff; margin-left: auto; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+.jeju-nav .navbar-toggler { border-color: var(--jeju-sea); }
+.jeju-nav .navbar-toggler:focus { box-shadow: 0 0 0 3px rgba(79, 163, 183, .35); }
