@@ -23,7 +23,7 @@ export default function JejuPixelMap3D({ pins, selectedPinId, bouncingPinId, onP
   const canvasRef = useRef(null)
   const pinEls = useRef({})
   const pinsRef = useRef(pins)
-  const view = useRef({ tilt: TILT_3D, yaw: 0, hScale: 14, px: 3, reduce: false, auto: true, flat: false })
+  const view = useRef({ tilt: TILT_3D, yaw: 0, hScale: 14, px: 2, reduce: false, auto: true, flat: false })
   const rendererRef = useRef(null)
   const dragRef = useRef(null)
   const [flat, setFlat] = useState(false)

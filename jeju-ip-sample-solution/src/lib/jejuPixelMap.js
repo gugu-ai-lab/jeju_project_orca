@@ -168,7 +168,8 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
   const seaTop = new Map()                                                // 바다 칸 번호 → 윗면 꼭짓점 시작 번호(물결 색 갱신용)
   const sprBase = c => topY(c, getView().hScale) + .3                       // 오브젝트는 땅 위로 살짝 띄워 지형에 가려지지 않게
 
-  const U = .45, texCache = {}
+  let U = .45                                                             // 스프라이트 도트 1개의 월드 크기(화면 도트 1개와 같게 resize 에서 맞춘다)
+  const texCache = {}
   const spriteFor = name => {
     const sp = SPR[name], w = sp.rows[0].length, h = sp.rows.length
     if (!texCache[name]) {
@@ -180,12 +181,16 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
       texCache[name] = t
     }
     const o = new THREE.Sprite(new THREE.SpriteMaterial({ map: texCache[name], transparent: true, alphaTest: .5 }))
-    o.scale.set(w * U, (h + 1) * U, 1); o.userData.hh = (h + 1) * U
+    o.userData.pw = w; o.userData.ph = h + 1
     return o
   }
   const spriteObjs = sprites.map(s => { const o = spriteFor(s.t); scene.add(o); return o })
   const boatObjs = BOATS.map(() => { const o = spriteFor('boat'); scene.add(o); return o })
 
+  function fitSprites() {
+    for (const o of [...spriteObjs, ...boatObjs]) { o.scale.set(o.userData.pw * U, o.userData.ph * U, 1); o.userData.hh = o.userData.ph * U }
+    sprites.forEach((s, n) => spriteObjs[n].position.set(s.i - W / 2 + .5, sprBase(cells[s.j * W + s.i]) + spriteObjs[n].userData.hh / 2, s.j - H / 2 + .5))
+  }
   function rebuild() {
     const { hScale } = getView()
     const pos = [], nor = [], colr = [], idx = []
@@ -218,7 +223,7 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
     g.setAttribute('color', colorAttr)
     g.setIndex(idx)
     terrain.geometry = g
-    sprites.forEach((s, n) => spriteObjs[n].position.set(s.i - W / 2 + .5, sprBase(cells[s.j * W + s.i]) + spriteObjs[n].userData.hh / 2, s.j - H / 2 + .5))
+    fitSprites()
     lastSea = -1
   }
   let lastSea = -1
@@ -230,7 +235,9 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
     rebuild,
     resize() {
       const [w, h] = getSize(), { px } = getView()
-      gl.setPixelRatio(1); gl.setSize(Math.max(80, Math.floor(w / px)), Math.max(45, Math.floor(h / px)), false)
+      const ih = Math.max(45, Math.floor(h / px))
+      gl.setPixelRatio(1); gl.setSize(Math.max(80, Math.floor(w / px)), ih, false)
+      U = 2 * frustum / ih; fitSprites()
       const a = w / h
       cam.left = -frustum * a; cam.right = frustum * a; cam.top = frustum * 1.12; cam.bottom = -frustum * .88; cam.updateProjectionMatrix()
     },
