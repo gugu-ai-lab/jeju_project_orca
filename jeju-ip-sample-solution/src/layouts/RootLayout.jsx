@@ -39,7 +39,7 @@ export default function RootLayout() {
 
       <footer className="py-3 jeju-footer">
         <Container className="small">
-          제주 신화·전설 AI 관광 안내 · 데이터 출처: 공공데이터포털 외
+          제주 신화·전설 AI 관광 안내 · 신화 삽화·설명: 제주특별자치도 「제주신화전설 삽화 정보」(공공데이터포털, 공공저작물 자유이용 제0유형)
         </Container>
       </footer>
 

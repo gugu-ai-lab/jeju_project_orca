@@ -8,13 +8,13 @@ export default function MythCard({ myth, selected, onSelect }) {
       onClick={() => onSelect(myth.id)}
     >
       <span className="myth-art" aria-hidden="true">
-        <i className={`bi bi-${myth.icon}`} />
+        {myth.thumb ? <img src={myth.thumb.src} alt="" loading="lazy" /> : <i className={`bi bi-${myth.icon}`} />}
       </span>
       <span className="myth-body">
         {myth.preview && <span className="preview-badge">예시 데이터 · 미리보기</span>}
         <span className="myth-title font-myth">{myth.title}</span>
         <span className="myth-place"><i className="bi bi-geo-alt me-1" />연결 후보 장소 · {myth.place}</span>
-        <span className="myth-note">줄거리·출처는 API 연결 후 표시됩니다</span>
+        <span className="myth-note">{myth.thumb ? '삽화·설명: 제주특별자치도 공공데이터' : '줄거리·출처는 확인 후 표시됩니다'}</span>
       </span>
     </button>
   )

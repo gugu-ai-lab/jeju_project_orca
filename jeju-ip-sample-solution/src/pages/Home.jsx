@@ -3,9 +3,14 @@ import { Col, Row } from 'react-bootstrap'
 import MythCard from '../components/MythCard'
 import StoryPanel from '../components/StoryPanel'
 import { MYTH_PREVIEW } from '../data/mythPreview'
+import { MYTH_SCENES, MYTH_SOURCE } from '../data/mythStories'
 
 export default function Home() {
-  const myths = MYTH_PREVIEW.map((m) => ({ ...m, preview: true }))
+  // 공식 자료가 있는 신화는 실제 자료로, 없는 신화만 예시(preview)로 표시
+  const myths = MYTH_PREVIEW.map((m) => {
+    const scenes = MYTH_SCENES[m.id]
+    return { ...m, scenes, thumb: scenes?.[0]?.image, source: scenes ? MYTH_SOURCE : undefined, preview: !scenes }
+  })
   const [selectedId, setSelectedId] = useState(myths[0].id)
   const selected = myths.find((m) => m.id === selectedId)
 

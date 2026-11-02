@@ -109,7 +109,7 @@ h1, h2, h3, .font-myth {
 }
 .myth-card:hover { transform: translateY(-3px); }
 .myth-card.is-selected { border-color: var(--jeju-forest); box-shadow: 0 0 0 2px var(--jeju-forest), var(--jeju-shadow); }
-.myth-art {
+.myth-art { overflow: hidden;
   display: flex; align-items: center; justify-content: center; height: 8rem; font-size: 2.6rem; color: #fff;
 }
 .tone-sea .myth-art { background: linear-gradient(150deg, var(--jeju-sky), var(--jeju-sea)); }
@@ -136,3 +136,5 @@ h1, h2, h3, .font-myth {
 .story-caption { font-size: .8rem; color: var(--jeju-sea); font-weight: 700; }
 .story-text { white-space: pre-line; }
 .source-credit { margin: 1rem 0 0; font-size: .78rem; color: #6b7377; }
+.myth-art img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.story-figure img { width: auto; max-width: 100%; max-height: 32rem; object-fit: contain; }
