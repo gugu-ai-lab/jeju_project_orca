@@ -6,7 +6,6 @@ import { Col, Row } from 'react-bootstrap'
 import JejuMythExplorerMap from '../components/JejuMythExplorerMap'
 import MythCard from '../components/MythCard'
 import StoryPanel from '../components/StoryPanel'
-import AgentIntroCard from '../components/AgentIntroCard'
 import mapPinsData from '../data/jejuMapPins.json'
 import { getMythQuizPuzzle } from '../data/mythQuizPuzzles'
 import { HOME_STORIES, VERIFIED_PLACE_COUNT } from '../data/storyCatalog'
@@ -212,7 +211,6 @@ export default function Home() {
       </section>
 
       <StoryFavoriteButton storyId={selected.id} storyTitle={selected.title} />
-      <AgentIntroCard />
     </div>
   )
 }

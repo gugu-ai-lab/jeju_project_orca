@@ -19,7 +19,7 @@ export const NAV_ITEMS = [
   { to: '/explore', label: '이야기 탐험', icon: 'compass' },
   { to: '/places', label: '관광·문화', icon: 'geo-alt' },
   { to: '/heritage', label: '국가유산', icon: 'bank' },
-  { to: '/agent', label: 'AI 가이드', icon: 'robot' },
+  { to: '/agent', label: '신화안내원', icon: 'robot' },
   { to: '/my', label: '내 즐겨찾기', icon: 'star' },
 ]
 
