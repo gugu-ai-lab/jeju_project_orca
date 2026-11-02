@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import StoryPanel from '../components/StoryPanel'
+import MythQuizPuzzleSection from '../components/puzzle/MythQuizPuzzleSection'
+import { getMythQuizPuzzle } from '../data/mythQuizPuzzles'
 import { STORY_CATALOG } from '../data/storyCatalog'
 import { CATEGORY_LABEL, isVerified } from '../lib/storyFilter'
 
@@ -9,6 +11,7 @@ export default function StoryDetail() {
   const { storyId } = useParams()
   const story = STORY_CATALOG.find((s) => s.id === storyId)
   const [sceneIndex, setSceneIndex] = useState(0)
+  const hasQuizPuzzle = Boolean(story && getMythQuizPuzzle(story.id))
 
   return (
     <>
@@ -22,8 +25,23 @@ export default function StoryDetail() {
             <span className={`chip ${isVerified(story) ? 'chip-ok' : 'chip-wait'}`}>{isVerified(story) ? '출처 확인됨' : '출처 검증 대기'}</span>
             {story.place && <span className="chip"><i className="bi bi-geo-alt me-1" />{story.place}</span>}
           </div>
-          <StoryPanel title={story.title} scene={story.scenes[sceneIndex]} source={story.source}
-            sceneIndex={sceneIndex} sceneCount={story.scenes.length} onSceneChange={setSceneIndex} />
+          <StoryPanel
+            storyId={story.id}
+            title={story.title}
+            scene={story.scenes[sceneIndex]}
+            source={story.source}
+            sceneIndex={sceneIndex}
+            sceneCount={story.scenes.length}
+            onSceneChange={setSceneIndex}
+            hasQuizPuzzle={hasQuizPuzzle}
+          />
+          {hasQuizPuzzle && (
+            <MythQuizPuzzleSection
+              key={story.id}
+              storyId={story.id}
+              storyTitle={story.title}
+            />
+          )}
         </>
       )}
     </>

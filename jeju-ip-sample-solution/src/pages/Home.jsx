@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 import MythCard from '../components/MythCard'
 import StoryPanel from '../components/StoryPanel'
+import MythQuizPuzzleSection from '../components/puzzle/MythQuizPuzzleSection'
+import { getMythQuizPuzzle } from '../data/mythQuizPuzzles'
 import { MYTH_SCENES, MYTH_SOURCE } from '../data/mythStories'
 
 // Gemini 검증 완료 대표 신화·전설 7선 (학생 눈높이 질문형 카드 + 장면별 2~3문장 요약)
@@ -326,8 +328,18 @@ export default function Home() {
           onSceneChange={setSceneIndex}
           placeBridge={selected.placeBridge}
           preferPastelArt
+          hasQuizPuzzle={Boolean(getMythQuizPuzzle(selected.id))}
         />
       </section>
+
+      {/* 4. 신화 퀴즈로 그림 퍼즐 완성하기 (설문대할망 시범 적용) */}
+      {getMythQuizPuzzle(selected.id) && (
+        <MythQuizPuzzleSection
+          key={selected.id}
+          storyId={selected.id}
+          storyTitle={selected.title}
+        />
+      )}
     </div>
   )
 }

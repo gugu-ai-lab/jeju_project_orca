@@ -504,3 +504,564 @@ h1, h2, h3, h4, .font-myth {
 .story-card-meta { font-size: .82rem; color: #5b6468; }
 .chip { font-size: .7rem; font-weight: 700; padding: .1rem .5rem; border-radius: 999px; background: var(--jeju-sky-pastel); color: var(--jeju-forest); }
 .chip-ok { background: #e3f1ec; } .chip-wait { background: #fff3e3; color: #8a4b05; }
+
+/* ── 4. 이야기 패널 내 퍼즐 이동 안내 박스 ────────────── */
+.story-puzzle-callout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .85rem;
+  padding: .9rem 1.1rem;
+  border-radius: 1.1rem;
+  background: var(--jeju-mint-pastel);
+  border: 1.5px dashed var(--jeju-sea);
+}
+.story-puzzle-callout.is-ready {
+  border-style: solid;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(169, 215, 243, .45);
+}
+.story-puzzle-callout-badge {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+  margin-bottom: .15rem;
+}
+.story-puzzle-callout-text {
+  font-size: .88rem;
+  color: var(--jeju-basalt);
+}
+
+/* ── 5. 제주 신화 퀴즈 & 그림 퍼즐 섹션 ───────────────── */
+.myth-quiz-puzzle-section {
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sky);
+  border-radius: 1.6rem;
+  padding: 1.5rem;
+}
+@media (min-width: 768px) {
+  .myth-quiz-puzzle-section {
+    padding: 2rem 2.2rem;
+  }
+}
+.puzzle-section-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-section-sub {
+  font-size: .95rem;
+  color: #556065;
+}
+
+.puzzle-workspace-grid {
+  display: grid;
+  gap: 1.35rem;
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .puzzle-workspace-grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+    gap: 1.6rem;
+  }
+}
+
+/* 퍼즐 보드 카드 */
+.puzzle-board-card {
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.35rem;
+  padding: 1.2rem;
+}
+.puzzle-board-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+.puzzle-step-badge {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.puzzle-board-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+
+/* 진행 막대 (단색) */
+.puzzle-progress-track {
+  width: 100%;
+  height: .55rem;
+  background: var(--jeju-sky-pastel);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: .9rem;
+}
+.puzzle-progress-fill {
+  height: 100%;
+  background: var(--jeju-sea);
+  border-radius: 999px;
+  transition: width .3s ease;
+}
+
+/* N×M 퍼즐 격자 프레임 — 완성 전에는 조각 구분선, 완성 후에는 하나로 매끄럽게 연결 */
+.puzzle-grid-frame {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+  padding: 6px;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-line);
+  border-radius: 1.15rem;
+  overflow: hidden;
+  transition: gap .35s ease, padding .35s ease, border-color .35s ease;
+}
+.puzzle-grid-frame.is-completed {
+  gap: 0;
+  padding: 0;
+  border-color: var(--jeju-sea);
+  box-shadow: 0 8px 24px rgba(47, 93, 80, .14);
+}
+
+.puzzle-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 10.5rem;
+  border-radius: .75rem;
+  overflow: hidden;
+  transition: border-radius .35s ease, transform .2s ease;
+}
+.puzzle-grid-frame.is-completed .puzzle-tile {
+  border-radius: 0;
+}
+
+/* 열린 퍼즐 조각: 원본 공식 삽화의 정확한 위치 슬라이스 표시 */
+.puzzle-tile-art-slice {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  animation: piece-reveal .36s ease-out;
+}
+@keyframes piece-reveal {
+  from {
+    opacity: 0;
+    transform: scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.puzzle-tile-art-slice img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+.puzzle-tile-opened-tag {
+  position: absolute;
+  bottom: .5rem;
+  left: .5rem;
+  font-size: .72rem;
+  font-weight: 800;
+  padding: .18rem .55rem;
+  border-radius: 999px;
+  background: rgba(255, 253, 247, .92);
+  color: var(--jeju-forest);
+  border: 1px solid var(--jeju-line);
+}
+
+/* 가려진 퍼즐 조각 커버 */
+.puzzle-tile-cover {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--jeju-sky);
+  border-radius: .75rem;
+  padding: .85rem .5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: .3rem;
+  cursor: pointer;
+  color: var(--jeju-forest);
+  transition: background .18s ease, border-color .18s ease, transform .15s ease;
+}
+.puzzle-tile-cover.cover-sky {
+  background: var(--jeju-sky-pastel);
+}
+.puzzle-tile-cover.cover-mint {
+  background: var(--jeju-mint-pastel);
+}
+.puzzle-tile-cover:hover {
+  border-color: var(--jeju-sea);
+  transform: translateY(-2px);
+}
+.puzzle-tile.is-active-target .puzzle-tile-cover {
+  border-style: solid;
+  border-color: var(--jeju-sea);
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 2px var(--jeju-sky);
+}
+.puzzle-cover-num {
+  font-size: .72rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-sea);
+  padding: .12rem .55rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-line);
+}
+.puzzle-cover-icon {
+  font-size: 1.55rem;
+  color: var(--jeju-sea);
+  line-height: 1.1;
+}
+.puzzle-cover-title {
+  font-size: .86rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-cover-sub {
+  font-size: .74rem;
+  color: #5A656A;
+}
+
+.puzzle-board-footer {
+  margin-top: .75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .35rem .75rem;
+  font-size: .76rem;
+  color: #657075;
+}
+.puzzle-caption-text {
+  font-weight: 700;
+  color: var(--jeju-forest);
+}
+.puzzle-session-note {
+  color: #6F7A7F;
+}
+
+/* ── 6. 3지선다 신화 퀴즈 카드 ──────────────────────── */
+.quiz-card-box {
+  background: #FFFFFF;
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.35rem;
+  padding: 1.2rem;
+}
+.quiz-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+.quiz-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .1rem;
+  padding: .5rem .4rem;
+  border-radius: .9rem;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-ivory);
+  color: var(--jeju-basalt);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.quiz-tab-btn:hover {
+  border-color: var(--jeju-sky);
+  background: var(--jeju-sky-pastel);
+}
+.quiz-tab-btn.is-active {
+  border-color: var(--jeju-sea);
+  background: var(--jeju-sky-pastel);
+  box-shadow: 0 0 0 2px rgba(169, 215, 243, .45);
+}
+.quiz-tab-btn.is-solved {
+  border-color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+}
+.quiz-tab-num {
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.quiz-tab-status {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+}
+.quiz-tab-btn.is-solved .quiz-tab-status {
+  color: var(--jeju-forest);
+}
+
+.quiz-piece-link-pill {
+  font-size: .78rem;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .65rem;
+  border-radius: 999px;
+}
+.quiz-solved-pill {
+  font-size: .75rem;
+  font-weight: 700;
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  padding: .2rem .6rem;
+  border-radius: 999px;
+}
+.quiz-prompt-title {
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.55;
+  color: var(--jeju-forest);
+  margin: .5rem 0 .95rem;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.quiz-option-btn {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  width: 100%;
+  text-align: left;
+  padding: .75rem .95rem;
+  border-radius: 1rem;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-ivory);
+  color: var(--jeju-basalt);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .12s ease, border-color .15s ease, background .15s ease;
+}
+.quiz-option-btn:hover:not(:disabled) {
+  border-color: var(--jeju-sea);
+  background: var(--jeju-sky-pastel);
+  transform: translateY(-1px);
+}
+.quiz-option-btn:disabled {
+  cursor: default;
+}
+.quiz-option-btn.is-correct {
+  border-color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  font-weight: 800;
+}
+.quiz-option-btn.is-wrong {
+  border-color: var(--jeju-sky);
+  background: #F5F9FC;
+}
+.quiz-option-index {
+  flex: none;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .82rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  border: 1px solid var(--jeju-line);
+}
+.quiz-option-btn.is-correct .quiz-option-index {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+  border-color: var(--jeju-forest);
+}
+.quiz-option-text {
+  flex: 1;
+  font-size: .95rem;
+}
+.quiz-option-mark {
+  font-size: .76rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.quiz-option-mark.is-retry {
+  color: var(--jeju-sea);
+}
+
+.quiz-feedback-box {
+  margin-top: .9rem;
+  padding: .85rem 1rem;
+  border-radius: 1rem;
+  animation: scene-fade .22s ease-out;
+}
+.quiz-feedback-box.is-hint {
+  background: var(--jeju-sky-pastel);
+  border: 1.5px solid var(--jeju-sky);
+}
+.quiz-feedback-box.is-correct {
+  background: var(--jeju-mint-pastel);
+  border: 1.5px solid var(--jeju-sea);
+}
+.quiz-feedback-title {
+  font-size: .9rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+  margin-bottom: .25rem;
+}
+.quiz-feedback-desc {
+  font-size: .88rem;
+  color: var(--jeju-basalt);
+  line-height: 1.6;
+}
+.quiz-feedback-evidence {
+  font-size: .75rem;
+  color: #5C676C;
+}
+
+/* ── 7. 퍼즐 완성 축하 배너 & 크게 보기 라이트박스 ─────── */
+.puzzle-complete-banner {
+  position: relative;
+  margin-top: 1rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 1.3rem;
+  background: var(--jeju-mint-pastel);
+  border: 2px solid var(--jeju-sea);
+  overflow: hidden;
+  animation: celebrate-pop .38s ease-out;
+}
+@keyframes celebrate-pop {
+  0% { opacity: 0; transform: scale(.96); }
+  70% { transform: scale(1.01); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.puzzle-complete-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.puzzle-complete-pill {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  padding: .2rem .7rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sea);
+}
+.puzzle-complete-heading {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-complete-desc {
+  font-size: .9rem;
+  color: var(--jeju-basalt);
+}
+
+.puzzle-complete-sparkles {
+  position: absolute;
+  top: .6rem;
+  right: 1rem;
+  display: flex;
+  gap: .45rem;
+  pointer-events: none;
+}
+.sparkle-dot {
+  color: var(--jeju-sea);
+  font-size: 1.1rem;
+  animation: sparkle-float 1.8s infinite ease-in-out;
+}
+.sparkle-dot.s2 { animation-delay: .3s; color: var(--jeju-forest); }
+.sparkle-dot.s3 { animation-delay: .6s; }
+@keyframes sparkle-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: .7; }
+  50% { transform: translateY(-4px) scale(1.2); opacity: 1; }
+}
+
+/* 크게 감상하기 모달 */
+.puzzle-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1080;
+  background: rgba(34, 48, 44, .62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: scene-fade .2s ease-out;
+}
+.puzzle-lightbox-card {
+  width: 100%;
+  max-width: 56rem;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sky);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .25);
+}
+@media (min-width: 768px) {
+  .puzzle-lightbox-card {
+    padding: 1.6rem 1.8rem;
+  }
+}
+.puzzle-lightbox-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+.puzzle-lightbox-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-lightbox-image-wrap {
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.1rem;
+  padding: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.puzzle-lightbox-image-wrap img {
+  display: block;
+  width: 100%;
+  max-height: 64vh;
+  height: auto;
+  object-fit: contain;
+  border-radius: .75rem;
+}
+.puzzle-lightbox-footer {
+  margin-top: .9rem;
+  font-size: .88rem;
+  color: var(--jeju-basalt);
+}
+.puzzle-lightbox-source {
+  font-size: .76rem;
+  color: #687378;
+}

@@ -69,12 +69,14 @@ export default function StoryPanel({
   onSceneChange,
   placeBridge,
   preferPastelArt = false,
+  hasQuizPuzzle = false,
 }) {
   const [showOriginalArt, setShowOriginalArt] = useState(false)
   const image = scene?.image
   const text = scene?.text
   const lines = scene?.studentLines
   const usePastel = preferPastelArt && !showOriginalArt
+  const isLastScene = sceneIndex >= Math.max(sceneCount, 1) - 1
 
   return (
     <article className="story-panel surface">
@@ -145,6 +147,35 @@ export default function StoryPanel({
         )}
 
         <SceneNav index={sceneIndex} total={sceneCount} onChange={onSceneChange} />
+
+        {hasQuizPuzzle && (
+          <div className={`story-puzzle-callout mt-3 ${isLastScene ? 'is-ready' : ''}`}>
+            <div>
+              <span className="story-puzzle-callout-badge">
+                {isLastScene ? '🧩 마지막 장면까지 다 읽었어요!' : '🧩 신화 그림 퍼즐 챌린지'}
+              </span>
+              <p className="story-puzzle-callout-text mb-0">
+                {isLastScene
+                  ? '이제 아래 3지선다 퀴즈를 풀고 가려진 설문대할망 신화 삽화 3조각을 완성해 보세요!'
+                  : '2장면까지 모두 읽은 뒤, 아래 퀴즈 3문제를 맞히면 가려진 신화 삽화가 완성돼요.'}
+              </p>
+            </div>
+            <div className="d-flex flex-wrap gap-2">
+              {!isLastScene && onSceneChange && (
+                <button
+                  type="button"
+                  className="btn btn-outline-sea btn-sm btn-round"
+                  onClick={() => onSceneChange(sceneCount - 1)}
+                >
+                  2장면 이어서 읽기 →
+                </button>
+              )}
+              <a href="#myth-quiz-puzzle" className="btn btn-primary btn-sm btn-round">
+                🧩 퀴즈 풀고 퍼즐 맞추기 ↓
+              </a>
+            </div>
+          </div>
+        )}
 
         {placeBridge && (
           <div className="story-place-bridge mt-3">
