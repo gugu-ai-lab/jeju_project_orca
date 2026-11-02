@@ -1,42 +1,12 @@
-import { Component, Suspense, lazy, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import mapPinsData from '../data/jejuMapPins.json'
 
-// Three.js 3D 미니어처 지도는 사용자가 '🧊 3D 미니어처' 탭을 선택했을 때만 지연 로드한다.
-const LazyJejuMiniature3D = lazy(() => import('./JejuMiniature3D'))
-
-// 3D WebGL 렌더링 중 예외 발생 시 기본 2.5D SVG 지도로 안전하게 복구하는 에러 경계
-class Map3DErrorBoundary extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { hasError: false }
-  }
-  static getDerivedStateFromError() {
-    return { hasError: true }
-  }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="mini3d-fallback-box" role="status">
-          <strong>💡 3D 미니어처 지도를 불러오지 못했어요</strong>
-          <p className="mb-2">
-            현재 브라우저 환경에서는 2.5D 그림책 일러스트 지도로 안전하게 탐험할 수 있습니다.
-          </p>
-          <button
-            type="button"
-            className="btn btn-primary btn-sm btn-round"
-            onClick={this.props.onFallback}
-          >
-            🎨 2.5D 그림책 지도로 돌아가기
-          </button>
-        </div>
-      )
-    }
-    return this.props.children
-  }
-}
-
 /**
- * JejuMythExplorerMap — 2.5D 팝업북 SVG 제주 일러스트 지도(기본) + 선택형 Three.js 3D 미니어처 탭 + 카카오맵
+ * JejuMythExplorerMap — 2.5D 그림책 스타일 SVG 제주 신화 탐험 지도(기본) + 카카오맵 연동
+ *
+ * 참고:
+ * - Three.js 기반 미니어처 컴포넌트(`src/components/JejuMiniature3D.jsx`)는 추후 재검토를 위해 파일로 보존하되,
+ *   현재 화면과 지도 모드 선택 탭에서는 제외하여 밝고 깔끔한 2.5D SVG 일러스트 지도에 집중한다.
  */
 export default function JejuMythExplorerMap({
   selectedMythId,
@@ -48,7 +18,7 @@ export default function JejuMythExplorerMap({
     import.meta.env.VITE_KAKAO_APP_KEY ||
     ''
 
-  const [mapMode, setMapMode] = useState('pastel') // 'pastel' (기본 2.5D SVG) | 'mini3d' (Three.js) | 'kakao'
+  const [mapMode, setMapMode] = useState('pastel') // 'pastel' (기본 2.5D SVG) | 'kakao'
   const [kakaoStatus, setKakaoStatus] = useState(kakaoKey ? 'idle' : 'no-key')
   const [bouncingPinId, setBouncingPinId] = useState(null)
 
@@ -180,7 +150,7 @@ export default function JejuMythExplorerMap({
 
   return (
     <div className="explorer-map-card">
-      {/* 지도 상단 컨트롤 바 */}
+      {/* 지도 상단 컨트롤 바 (3D 미니어처 탭 숨김 처리) */}
       <div className="explorer-map-topbar">
         <div className="d-flex align-items-center gap-2 flex-wrap">
           <span className="map-badge-pill">
@@ -217,15 +187,6 @@ export default function JejuMythExplorerMap({
             <button
               type="button"
               role="tab"
-              aria-selected={mapMode === 'mini3d'}
-              className={`map-mode-btn ${mapMode === 'mini3d' ? 'is-active' : ''}`}
-              onClick={() => handleSelectMode('mini3d')}
-            >
-              🧊 3D 미니어처
-            </button>
-            <button
-              type="button"
-              role="tab"
               aria-selected={mapMode === 'kakao'}
               className={`map-mode-btn ${mapMode === 'kakao' ? 'is-active' : ''}`}
               onClick={() => handleSelectMode('kakao')}
@@ -238,36 +199,7 @@ export default function JejuMythExplorerMap({
 
       {/* 메인 지도 스테이지 */}
       <div className="explorer-map-stage">
-        {mapMode === 'mini3d' ? (
-          <Map3DErrorBoundary onFallback={() => handleSelectMode('pastel')}>
-            <Suspense
-              fallback={
-                <div className="mini3d-loading-box" role="status">
-                  <div className="spinner-border spinner-border-sm text-primary me-2" />
-                  <span>제주 3D 미니어처 섬을 준비하고 있어요...</span>
-                </div>
-              }
-            >
-              {isGlobalMythSelected && (
-                <div className="map-global-myth-banner" role="status">
-                  <span className="fs-4" aria-hidden="true">🌾</span>
-                  <div>
-                    <strong>‘{selectedPin.mythTitle}’는 제주 섬 전체 마을에 전해지는 신화예요!</strong>
-                    <p className="mb-0">
-                      특정 단일 유적지가 아닌 제주 전역 농경 본풀이여서 가짜 핀을 찍지 않았어요.
-                    </p>
-                  </div>
-                </div>
-              )}
-              <LazyJejuMiniature3D
-                pins={verifiedPins}
-                selectedPin={selectedPin}
-                onSelectPin={handlePinClick}
-                onFallbackToSvg={() => handleSelectMode('pastel')}
-              />
-            </Suspense>
-          </Map3DErrorBoundary>
-        ) : mapMode === 'kakao' && kakaoStatus === 'ready' ? (
+        {mapMode === 'kakao' && kakaoStatus === 'ready' ? (
           <div
             ref={mapContainerRef}
             className="kakao-map-canvas"
@@ -306,7 +238,7 @@ export default function JejuMythExplorerMap({
               </div>
             )}
 
-            {/* 2.5D 팝업북 입체감을 더한 제주도 SVG 일러스트 지도 (800×480, 단색 파스텔 톤) */}
+            {/* 2.5D 팝업북 입체감을 더한 제주도 SVG 일러스트 지도 (800×480, 밝은 아이보리·하늘·민트·블루그린 톤) */}
             <svg
               viewBox="0 0 800 480"
               className="pastel-jeju-svg"
@@ -314,16 +246,16 @@ export default function JejuMythExplorerMap({
               aria-label="한라산, 오름, 현무암, 바다가 입체적으로 표현된 2.5D 제주도 신화 탐험 일러스트 지도"
             >
               <defs>
-                {/* 2.5D 팝업북 종이 단차 그림자 필터 (그라데이션 없이 깔끔한 오프셋 그림자) */}
+                {/* 2.5D 팝업북 종이 단차 그림자 필터 (칙칙한 회색 없이 맑은 청록/하늘 그림자 사용) */}
                 <filter id="popup-island-shadow" x="-8%" y="-8%" width="116%" height="122%">
-                  <feDropShadow dx="0" dy="8" stdDeviation="4" floodColor="#4FA3B7" floodOpacity="0.22" />
+                  <feDropShadow dx="0" dy="7" stdDeviation="3.5" floodColor="#4FA3B7" floodOpacity="0.2" />
                 </filter>
                 <filter id="popup-piece-shadow" x="-15%" y="-15%" width="130%" height="135%">
-                  <feDropShadow dx="0" dy="4" stdDeviation="2" floodColor="#2F5D50" floodOpacity="0.18" />
+                  <feDropShadow dx="0" dy="3.5" stdDeviation="1.8" floodColor="#4FA3B7" floodOpacity="0.18" />
                 </filter>
               </defs>
 
-              {/* 1. 파스텔 제주 바다 배경 장식 (잔잔한 물결과 나침반) */}
+              {/* 1. 파스텔 제주 바다 배경 장식 (잔잔한 물결, 나침반, 구름, 배) */}
               <g className="svg-sea-decor" aria-hidden="true">
                 {/* 귀여운 2.5D 탐험 나침반 (좌측 상단) */}
                 <g transform="translate(68, 66)" filter="url(#popup-piece-shadow)">
@@ -336,14 +268,24 @@ export default function JejuMythExplorerMap({
                   <text x="0" y="-30" textAnchor="middle" fill="#2F5D50" fontSize="11" fontWeight="800">N</text>
                 </g>
 
+                {/* 하늘 위 미세하게 움직이는 귀여운 구름 */}
+                <g className="svg-float-cloud-slow" filter="url(#popup-piece-shadow)">
+                  <path
+                    d="M 612 64 C 612 56, 625 53, 632 59 C 639 52, 653 56, 653 65 C 653 71, 612 71, 612 64 Z"
+                    fill="#FFFDF7"
+                    stroke="#A9D7F3"
+                    strokeWidth="1.8"
+                  />
+                </g>
+
                 {/* 바다 잔물결 (단색 선) */}
                 <path d="M 150 56 Q 165 48 180 56 T 210 56" fill="none" stroke="#A9D7F3" strokeWidth="3" strokeLinecap="round" />
-                <path d="M 575 52 Q 590 44 605 52 T 635 52" fill="none" stroke="#A9D7F3" strokeWidth="3" strokeLinecap="round" />
+                <path d="M 555 48 Q 570 40 585 48 T 615 48" fill="none" stroke="#A9D7F3" strokeWidth="3" strokeLinecap="round" />
                 <path d="M 65 365 Q 80 357 95 365 T 125 365" fill="none" stroke="#A9D7F3" strokeWidth="3" strokeLinecap="round" />
                 <path d="M 635 395 Q 650 387 665 395 T 695 395" fill="none" stroke="#A9D7F3" strokeWidth="3" strokeLinecap="round" />
                 <path d="M 445 432 Q 460 424 475 432 T 505 432" fill="none" stroke="#A9D7F3" strokeWidth="2.5" strokeLinecap="round" />
 
-                {/* 성산 동쪽 바다의 작은 나무배/상자 모티프 (살짝 흔들리는 2.5D 피스) */}
+                {/* 성산 동쪽 바다의 작은 나무배/상자 모티프 (잔잔하게 흔들리는 애니메이션) */}
                 <g transform="translate(722, 268)" className="svg-float-boat" filter="url(#popup-piece-shadow)">
                   <path d="M -16 0 L 16 0 L 11 9 L -11 9 Z" fill="#FFFDF7" stroke="#2F5D50" strokeWidth="2" strokeLinejoin="round" />
                   <rect x="-6" y="-8" width="12" height="8" rx="2" fill="#A9D7F3" stroke="#2F5D50" strokeWidth="1.8" />
@@ -403,11 +345,11 @@ export default function JejuMythExplorerMap({
                 <text x="188" y="462" textAnchor="middle" fill="#4FA3B7" fontSize="9.5" fontWeight="700">마라도</text>
               </g>
 
-              {/* 3. 제주 본섬 2.5D 입체 지형 (바다 수중 턱 + 현무암·해안 절벽 두께 + 들판 + 곶자왈 단차) */}
+              {/* 3. 제주 본섬 2.5D 입체 지형 (밝은 파스텔 바다 턱 + 블루그린 해안 단면 + 아이보리 모래 + 민트 들판) */}
               <g className="svg-main-island" filter="url(#popup-island-shadow)">
-                {/* [2.5D 1층] 바닷속 얕은 산호·모래 턱 (아래로 12px 오프셋) */}
+                {/* [2.5D 1층] 바닷속 얕은 파스텔 하늘 턱 */}
                 <path
-                  transform="translate(0, 12)"
+                  transform="translate(0, 11)"
                   d="M 116 266
                      C 110 245, 130 222, 152 204
                      C 172 188, 188 170, 218 155
@@ -424,15 +366,15 @@ export default function JejuMythExplorerMap({
                      C 234 360, 206 372, 178 362
                      C 154 352, 148 326, 136 306
                      C 124 288, 120 280, 116 266 Z"
-                  fill="#BBE0F5"
-                  stroke="#9AC9E8"
+                  fill="#C4E4F7"
+                  stroke="#A9D7F3"
                   strokeWidth="8"
                   strokeLinejoin="round"
                 />
 
-                {/* [2.5D 2층] 제주 섬 입체 블록 측면 두께 (아래로 7px 오프셋) */}
+                {/* [2.5D 2층] 제주 섬 입체 블록 측면 두께 */}
                 <path
-                  transform="translate(0, 7)"
+                  transform="translate(0, 6)"
                   d="M 116 266
                      C 110 245, 130 222, 152 204
                      C 172 188, 188 170, 218 155
@@ -450,12 +392,12 @@ export default function JejuMythExplorerMap({
                      C 154 352, 148 326, 136 306
                      C 124 288, 120 280, 116 266 Z"
                   fill="#4FA3B7"
-                  stroke="#3E8B9E"
+                  stroke="#4FA3B7"
                   strokeWidth="4"
                   strokeLinejoin="round"
                 />
 
-                {/* [2.5D 3층] 아이보리 모래 해안선 테두리 */}
+                {/* [2.5D 3층] 아이보리 모래 해안선 테두리 & 밝은 민트 들판 */}
                 <path
                   d="M 116 266
                      C 110 245, 130 222, 152 204
@@ -479,16 +421,16 @@ export default function JejuMythExplorerMap({
                   strokeLinejoin="round"
                 />
 
-                {/* [2.5D 4층] 중산간 곶자왈 입체 단차 (아래 그림자 턱 + 위 고원) */}
+                {/* [2.5D 4층] 중산간 곶자왈 입체 단차 */}
                 <path
-                  transform="translate(0, 5)"
+                  transform="translate(0, 4)"
                   d="M 192 252
                      C 186 212, 245 162, 342 146
                      C 438 130, 558 144, 612 192
                      C 644 220, 616 268, 542 296
                      C 466 324, 336 328, 254 304
                      C 208 290, 196 274, 192 252 Z"
-                  fill="#B2DCD3"
+                  fill="#BCE4DC"
                 />
                 <path
                   d="M 192 252
@@ -503,8 +445,8 @@ export default function JejuMythExplorerMap({
                 />
 
                 {/* [2.5D 5층] 한라산 기슭 고원 단차 */}
-                <ellipse cx="408" cy="236" rx="132" ry="56" fill="#9ED0C6" />
-                <ellipse cx="408" cy="232" rx="132" ry="56" fill="#C2E6DF" stroke="#FFFDF7" strokeWidth="1.5" />
+                <ellipse cx="408" cy="236" rx="132" ry="56" fill="#A8DDD2" />
+                <ellipse cx="408" cy="232" rx="132" ry="56" fill="#C4EAE2" stroke="#FFFDF7" strokeWidth="1.5" />
               </g>
 
               {/* 4. 신화 장소를 잇는 귀여운 점선 탐험 길 */}
@@ -520,10 +462,10 @@ export default function JejuMythExplorerMap({
 
               {/* 5. 제주 자연·문화 2.5D 팝업 피스 요소 (한라산·백록담·오름·현무암·산방산·성산일출봉) */}
               <g className="svg-jeju-landmarks" aria-hidden="true">
-                {/* 중앙 한라산과 백록담 (팝업 그림자 적용) */}
+                {/* 중앙 한라산과 백록담 */}
                 <g transform="translate(398, 224)" filter="url(#popup-piece-shadow)">
                   {/* 산자락 바닥 입체 받침 */}
-                  <ellipse cx="0" cy="34" rx="92" ry="12" fill="#3B899C" />
+                  <ellipse cx="0" cy="34" rx="92" ry="11" fill="#4FA3B7" opacity="0.45" />
                   {/* 산자락 */}
                   <path
                     d="M -92 34 C -68 -6, -36 -48, 0 -52 C 36 -48, 68 -6, 92 34 Z"
@@ -570,7 +512,7 @@ export default function JejuMythExplorerMap({
 
                 {/* 동쪽 오름 군락 (2.5D 입체 오름) */}
                 <g transform="translate(546, 174)" filter="url(#popup-piece-shadow)">
-                  <ellipse cx="4" cy="19" rx="32" ry="6" fill="#3B899C" opacity="0.35" />
+                  <ellipse cx="4" cy="19" rx="32" ry="5" fill="#4FA3B7" opacity="0.3" />
                   <path d="M -28 18 Q -12 -10 4 18 Z" fill="#A9D7F3" stroke="#2F5D50" strokeWidth="2" strokeLinejoin="round" />
                   <path d="M -6 20 Q 14 -14 34 20 Z" fill="#4FA3B7" stroke="#2F5D50" strokeWidth="2" strokeLinejoin="round" />
                   <path d="M 8 -2 Q 14 2 20 -2" fill="none" stroke="#FFFDF7" strokeWidth="2" strokeLinecap="round" />
@@ -579,7 +521,7 @@ export default function JejuMythExplorerMap({
 
                 {/* 서쪽 오름 군락 (금악·한림 방면) */}
                 <g transform="translate(246, 212)" filter="url(#popup-piece-shadow)">
-                  <ellipse cx="4" cy="18" rx="28" ry="5" fill="#3B899C" opacity="0.35" />
+                  <ellipse cx="4" cy="18" rx="28" ry="5" fill="#4FA3B7" opacity="0.3" />
                   <path d="M -24 16 Q -8 -8 8 16 Z" fill="#A9D7F3" stroke="#2F5D50" strokeWidth="2" strokeLinejoin="round" />
                   <path d="M 0 18 Q 16 -6 32 18 Z" fill="#4FA3B7" stroke="#2F5D50" strokeWidth="2" strokeLinejoin="round" />
                   <text x="4" y="31" textAnchor="middle" fill="#2F5D50" fontSize="10" fontWeight="700">서부 오름</text>
@@ -615,18 +557,18 @@ export default function JejuMythExplorerMap({
                   <line x1="-13" y1="4" x2="13" y2="5" stroke="#FFFDF7" strokeWidth="1.8" />
                 </g>
 
-                {/* 귀여운 제주 현무암 돌담 & 구멍 뽕뽕 현무암 바위 */}
+                {/* 귀여운 제주 현무암 돌담 & 구멍 뽕뽕 바위 (칙칙한 회색 대신 곶자왈 그린·블루그린 톤 사용) */}
                 <g transform="translate(310, 166)">
-                  <ellipse cx="0" cy="3" rx="11" ry="8" fill="#263B35" opacity="0.35" />
-                  <ellipse cx="0" cy="0" rx="11" ry="8" fill="#3D5A52" />
+                  <ellipse cx="0" cy="2.5" rx="11" ry="8" fill="#4FA3B7" opacity="0.35" />
+                  <ellipse cx="0" cy="0" rx="11" ry="8" fill="#2F5D50" />
                   <circle cx="-4" cy="-2" r="1.4" fill="#FFFDF7" />
                   <circle cx="3" cy="-1" r="1.2" fill="#FFFDF7" />
                   <circle cx="0" cy="3" r="1.3" fill="#FFFDF7" />
                   <ellipse cx="14" cy="3" rx="8" ry="6" fill="#4FA3B7" />
                 </g>
                 <g transform="translate(495, 292)">
-                  <ellipse cx="0" cy="3" rx="11" ry="8" fill="#263B35" opacity="0.35" />
-                  <ellipse cx="0" cy="0" rx="11" ry="8" fill="#3D5A52" />
+                  <ellipse cx="0" cy="2.5" rx="11" ry="8" fill="#4FA3B7" opacity="0.35" />
+                  <ellipse cx="0" cy="0" rx="11" ry="8" fill="#2F5D50" />
                   <circle cx="-3" cy="-2" r="1.4" fill="#FFFDF7" />
                   <circle cx="4" cy="0" r="1.2" fill="#FFFDF7" />
                   <circle cx="-1" cy="3" r="1.3" fill="#FFFDF7" />

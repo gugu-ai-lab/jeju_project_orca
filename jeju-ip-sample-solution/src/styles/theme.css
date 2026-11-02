@@ -1363,10 +1363,13 @@ h1, h2, h3, h4, .font-myth {
   pointer-events: none;
 }
 .svg-float-cloud {
-  animation: gentle-cloud-drift 4.2s infinite ease-in-out;
+  animation: gentle-cloud-drift 4.5s infinite ease-in-out;
+}
+.svg-float-cloud-slow {
+  animation: gentle-cloud-drift 6.2s infinite ease-in-out reverse;
 }
 .svg-float-boat {
-  animation: gentle-boat-bob 3.4s infinite ease-in-out;
+  animation: gentle-boat-bob 3.8s infinite ease-in-out;
 }
 @keyframes gentle-cloud-drift {
   0%, 100% { transform: translateX(0); }
