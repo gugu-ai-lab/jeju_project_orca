@@ -8,6 +8,6 @@ export default async function handler(req, res) {
     return res.status(200).json(await executeTool(tool, input))
   } catch (error) {
     const code = safeErrors[error.message] ? error.message : 'UPSTREAM_UNAVAILABLE'
-    return res.status(['INVALID_TOOL_INPUT', 'UNKNOWN_TOOL'].includes(code) ? 400 : 503).json({ code, error: safeErrors[code] })
+    return res.status(['INVALID_TOOL_INPUT', 'UNKNOWN_TOOL'].includes(code) ? 400 : 503).json({ code, error: safeErrors[code], upstreamCode: error.upstreamCode, httpStatus: error.httpStatus })
   }
 }

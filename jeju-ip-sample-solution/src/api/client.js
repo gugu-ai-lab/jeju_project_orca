@@ -7,7 +7,7 @@ async function readJson(r) {
   try { data = await r.json() }
   catch { throw new Error(`서버 응답이 JSON이 아님 (${r.status}) — vercel dev 로 실행했는지 확인`) }
   if (!r.ok) {
-    const error = new Error(data.error || '요청을 처리하지 못했습니다.')
+    const error = new Error((data.error || '요청을 처리하지 못했습니다.') + (data.upstreamCode ? ' (코드: ' + data.upstreamCode + ', HTTP ' + (data.httpStatus || '—') + ')' : ''))
     error.steps = data.steps || []
     error.code = data.code
     throw error

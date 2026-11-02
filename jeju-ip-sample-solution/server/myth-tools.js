@@ -1,3 +1,4 @@
+import { searchTourPlaces } from './tour.js'
 import { getWeather } from './weather.js'
 import { XMLParser } from 'fast-xml-parser'
 
@@ -17,6 +18,12 @@ tools.push({
   input_schema: { type: 'object', properties: { place: { type: 'string', enum: ['제주시', '서귀포시'] } }, required: ['place'], additionalProperties: false },
 })
 definitions.push(['get_weather', '기상청 단기예보'])
+tools.push({
+  name: 'search_tour_places',
+  description: '한국관광공사 TourAPI로 제주 신화와 관련된 관광지 이름을 검색하고 주소·좌표·소개를 확인한다. 신화와의 관계 자체는 별도 근거로 확인한다.',
+  input_schema: { type: 'object', properties: { keyword: { type: 'string', maxLength: 80 } }, required: ['keyword'], additionalProperties: false },
+})
+definitions.push(['search_tour_places', '한국관광공사 TourAPI'])
 export function catalog() {
   return definitions.map(([name, source]) => ({
     name, source, configured: name === 'search_myths' || Boolean(process.env.DATA_GO_KR_KEY?.trim()),
@@ -87,11 +94,14 @@ export const safeErrors = {
   UNKNOWN_TOOL: '지원하지 않는 도구입니다.',
   DATA_KEY_MISSING: '공공데이터 인증 설정을 기다리고 있습니다.',
   DATA_AUTH_REQUIRED: '공공데이터 인증 설정을 확인해 주세요.',
+  TOUR_AUTH_ERROR: 'TourAPI 인증 또는 서비스 활용 권한을 확인해 주세요.',
+  TOUR_UPSTREAM_ERROR: 'TourAPI 응답을 받지 못했습니다. 다른 도구는 계속 이용할 수 있습니다.',
   UPSTREAM_UNAVAILABLE: '공공데이터 응답을 받지 못했습니다. 잠시 후 다시 시도해 주세요.',
 }
 export async function executeTool(name, input) {
   if (!tools.some(t => t.name === name)) throw new Error('UNKNOWN_TOOL')
   const args = validateInput(input, name)
+  if (name === 'search_tour_places') return searchTourPlaces(args)
   if (name === 'get_weather') {
     const items = await getWeather(args)
     return { source: '기상청 단기예보', items, count: items.length, complete: true, fetchedAt: new Date().toISOString() }

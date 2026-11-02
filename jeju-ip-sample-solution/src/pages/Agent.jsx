@@ -85,7 +85,7 @@ export default function Agent() {
         <Form.Label htmlFor="tool-select">조회할 도구</Form.Label>
         <Form.Select id="tool-select" value={tool} onChange={e => setTool(e.target.value)} className="mb-2">
           <option value="search_myths">제주신화정보</option><option value="search_culture">역사문화일반정보</option>
-          <option value="search_locations">역사문화위치정보</option><option value="get_weather">기상청 단기예보</option>
+          <option value="search_locations">역사문화위치정보</option><option value="get_weather">기상청 단기예보</option><option value="search_tour_places">관광지 주소·소개 (TourAPI)</option>
         </Form.Select>
         <Form.Label htmlFor="tool-keyword">{tool === 'get_weather' ? '예보 지역' : '검색어'}</Form.Label>
         <InputGroup>{tool === 'get_weather'
@@ -100,6 +100,8 @@ export default function Agent() {
         {lookup.items.length === 0 ? <p>검색 결과가 없습니다.</p> : <ul>{lookup.items.map(p =>
           <li key={p.id}><strong>{p.title}</strong>{p.description && <p>{p.description}</p>}
             {p.time && <p>{p.sky || '하늘 정보 없음'} · 기온 {p.temp ?? '—'}°C · 강수확률 {p.pop ?? '—'}%</p>}
+            {p.address && <p>{p.address}</p>}
+            {p.detailStatus === 'error' && <p>상세 소개 조회 실패 · 코드 {p.upstreamCode || 'UNKNOWN'}</p>}
             {p.latitude && p.longitude && <span> · 좌표 {p.latitude}, {p.longitude}</span>}
             <div className="small text-muted">{p.publisher || p.source}{p.copyright && ' · 저작권: ' + p.copyright}</div></li>)}</ul>}
       </div>}

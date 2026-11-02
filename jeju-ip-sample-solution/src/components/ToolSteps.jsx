@@ -11,7 +11,11 @@ export default function ToolSteps({ steps = [] }) {
         {s.complete === false && <div>일부 자료 범위에서 검색</div>}
         {s.preview?.length > 0 && <details className="mt-2"><summary>조회 결과 보기</summary><ul>{s.preview.map((p, n) =>
           <li key={n}>{p.title || p.place}{p.description && <p>{p.description}</p>}
+            {p.address && <div>{p.address}</div>}
+            {p.latitude && p.longitude && <div>좌표 {p.latitude}, {p.longitude}</div>}
+            {p.detailStatus === 'error' && <div>상세 조회 실패 · 코드 {p.upstreamCode || 'UNKNOWN'}</div>}
             {p.time && <span> · {p.sky || '—'} · {p.temp ?? '—'}°C · 강수확률 {p.pop ?? '—'}%</span>}</li>)}</ul></details>}
+        {s.upstreamCode && <div>제공기관 오류 코드: {s.upstreamCode} · HTTP {s.httpStatus || '—'}</div>}
         {s.error && <Alert variant="warning" className="mt-2 mb-0">{s.error}</Alert>}
       </td><td>{s.source || '—'}</td>
     </tr>)}</tbody>
