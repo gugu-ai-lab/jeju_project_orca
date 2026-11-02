@@ -59,7 +59,8 @@
       "source": "한국관광공사 TourAPI",
       "sourceUrl": "https://www.data.go.kr/data/15101578/openapi.do",
       "recordId": "127744"
-    }
+    },
+    "buttonLabel": "삼성혈"
   },
   {
     "pinId": "pin-honinji",

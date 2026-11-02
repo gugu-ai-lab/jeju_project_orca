@@ -27,7 +27,7 @@ try {
   }
   for (const id of ['seolmundae', 'honinji']) {
     const pin = pins.find(p => p.mythId === id)
-    await page.locator('.explorer-map-chips .map-place-chip').filter({hasText: pin.mythTitle}).click()
+    await page.locator('.explorer-map-chips .map-place-chip').filter({hasText: pin.buttonLabel || pin.mythTitle}).click()
     assert.equal(await page.locator('.jeju-map-pin').count(), 1)
     assert.ok((await page.locator('.jeju-map-pin').getAttribute('aria-label')).startsWith(pin.placeName))
     await page.locator(`[data-place-id="${id}"]`).waitFor()
