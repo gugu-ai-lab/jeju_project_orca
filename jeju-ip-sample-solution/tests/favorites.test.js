@@ -62,3 +62,24 @@ test('list refuses an unexpected foreign owner in response',async()=>{
   const {client}=fakeClient([{data:[{...row,user_id:'user-b'}]}])
   await assert.rejects(createMythFavorites(client).list(),e=>e.code==='ACCESS_DENIED')
 })
+
+test('remove always filters both owner and story and reports actual deletion count',async()=>{
+  const {client,calls}=fakeClient([{data:[{id:'favorite-a'}]}])
+  const result=await createMythFavorites(client).remove(' story-a ')
+  assert.deepEqual(result,{deleted:true,deletedCount:1})
+  assert.ok(calls.some(c=>c.method==='eq'&&c.args[0]==='user_id'&&c.args[1]==='user-a'))
+  assert.ok(calls.some(c=>c.method==='eq'&&c.args[0]==='story_id'&&c.args[1]==='story-a'))
+})
+test('remove with no matching row does not claim deletion',async()=>{
+  const {client}=fakeClient([{data:[]}])
+  assert.deepEqual(await createMythFavorites(client).remove('story-a'),{deleted:false,deletedCount:0})
+})
+test('remove rejects missing filters before authentication and query',async()=>{
+  const {client,calls}=fakeClient([])
+  await assert.rejects(createMythFavorites(client).remove(''),e=>e.code==='INVALID_STORY')
+  assert.equal(calls.length,0)
+})
+test('remove permission failure is sanitized',async()=>{
+  const {client}=fakeClient([{error:{code:'42501',message:'private credential'}}])
+  await assert.rejects(createMythFavorites(client).remove('story-a'),e=>e.code==='ACCESS_DENIED'&&!e.message.includes('private'))
+})

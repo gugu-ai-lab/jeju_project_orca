@@ -23,6 +23,19 @@ export function createMythFavorites(client) {
   if (client?.supabaseUrl?.replace(/\/$/, '') !== FAVORITES_PROJECT_URL) throw new FavoritesError('WRONG_PROJECT')
   return {
     ensureSession: () => ensureFavoritesSession(client),
+    async remove(storyId) {
+      const value = validStoryId(storyId)
+      const { userId } = await ensureFavoritesSession(client)
+      let result
+      try {
+        result = await client.from(FAVORITES_TABLE).delete()
+          .eq('user_id', userId).eq('story_id', value).select('id')
+      } catch (error) { throw databaseError(error) }
+      if (result.error) throw databaseError(result.error)
+      const deletedCount = result.data?.length || 0
+      return { deleted: deletedCount > 0, deletedCount }
+    },
+
     async list() {
       const { userId } = await ensureFavoritesSession(client)
       let result
