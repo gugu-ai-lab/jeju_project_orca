@@ -1,0 +1,161 @@
+[
+  {
+    "pinId": "pin-seolmundae",
+    "mythId": "seolmundae",
+    "mythTitle": "설문대할망",
+    "categoryTag": "창세 신화",
+    "placeName": "돌문화공원 · 영실",
+    "fullPlaceName": "제주돌문화공원 & 한라산 영실기암 (제주시 조천읍 남조로 2023)",
+    "regionLabel": "조천 · 한라산",
+    "emoji": "🏔️",
+    "pinTone": "forest",
+    "hasVerifiedLocation": true,
+    "illustrationCoords": {
+      "svgX": 428,
+      "svgY": 238,
+      "xPercent": 53.5,
+      "yPercent": 49.5
+    },
+    "realGeoCoords": {
+      "lat": 33.4475,
+      "lng": 126.6578,
+      "kakaoPlaceName": "제주돌문화공원"
+    },
+    "verifiedNote": "국가지정 명승 제84호(한라산 영실기암 오백장군) · 제주돌문화공원 설문대할망전시관 확인"
+  },
+  {
+    "pinId": "pin-samsinin",
+    "mythId": "samsinin",
+    "mythTitle": "탐라 삼신인",
+    "categoryTag": "개국 신화",
+    "placeName": "제주 삼성혈",
+    "fullPlaceName": "제주 삼성혈 (제주시 삼성로 22)",
+    "regionLabel": "제주시 도심",
+    "emoji": "🏹",
+    "pinTone": "sea",
+    "hasVerifiedLocation": true,
+    "illustrationCoords": {
+      "svgX": 276,
+      "svgY": 132,
+      "xPercent": 34.5,
+      "yPercent": 27.5
+    },
+    "realGeoCoords": {
+      "lat": 33.5043,
+      "lng": 126.5291,
+      "kakaoPlaceName": "삼성혈"
+    },
+    "verifiedNote": "국가지정 사적 제134호 · 제주역사문화정보 #651 · 한국관광공사 TourAPI 확인"
+  },
+  {
+    "pinId": "pin-honinji",
+    "mythId": "honinji",
+    "mythTitle": "혼인지",
+    "categoryTag": "개국·혼례 신화",
+    "placeName": "성산 혼인지",
+    "fullPlaceName": "성산 온평리 혼인지 (서귀포시 성산읍 혼인지로 39-22)",
+    "regionLabel": "동쪽 성산·온평",
+    "emoji": "🌺",
+    "pinTone": "sky",
+    "hasVerifiedLocation": true,
+    "illustrationCoords": {
+      "svgX": 644,
+      "svgY": 226,
+      "xPercent": 80.5,
+      "yPercent": 47.1
+    },
+    "realGeoCoords": {
+      "lat": 33.4310,
+      "lng": 126.8998,
+      "kakaoPlaceName": "혼인지"
+    },
+    "verifiedNote": "제주역사문화일반·위치정보 #2945 · 한국관광공사 TourAPI 확인"
+  },
+  {
+    "pinId": "pin-suwolbong",
+    "mythId": "suwolbong",
+    "mythTitle": "수월봉과 녹고물",
+    "categoryTag": "지명·효행 전설",
+    "placeName": "한경 수월봉",
+    "fullPlaceName": "한경면 고산리 수월봉 · 녹고물 (제주시 한경면 노을해안로 1013)",
+    "regionLabel": "서쪽 한경·고산",
+    "emoji": "💧",
+    "pinTone": "sea",
+    "hasVerifiedLocation": true,
+    "illustrationCoords": {
+      "svgX": 136,
+      "svgY": 276,
+      "xPercent": 17.0,
+      "yPercent": 57.5
+    },
+    "realGeoCoords": {
+      "lat": 33.2947,
+      "lng": 126.1636,
+      "kakaoPlaceName": "수월봉"
+    },
+    "verifiedNote": "국가지정 천연기념물 제513호 · 제주역사문화정보 #2872 확인"
+  },
+  {
+    "pinId": "pin-sanbangdeok",
+    "mythId": "sanbangdeok",
+    "mythTitle": "산방덕이",
+    "categoryTag": "지명·여신 전설",
+    "placeName": "산방산·산방굴사",
+    "fullPlaceName": "서귀포 안덕면 산방산 · 산방굴사 (안덕면 산방로 218-10)",
+    "regionLabel": "남서쪽 안덕",
+    "emoji": "⛰️",
+    "pinTone": "forest",
+    "hasVerifiedLocation": true,
+    "illustrationCoords": {
+      "svgX": 252,
+      "svgY": 352,
+      "xPercent": 31.5,
+      "yPercent": 73.3
+    },
+    "realGeoCoords": {
+      "lat": 33.2415,
+      "lng": 126.3134,
+      "kakaoPlaceName": "산방산"
+    },
+    "verifiedNote": "국가지정 명승 제77호 · 제주역사문화위치정보 확인"
+  },
+  {
+    "pinId": "pin-yeongdeung",
+    "mythId": "yeongdeung",
+    "mythTitle": "영등할망",
+    "categoryTag": "바다·해녀 신화",
+    "placeName": "건입동 칠머리당",
+    "fullPlaceName": "제주시 건입동 칠머리당 영등굿 전수관 (사라봉동길 58)",
+    "regionLabel": "제주시 건입동",
+    "emoji": "🌬️",
+    "pinTone": "sky",
+    "hasVerifiedLocation": true,
+    "illustrationCoords": {
+      "svgX": 468,
+      "svgY": 94,
+      "xPercent": 58.5,
+      "yPercent": 19.5
+    },
+    "realGeoCoords": {
+      "lat": 33.5162,
+      "lng": 126.5407,
+      "kakaoPlaceName": "칠머리당영등굿전수관"
+    },
+    "verifiedNote": "국가무형유산 · 유네스코 인류무형문화유산 · 제주역사문화정보 #1635 확인"
+  },
+  {
+    "pinId": "pin-jacheongbi",
+    "mythId": "jacheongbi",
+    "mythTitle": "자청비",
+    "categoryTag": "농경 신화",
+    "placeName": "제주 전역 전승",
+    "fullPlaceName": "제주 전역에 전해지는 농경 본풀이 (단일 고정 위치 없음)",
+    "regionLabel": "제주 섬 전체",
+    "emoji": "🌾",
+    "pinTone": "mint",
+    "hasVerifiedLocation": false,
+    "illustrationCoords": null,
+    "realGeoCoords": null,
+    "verifiedNote": "특정 단일 유적지가 아닌 제주 전역 무속 신화(세경본풀이)로 전승"
+  }
+]

@@ -1,20 +1,1654 @@
-/* 테마 위에 덧입히는 우리 앱 스타일 — 색은 Bootstrap 변수(--bs-*)를 써서 테마를 바꿔도 어울리게 */
-body { font-family: 'Pretendard', system-ui, sans-serif; background: var(--bs-tertiary-bg); }
+/* 제주 신화·전설 학생 탐험 테마 — 아이보리·화이트 단색 배경과 파스텔 하늘·블루그린 보조색 */
+:root {
+  --jeju-sky: #A9D7F3;
+  --jeju-sky-pastel: #EDF6FC;
+  --jeju-sea: #4FA3B7;
+  --jeju-mint-pastel: #E9F5F7;
+  --jeju-forest: #2F5D50;
+  --jeju-citrus: #F28C28;
+  --jeju-ivory: #FFFDF7;
+  --jeju-basalt: #343A3D;
+  --jeju-mist: #EDF6FA;
+  --jeju-line: #DCEAEF;
+  --jeju-shadow: 0 6px 20px rgba(47, 93, 80, .06);
+  --jeju-shadow-hover: 0 10px 26px rgba(47, 93, 80, .11);
 
-.hero {
-  background: linear-gradient(135deg, var(--bs-primary), var(--bs-info));
-  color: #fff;
+  --bs-body-bg: var(--jeju-ivory);
+  --bs-body-color: var(--jeju-basalt);
+  --bs-body-font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif;
+  --bs-primary: var(--jeju-sea);
+  --bs-primary-rgb: 79, 163, 183;
+  --bs-link-color: var(--jeju-forest);
+  --bs-link-hover-color: var(--jeju-sea);
+  --bs-border-radius: 1rem;
+  --bs-border-radius-lg: 1.4rem;
+  --bs-border-color: var(--jeju-line);
 }
-.hero h1, .hero .lead { color: #fff; }
 
-.item-card { transition: transform .15s, box-shadow .15s; }
-.item-card:hover { transform: translateY(-3px); box-shadow: 0 .5rem 1rem rgba(0,0,0,.08); }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--jeju-ivory);
+  color: var(--jeju-basalt);
+  line-height: 1.7;
+}
+h1, h2, h3, h4, .font-myth {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif;
+  color: var(--jeju-forest);
+  letter-spacing: -.02em;
+}
+
+/* 버튼 */
+.btn-primary {
+  --bs-btn-bg: var(--jeju-forest); --bs-btn-border-color: var(--jeju-forest);
+  --bs-btn-hover-bg: #254b40; --bs-btn-hover-border-color: #254b40;
+  --bs-btn-active-bg: #1e3d34; --bs-btn-active-border-color: #1e3d34;
+  font-weight: 600;
+}
+.btn-citrus {
+  --bs-btn-color: #2b1a05; --bs-btn-bg: var(--jeju-citrus); --bs-btn-border-color: var(--jeju-citrus);
+  --bs-btn-hover-bg: #dd7d1c; --bs-btn-hover-border-color: #dd7d1c; --bs-btn-hover-color: #2b1a05;
+  font-weight: 700;
+}
+.btn-outline-sea {
+  --bs-btn-color: var(--jeju-forest); --bs-btn-border-color: var(--jeju-sea);
+  --bs-btn-hover-bg: var(--jeju-sky-pastel); --bs-btn-hover-color: var(--jeju-forest); --bs-btn-hover-border-color: var(--jeju-sea);
+  font-weight: 600;
+}
+.btn-round {
+  border-radius: 999px;
+  padding: .55rem 1.25rem;
+  font-size: .95rem;
+}
+:focus-visible { outline: 3px solid var(--jeju-sky); outline-offset: 2px; }
+
+/* 상단 바 */
+.jeju-nav {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--jeju-line);
+}
+.jeju-nav .navbar-brand { display: flex; align-items: center; gap: .55rem; color: var(--jeju-forest); font-weight: 800; }
+.jeju-nav .brand-mark {
+  width: 1.75rem; height: 1.75rem; border-radius: 50%;
+  background: var(--jeju-sea);
+  box-shadow: inset 0 0 0 4px var(--jeju-sky);
+}
+.jeju-nav .nav-link { color: var(--jeju-basalt); border-radius: 999px; padding: .4rem .9rem; font-weight: 600; }
+.jeju-nav .nav-link:hover { background: var(--jeju-sky-pastel); }
+.jeju-nav .nav-link.active { background: var(--jeju-forest); color: #fff; }
+.jeju-nav .navbar-toggler { border-color: var(--jeju-sea); }
+.jeju-nav .navbar-toggler:focus { box-shadow: 0 0 0 3px rgba(79, 163, 183, .28); }
+
+/* 공통 면 */
+.surface {
+  background: #FFFFFF;
+  border: 1.5px solid var(--jeju-line);
+  border-radius: var(--bs-border-radius-lg);
+  box-shadow: var(--jeju-shadow);
+}
+.section-eyebrow { font-size: .8rem; letter-spacing: .08em; color: var(--jeju-sea); font-weight: 700; }
+.jeju-footer { border-top: 1px solid var(--jeju-line); background: #FFFFFF; color: var(--jeju-forest); }
+
+/* 샘플 컴포넌트(ItemCard 등) 호환 */
+.hero { background: var(--jeju-sea); color: #fff; }
+.hero h1, .hero .lead { color: #fff; }
+.item-card { border-radius: 1.25rem; border-color: var(--jeju-line); transition: transform .15s, box-shadow .15s; }
+.item-card:hover { transform: translateY(-3px); box-shadow: var(--jeju-shadow-hover); }
 .item-card-img { height: 160px; object-fit: cover; }
 .placeholder-img {
   display: flex; align-items: center; justify-content: center;
-  background: var(--bs-secondary-bg); color: var(--bs-secondary-color); font-size: 2rem;
+  background: var(--jeju-sky-pastel); color: var(--jeju-sea); font-size: 2rem;
 }
 
-.chat-box .msg { max-width: 80%; padding: .6rem .9rem; border-radius: 1rem; margin-bottom: .5rem; }
-.chat-box .msg.assistant { background: var(--bs-secondary-bg); }
-.chat-box .msg.user { background: var(--bs-primary); color: #fff; margin-left: auto; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ── 1. 메인 히어로 (단색 파스텔·화이트 톤, 제목 1줄 + 소개 1문장) ── */
+.myth-hero {
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sky);
+  border-radius: 1.6rem;
+  padding: 2.2rem 1.5rem;
+  box-shadow: var(--jeju-shadow);
+}
+@media (min-width: 768px) {
+  .myth-hero { padding: 2.6rem 2.5rem; }
+}
+.hero-cute-badge {
+  display: inline-block;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  font-size: .82rem;
+  font-weight: 700;
+  padding: .3rem .85rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.myth-hero-title {
+  font-size: clamp(1.55rem, 2.8vw, 2.15rem);
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.myth-hero-sub {
+  font-size: 1.02rem;
+  color: #525B60;
+  max-width: 38rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-cute-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.story-count-pill {
+  font-size: .8rem;
+  font-weight: 700;
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  padding: .25rem .75rem;
+  border-radius: 999px;
+}
+
+/* ── 2. 호기심 질문 신화 카드 (삽화 + 제목 + 질문 3요소만 간결하게) ── */
+.myth-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: .85rem;
+  text-align: left;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-line);
+  border-radius: 1.4rem;
+  color: inherit;
+  box-shadow: var(--jeju-shadow);
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.myth-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--jeju-sky);
+  box-shadow: var(--jeju-shadow-hover);
+}
+.myth-card:active {
+  transform: scale(.985);
+}
+.myth-card.is-selected {
+  border-color: var(--jeju-sea);
+  background: #FAFEFF;
+  box-shadow: 0 0 0 3px rgba(169, 215, 243, .55), var(--jeju-shadow-hover);
+}
+
+.myth-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 8.5rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: var(--jeju-sky-pastel);
+}
+.tone-sky .myth-art { background: var(--jeju-sky-pastel); }
+.tone-mint .myth-art,
+.tone-sea .myth-art,
+.tone-forest .myth-art { background: var(--jeju-mint-pastel); }
+
+.myth-mini-tag {
+  position: absolute;
+  top: .55rem;
+  left: .6rem;
+  font-size: .7rem;
+  font-weight: 700;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-line);
+}
+.myth-loc-badge {
+  position: absolute;
+  top: .55rem;
+  right: .6rem;
+  font-size: .68rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-sea);
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.pastel-illo {
+  width: 82%;
+  height: 82%;
+  max-height: 6.8rem;
+}
+
+.myth-body {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  padding: .85rem .35rem .25rem;
+}
+.myth-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.myth-card.is-selected .myth-title {
+  color: var(--jeju-sea);
+}
+.myth-question {
+  font-size: .92rem;
+  line-height: 1.5;
+  color: var(--jeju-basalt);
+  font-weight: 500;
+}
+
+.preview-badge {
+  display: inline-block; align-self: flex-start; font-size: .72rem; font-weight: 700;
+  padding: .15rem .6rem; border-radius: 999px;
+  background: #FFF6E9; color: #8a4b05; border: 1px solid var(--jeju-citrus);
+}
+
+.story-empty {
+  padding: 1.15rem; border-radius: var(--bs-border-radius); background: var(--jeju-sky-pastel);
+  border: 1px dashed var(--jeju-sea); color: var(--jeju-forest);
+}
+
+/* ── 3. 장면별 이야기 패널 (StoryPanel: 파스텔 그림책 + 2~3문장 장면) ── */
+.story-panel {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-line);
+  border-radius: 1.5rem;
+}
+@media (min-width: 992px) {
+  .story-panel {
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr);
+  }
+}
+
+.story-figure {
+  background: var(--jeju-ivory);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.35rem;
+  border-bottom: 1px solid var(--jeju-line);
+}
+@media (min-width: 992px) {
+  .story-figure {
+    padding: 1.65rem;
+    border-bottom: 0;
+    border-right: 1px solid var(--jeju-line);
+  }
+}
+
+.story-figure-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+.story-step-pill {
+  font-size: .8rem;
+  font-weight: 700;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .25rem .75rem;
+  border-radius: 999px;
+}
+.btn-archive-toggle {
+  border: 1px solid var(--jeju-line);
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  font-size: .76rem;
+  font-weight: 700;
+  padding: .25rem .7rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.btn-archive-toggle:hover {
+  background: var(--jeju-mint-pastel);
+  border-color: var(--jeju-sea);
+}
+
+.story-figure-frame {
+  background: #FFFFFF;
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.2rem;
+  padding: .85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 15.5rem;
+}
+.story-figure-frame img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 22rem;
+  height: auto;
+  object-fit: contain;
+  border-radius: .75rem;
+}
+.scene-pastel-canvas {
+  width: 100%;
+  min-height: 14rem;
+  border-radius: .95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--jeju-sky-pastel);
+}
+.scene-pastel-canvas.tone-mint {
+  background: var(--jeju-mint-pastel);
+}
+.scene-pastel-svg {
+  width: 100%;
+  max-width: 17rem;
+  height: auto;
+}
+
+.story-term-tip {
+  margin-top: .85rem;
+  padding: .65rem .85rem;
+  border-radius: .9rem;
+  background: var(--jeju-mint-pastel);
+  font-size: .84rem;
+  color: var(--jeju-basalt);
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+.term-tip-badge {
+  font-weight: 800;
+  font-size: .78rem;
+  color: var(--jeju-forest);
+}
+
+.story-copy {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+}
+@media (min-width: 992px) {
+  .story-copy { padding: 1.85rem 2rem; }
+}
+
+.story-caption {
+  font-size: .84rem;
+  color: var(--jeju-sea);
+  font-weight: 800;
+}
+.story-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.story-question-sub {
+  font-size: .95rem;
+  color: #5A6469;
+  font-weight: 600;
+}
+
+.story-easy-lines {
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.15rem;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+.story-easy-p {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--jeju-basalt);
+}
+.story-text {
+  white-space: pre-line;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* 이야기 패널 내부 장소 탐험 연결 박스 */
+.story-place-bridge {
+  background: var(--jeju-sky-pastel);
+  border: 1.5px solid var(--jeju-sky);
+  border-radius: 1.1rem;
+  padding: .95rem 1.1rem;
+}
+.story-place-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .85rem;
+}
+.story-place-label {
+  font-size: .76rem;
+  font-weight: 800;
+  color: var(--jeju-sea);
+}
+.story-place-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+  margin-top: .1rem;
+}
+.story-place-summary {
+  font-size: .86rem;
+  color: #4A5458;
+  margin-top: .2rem;
+}
+.story-place-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.story-credit-bar {
+  margin-top: 1rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--jeju-line);
+}
+.source-credit { margin: 0; font-size: .76rem; color: #6b7377; }
+.source-distinction { font-size: .74rem; color: #7A8387; margin-top: .2rem; }
+
+/* ── 간단한 장면 전환 효과 ───────────────────────── */
+@keyframes scene-fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+.story-figure-frame, .story-copy { animation: scene-fade .28s ease-out; }
+
+.scene-nav { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1.1rem; }
+.scene-dots { display: inline-flex; gap: .5rem; }
+.scene-dot { width: .7rem; height: .7rem; padding: 0; border-radius: 50%; border: 1.5px solid var(--jeju-sea); background: transparent; transition: background .18s, transform .18s; }
+.scene-dot.is-active { background: var(--jeju-forest); border-color: var(--jeju-forest); transform: scale(1.2); }
+
+/* ── AI 안내원 채팅 ────────────────────────────── */
+.chat-panel { display: flex; flex-direction: column; overflow: hidden; }
+.chat-head { display: flex; align-items: center; gap: .75rem; padding: .9rem 1.1rem; border-bottom: 1px solid var(--jeju-line); background: var(--jeju-sky-pastel); }
+.chat-avatar { flex: none; width: 2rem; height: 2rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--jeju-forest); color: #fff; }
+.chat-log { padding: 1rem; height: 24rem; max-height: 60vh; overflow-y: auto; display: flex; flex-direction: column; gap: .75rem; }
+.chat-empty { color: #6b7377; text-align: center; margin: auto; }
+.chat-msg { display: flex; gap: .5rem; align-items: flex-start; max-width: 92%; }
+.chat-msg.is-user { align-self: flex-end; flex-direction: row-reverse; }
+.chat-bubble { display: flex; flex-direction: column; padding: .65rem .9rem; border-radius: 1rem; background: var(--jeju-sky-pastel); }
+.chat-msg.is-user .chat-bubble { background: var(--jeju-forest); color: #fff; }
+.chat-msg.is-error .chat-bubble { background: #fdecea; border: 1px solid #e5a29b; }
+.chat-msg { animation: scene-fade .25s ease-out; }
+.chat-typing { flex-direction: row; gap: .3rem; padding: .85rem 1rem; }
+.chat-typing span { width: .45rem; height: .45rem; border-radius: 50%; background: var(--jeju-sea); animation: chat-bounce 1s infinite ease-in-out; }
+.chat-typing span:nth-child(2) { animation-delay: .15s; } .chat-typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes chat-bounce { 0%, 80%, 100% { opacity: .3; transform: none; } 40% { opacity: 1; transform: translateY(-3px); } }
+.chat-suggest { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0 1rem .75rem; }
+.chat-input { display: flex; gap: .5rem; padding: .75rem 1rem 1rem; border-top: 1px solid var(--jeju-line); }
+
+.tool-steps { margin-bottom: .6rem; padding: .5rem .7rem; border-radius: .6rem; background: #fff; border: 1px dashed var(--jeju-sea); font-size: .82rem; }
+.tool-steps summary { cursor: pointer; color: var(--jeju-forest); font-weight: 700; }
+.tool-steps ol { margin: .5rem 0 0; padding-left: 1.1rem; display: grid; gap: .4rem; }
+.tool-step { display: flex; flex-wrap: wrap; gap: .25rem .6rem; align-items: baseline; }
+.tool-name { color: var(--jeju-forest); background: var(--jeju-sky-pastel); padding: 0 .35rem; border-radius: .3rem; }
+.tool-status { font-weight: 600; } .tool-step.is-ok .tool-status { color: var(--jeju-forest); }
+.tool-step.is-error .tool-status { color: #b3261e; } .tool-step.is-running .tool-status { color: var(--jeju-sea); }
+.tool-args { font-family: ui-monospace, monospace; color: #5b6468; word-break: break-all; }
+.tool-count { color: var(--jeju-basalt); }
+.chat-input .btn { flex: none; white-space: nowrap; }
+
+/* ── 이야기 탐험: 카드 목록·필터 ────────────────── */
+.story-card { display: flex; gap: .85rem; width: 100%; height: 100%; padding: .75rem; text-align: left; color: inherit;
+  background: #fff; border: 1.5px solid var(--jeju-line); border-radius: var(--bs-border-radius-lg); transition: transform .18s, border-color .18s; }
+.story-card:hover { transform: translateY(-2px); }
+.story-card.is-selected { border-color: var(--jeju-forest); box-shadow: 0 0 0 2px var(--jeju-forest); }
+.story-card-thumb { flex: none; width: 4.5rem; height: 4.5rem; border-radius: .75rem; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  background: var(--jeju-sky-pastel); color: var(--jeju-sea); font-size: 1.6rem; }
+.story-card-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.story-card-body { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+.story-card-title { font-size: 1.1rem; font-weight: 700; color: var(--jeju-forest); }
+.story-card-meta { font-size: .82rem; color: #5b6468; }
+.chip { font-size: .7rem; font-weight: 700; padding: .1rem .5rem; border-radius: 999px; background: var(--jeju-sky-pastel); color: var(--jeju-forest); }
+.chip-ok { background: #e3f1ec; } .chip-wait { background: #fff3e3; color: #8a4b05; }
+
+/* ── 4. 이야기 패널 내 퍼즐 이동 안내 박스 ────────────── */
+.story-puzzle-callout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .85rem;
+  padding: .9rem 1.1rem;
+  border-radius: 1.1rem;
+  background: var(--jeju-mint-pastel);
+  border: 1.5px dashed var(--jeju-sea);
+}
+.story-puzzle-callout.is-ready {
+  border-style: solid;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(169, 215, 243, .45);
+}
+.story-puzzle-callout-badge {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+  margin-bottom: .15rem;
+}
+.story-puzzle-callout-text {
+  font-size: .88rem;
+  color: var(--jeju-basalt);
+}
+
+/* ── 5. 제주 신화 퀴즈 & 그림 퍼즐 섹션 ───────────────── */
+.myth-quiz-puzzle-section {
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sky);
+  border-radius: 1.6rem;
+  padding: 1.5rem;
+}
+@media (min-width: 768px) {
+  .myth-quiz-puzzle-section {
+    padding: 2rem 2.2rem;
+  }
+}
+.puzzle-section-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-section-sub {
+  font-size: .95rem;
+  color: #556065;
+}
+
+.puzzle-workspace-grid {
+  display: grid;
+  gap: 1.35rem;
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .puzzle-workspace-grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+    gap: 1.6rem;
+  }
+}
+
+/* 퍼즐 보드 카드 */
+.puzzle-board-card {
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.35rem;
+  padding: 1.2rem;
+}
+.puzzle-board-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+.puzzle-step-badge {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.puzzle-board-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+
+/* 진행 막대 (단색) */
+.puzzle-progress-track {
+  width: 100%;
+  height: .55rem;
+  background: var(--jeju-sky-pastel);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: .9rem;
+}
+.puzzle-progress-fill {
+  height: 100%;
+  background: var(--jeju-sea);
+  border-radius: 999px;
+  transition: width .3s ease;
+}
+
+/* N×M 퍼즐 격자 프레임 — 완성 전에는 조각 구분선, 완성 후에는 하나로 매끄럽게 연결 */
+.puzzle-grid-frame {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+  padding: 6px;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-line);
+  border-radius: 1.15rem;
+  overflow: hidden;
+  transition: gap .35s ease, padding .35s ease, border-color .35s ease;
+}
+.puzzle-grid-frame.is-completed {
+  gap: 0;
+  padding: 0;
+  border-color: var(--jeju-sea);
+  box-shadow: 0 8px 24px rgba(47, 93, 80, .14);
+}
+
+.puzzle-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 10.5rem;
+  border-radius: .75rem;
+  overflow: hidden;
+  transition: border-radius .35s ease, transform .2s ease;
+}
+.puzzle-grid-frame.is-completed .puzzle-tile {
+  border-radius: 0;
+}
+
+/* 열린 퍼즐 조각: 원본 공식 삽화의 정확한 위치 슬라이스 표시 */
+.puzzle-tile-art-slice {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  animation: piece-reveal .36s ease-out;
+}
+@keyframes piece-reveal {
+  from {
+    opacity: 0;
+    transform: scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.puzzle-tile-art-slice img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+.puzzle-tile-opened-tag {
+  position: absolute;
+  bottom: .5rem;
+  left: .5rem;
+  font-size: .72rem;
+  font-weight: 800;
+  padding: .18rem .55rem;
+  border-radius: 999px;
+  background: rgba(255, 253, 247, .92);
+  color: var(--jeju-forest);
+  border: 1px solid var(--jeju-line);
+}
+
+/* 가려진 퍼즐 조각 커버 */
+.puzzle-tile-cover {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--jeju-sky);
+  border-radius: .75rem;
+  padding: .85rem .5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: .3rem;
+  cursor: pointer;
+  color: var(--jeju-forest);
+  transition: background .18s ease, border-color .18s ease, transform .15s ease;
+}
+.puzzle-tile-cover.cover-sky {
+  background: var(--jeju-sky-pastel);
+}
+.puzzle-tile-cover.cover-mint {
+  background: var(--jeju-mint-pastel);
+}
+.puzzle-tile-cover:hover {
+  border-color: var(--jeju-sea);
+  transform: translateY(-2px);
+}
+.puzzle-tile.is-active-target .puzzle-tile-cover {
+  border-style: solid;
+  border-color: var(--jeju-sea);
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 2px var(--jeju-sky);
+}
+.puzzle-cover-num {
+  font-size: .72rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-sea);
+  padding: .12rem .55rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-line);
+}
+.puzzle-cover-icon {
+  font-size: 1.55rem;
+  color: var(--jeju-sea);
+  line-height: 1.1;
+}
+.puzzle-cover-title {
+  font-size: .86rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-cover-sub {
+  font-size: .74rem;
+  color: #5A656A;
+}
+
+.puzzle-board-footer {
+  margin-top: .75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .35rem .75rem;
+  font-size: .76rem;
+  color: #657075;
+}
+.puzzle-caption-text {
+  font-weight: 700;
+  color: var(--jeju-forest);
+}
+.puzzle-session-note {
+  color: #6F7A7F;
+}
+
+/* ── 6. 3지선다 신화 퀴즈 카드 ──────────────────────── */
+.quiz-card-box {
+  background: #FFFFFF;
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.35rem;
+  padding: 1.2rem;
+}
+.quiz-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+.quiz-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .1rem;
+  padding: .5rem .4rem;
+  border-radius: .9rem;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-ivory);
+  color: var(--jeju-basalt);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.quiz-tab-btn:hover {
+  border-color: var(--jeju-sky);
+  background: var(--jeju-sky-pastel);
+}
+.quiz-tab-btn.is-active {
+  border-color: var(--jeju-sea);
+  background: var(--jeju-sky-pastel);
+  box-shadow: 0 0 0 2px rgba(169, 215, 243, .45);
+}
+.quiz-tab-btn.is-solved {
+  border-color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+}
+.quiz-tab-num {
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.quiz-tab-status {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+}
+.quiz-tab-btn.is-solved .quiz-tab-status {
+  color: var(--jeju-forest);
+}
+
+.quiz-piece-link-pill {
+  font-size: .78rem;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .65rem;
+  border-radius: 999px;
+}
+.quiz-solved-pill {
+  font-size: .75rem;
+  font-weight: 700;
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  padding: .2rem .6rem;
+  border-radius: 999px;
+}
+.quiz-prompt-title {
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.55;
+  color: var(--jeju-forest);
+  margin: .5rem 0 .95rem;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.quiz-option-btn {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  width: 100%;
+  text-align: left;
+  padding: .75rem .95rem;
+  border-radius: 1rem;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-ivory);
+  color: var(--jeju-basalt);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .12s ease, border-color .15s ease, background .15s ease;
+}
+.quiz-option-btn:hover:not(:disabled) {
+  border-color: var(--jeju-sea);
+  background: var(--jeju-sky-pastel);
+  transform: translateY(-1px);
+}
+.quiz-option-btn:disabled {
+  cursor: default;
+}
+.quiz-option-btn.is-correct {
+  border-color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  font-weight: 800;
+}
+.quiz-option-btn.is-wrong {
+  border-color: var(--jeju-sky);
+  background: #F5F9FC;
+}
+.quiz-option-index {
+  flex: none;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .82rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  border: 1px solid var(--jeju-line);
+}
+.quiz-option-btn.is-correct .quiz-option-index {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+  border-color: var(--jeju-forest);
+}
+.quiz-option-text {
+  flex: 1;
+  font-size: .95rem;
+}
+.quiz-option-mark {
+  font-size: .76rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.quiz-option-mark.is-retry {
+  color: var(--jeju-sea);
+}
+
+.quiz-feedback-box {
+  margin-top: .9rem;
+  padding: .85rem 1rem;
+  border-radius: 1rem;
+  animation: scene-fade .22s ease-out;
+}
+.quiz-feedback-box.is-hint {
+  background: var(--jeju-sky-pastel);
+  border: 1.5px solid var(--jeju-sky);
+}
+.quiz-feedback-box.is-correct {
+  background: var(--jeju-mint-pastel);
+  border: 1.5px solid var(--jeju-sea);
+}
+.quiz-feedback-title {
+  font-size: .9rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+  margin-bottom: .25rem;
+}
+.quiz-feedback-desc {
+  font-size: .88rem;
+  color: var(--jeju-basalt);
+  line-height: 1.6;
+}
+.quiz-feedback-evidence {
+  font-size: .75rem;
+  color: #5C676C;
+}
+
+/* ── 7. 퍼즐 완성 축하 배너 & 크게 보기 라이트박스 ─────── */
+.puzzle-complete-banner {
+  position: relative;
+  margin-top: 1rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 1.3rem;
+  background: var(--jeju-mint-pastel);
+  border: 2px solid var(--jeju-sea);
+  overflow: hidden;
+  animation: celebrate-pop .38s ease-out;
+}
+@keyframes celebrate-pop {
+  0% { opacity: 0; transform: scale(.96); }
+  70% { transform: scale(1.01); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.puzzle-complete-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.puzzle-complete-pill {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  padding: .2rem .7rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sea);
+}
+.puzzle-complete-heading {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-complete-desc {
+  font-size: .9rem;
+  color: var(--jeju-basalt);
+}
+
+.puzzle-complete-sparkles {
+  position: absolute;
+  top: .6rem;
+  right: 1rem;
+  display: flex;
+  gap: .45rem;
+  pointer-events: none;
+}
+.sparkle-dot {
+  color: var(--jeju-sea);
+  font-size: 1.1rem;
+  animation: sparkle-float 1.8s infinite ease-in-out;
+}
+.sparkle-dot.s2 { animation-delay: .3s; color: var(--jeju-forest); }
+.sparkle-dot.s3 { animation-delay: .6s; }
+@keyframes sparkle-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: .7; }
+  50% { transform: translateY(-4px) scale(1.2); opacity: 1; }
+}
+
+/* 크게 감상하기 모달 */
+.puzzle-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1080;
+  background: rgba(34, 48, 44, .62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: scene-fade .2s ease-out;
+}
+.puzzle-lightbox-card {
+  width: 100%;
+  max-width: 56rem;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sky);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .25);
+}
+@media (min-width: 768px) {
+  .puzzle-lightbox-card {
+    padding: 1.6rem 1.8rem;
+  }
+}
+.puzzle-lightbox-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+.puzzle-lightbox-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.puzzle-lightbox-image-wrap {
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 1.1rem;
+  padding: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.puzzle-lightbox-image-wrap img {
+  display: block;
+  width: 100%;
+  max-height: 64vh;
+  height: auto;
+  object-fit: contain;
+  border-radius: .75rem;
+}
+.puzzle-lightbox-footer {
+  margin-top: .9rem;
+  font-size: .88rem;
+  color: var(--jeju-basalt);
+}
+.puzzle-lightbox-source {
+  font-size: .76rem;
+  color: #687378;
+}
+
+/* ── 8. 제주 신화 탐험 지도 (Home 메인 레이아웃) ─────── */
+.map-home-header {
+  padding: .75rem .5rem 0;
+}
+.section-cute-sub {
+  font-size: .88rem;
+  color: #5C676C;
+}
+
+.explorer-main-grid {
+  display: grid;
+  gap: 1.35rem;
+  align-items: stretch;
+}
+@media (min-width: 992px) {
+  .explorer-main-grid {
+    grid-template-columns: minmax(0, 1.32fr) minmax(0, .88fr);
+    gap: 1.5rem;
+  }
+}
+
+/* 왼쪽 지도 카드 */
+.explorer-map-card {
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sky);
+  border-radius: 1.6rem;
+  padding: 1.15rem;
+  box-shadow: var(--jeju-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 768px) {
+  .explorer-map-card {
+    padding: 1.35rem 1.5rem;
+  }
+}
+
+.explorer-map-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: .85rem;
+}
+.map-badge-pill {
+  font-size: .8rem;
+  font-weight: 700;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .25rem .75rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.map-hint-text {
+  font-size: .84rem;
+  color: #586368;
+  font-weight: 600;
+}
+
+.map-mode-switch {
+  display: inline-flex;
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+  border-radius: 999px;
+  padding: .18rem;
+  gap: .2rem;
+}
+.map-mode-btn {
+  border: 0;
+  background: transparent;
+  color: #556065;
+  font-size: .76rem;
+  font-weight: 700;
+  padding: .28rem .75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.map-mode-btn.is-active {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+}
+.btn-kakao-route {
+  display: inline-flex;
+  align-items: center;
+  font-size: .76rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+  border: 1.5px solid var(--jeju-sea);
+  padding: .28rem .75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+}
+.btn-kakao-route:hover {
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  transform: translateY(-1px);
+}
+
+.explorer-map-stage {
+  position: relative;
+  width: 100%;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-sky-pastel);
+}
+
+.kakao-map-canvas {
+  width: 100%;
+  height: 22rem;
+}
+.kakao-map-canvas.is-loading {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pastel-jeju-map-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 20.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--jeju-sky-pastel);
+}
+.pastel-jeju-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 23rem;
+  user-select: none;
+}
+
+/* API 키 미설정/오류 안내 배너 */
+.map-fallback-notice {
+  position: absolute;
+  top: .65rem;
+  left: .65rem;
+  right: .65rem;
+  z-index: 6;
+  background: #FFFFFF;
+  border: 1.5px solid var(--jeju-sea);
+  border-radius: .9rem;
+  padding: .55rem .85rem;
+  font-size: .78rem;
+  color: var(--jeju-basalt);
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  box-shadow: var(--jeju-shadow);
+}
+.map-fallback-notice strong {
+  color: var(--jeju-forest);
+}
+
+/* 전역 전승 신화(자청비) 선택 안내 배너 */
+.map-global-myth-banner {
+  position: absolute;
+  bottom: .65rem;
+  left: .65rem;
+  right: .65rem;
+  z-index: 6;
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-sea);
+  border-radius: 1rem;
+  padding: .65rem .9rem;
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  font-size: .82rem;
+  color: var(--jeju-basalt);
+  box-shadow: var(--jeju-shadow);
+}
+.map-global-myth-banner strong {
+  color: var(--jeju-forest);
+  display: block;
+}
+
+/* 지도 위 귀여운 핀 레이어 */
+.pastel-map-pins-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.jeju-map-pin {
+  position: absolute;
+  transform: translate(-50%, -85%);
+  pointer-events: auto;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform .18s ease, z-index 0s;
+}
+.jeju-map-pin:hover {
+  transform: translate(-50%, -92%) scale(1.06);
+  z-index: 4;
+}
+.jeju-map-pin.is-selected {
+  transform: translate(-50%, -95%) scale(1.1);
+  z-index: 5;
+  animation: pin-bounce-pop .44s cubic-bezier(.34, 1.56, .64, 1);
+}
+.jeju-map-pin.is-bouncing {
+  animation: pin-bounce-pop .44s cubic-bezier(.34, 1.56, .64, 1);
+}
+@keyframes pin-bounce-pop {
+  0% {
+    transform: translate(-50%, -85%) scale(.92);
+  }
+  45% {
+    transform: translate(-50%, -112%) scale(1.16);
+  }
+  75% {
+    transform: translate(-50%, -91%) scale(1.06);
+  }
+  100% {
+    transform: translate(-50%, -95%) scale(1.1);
+  }
+}
+
+.pin-pulse-ring {
+  position: absolute;
+  bottom: -4px;
+  width: 1.65rem;
+  height: .75rem;
+  border-radius: 50%;
+  background: rgba(79, 163, 183, .35);
+  animation: pin-ring-wave 1.8s infinite ease-out;
+  pointer-events: none;
+}
+@keyframes pin-ring-wave {
+  0% {
+    transform: scale(.7);
+    opacity: .85;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+
+.pin-marker-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  border: 2px solid var(--jeju-sea);
+  border-bottom-width: 4px;
+  border-radius: 999px;
+  padding: .24rem .64rem;
+  font-size: .76rem;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 5px 12px rgba(47, 93, 80, .16);
+  transition: background .16s, color .16s, border-color .16s;
+}
+.jeju-map-pin.is-selected .pin-marker-bubble {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+  border-color: #1F4238;
+  box-shadow: 0 0 0 4px rgba(169, 215, 243, .75), 0 8px 18px rgba(47, 93, 80, .24);
+}
+.pin-ground-shadow {
+  position: absolute;
+  bottom: -4px;
+  width: 1.45rem;
+  height: .45rem;
+  border-radius: 50%;
+  background: rgba(47, 93, 80, .22);
+  pointer-events: none;
+}
+.svg-float-cloud {
+  animation: gentle-cloud-drift 4.5s infinite ease-in-out;
+}
+.svg-float-cloud-slow {
+  animation: gentle-cloud-drift 6.2s infinite ease-in-out reverse;
+}
+.svg-float-boat {
+  animation: gentle-boat-bob 3.8s infinite ease-in-out;
+}
+@keyframes gentle-cloud-drift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+@keyframes gentle-boat-bob {
+  0%, 100% { transform: translate(722px, 268px); }
+  50% { transform: translate(722px, 265px); }
+}
+.pin-emoji {
+  font-size: .88rem;
+  line-height: 1;
+}
+.pin-place-sub {
+  margin-top: .12rem;
+  font-size: .66rem;
+  font-weight: 700;
+  background: rgba(255, 253, 247, .92);
+  color: #465257;
+  padding: .05rem .42rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.jeju-map-pin.is-selected .pin-place-sub {
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  font-weight: 800;
+}
+.pin-tail {
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--jeju-sea);
+  border: 2px solid #FFFFFF;
+  margin-top: .1rem;
+}
+.jeju-map-pin.is-selected .pin-tail {
+  background: var(--jeju-forest);
+  transform: scale(1.25);
+}
+
+/* 지도 하단 빠른 장소 선택 칩 */
+.explorer-map-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: .85rem;
+}
+.map-place-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .32rem .7rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--jeju-line);
+  background: var(--jeju-ivory);
+  color: var(--jeju-basalt);
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.map-place-chip small {
+  font-size: .72rem;
+  color: #636F74;
+  font-weight: 600;
+}
+.map-place-chip:hover {
+  background: var(--jeju-sky-pastel);
+  border-color: var(--jeju-sky);
+}
+.map-place-chip.is-active {
+  background: var(--jeju-mint-pastel);
+  border-color: var(--jeju-sea);
+  color: var(--jeju-forest);
+}
+.map-place-chip.is-active small {
+  color: var(--jeju-forest);
+}
+
+/* 오른쪽 선택된 장소 & 신화 요약 카드 */
+.selected-spot-panel {
+  background: #FFFFFF;
+  border: 2px solid var(--jeju-line);
+  border-radius: 1.6rem;
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.spot-card-animate {
+  animation: spot-card-switch .3s cubic-bezier(.22, 1, .36, 1);
+}
+@keyframes spot-card-switch {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@media (min-width: 768px) {
+  .selected-spot-panel {
+    padding: 1.5rem 1.65rem;
+  }
+}
+
+.spot-panel-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+}
+.spot-tag-pill {
+  font-size: .78rem;
+  font-weight: 800;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+  border: 1px solid var(--jeju-sky);
+}
+.spot-verified-pill {
+  font-size: .76rem;
+  font-weight: 800;
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+}
+
+.spot-place-box {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem .95rem;
+  border-radius: 1.1rem;
+  background: var(--jeju-ivory);
+  border: 1.5px solid var(--jeju-line);
+}
+.spot-place-emoji {
+  font-size: 1.65rem;
+  line-height: 1;
+}
+.spot-place-label {
+  font-size: .72rem;
+  font-weight: 800;
+  color: var(--jeju-sea);
+}
+.spot-place-title {
+  font-size: .92rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+
+.spot-myth-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--jeju-forest);
+}
+.spot-myth-question {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--jeju-sea);
+}
+.spot-myth-intro {
+  font-size: .94rem;
+  line-height: 1.68;
+  color: var(--jeju-basalt);
+}
+.spot-evidence-note {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--jeju-forest);
+  background: var(--jeju-mint-pastel);
+  padding: .5rem .75rem;
+  border-radius: .85rem;
+}
+
+.spot-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+.spot-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: .88rem;
+  padding: .58rem .75rem;
+}
+
+/* ── 9. Three.js 3D 미니어처 제주 섬 탭 스타일 ─────────── */
+.mini3d-stage-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 22.5rem;
+  background: var(--jeju-sky-pastel);
+}
+.mini3d-guide-pill {
+  position: absolute;
+  top: .65rem;
+  left: .75rem;
+  z-index: 5;
+  background: rgba(255, 253, 247, .94);
+  border: 1.5px solid var(--jeju-sky);
+  border-radius: 999px;
+  padding: .25rem .75rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--jeju-forest);
+  pointer-events: none;
+}
+.mini3d-loading-box,
+.mini3d-fallback-box {
+  min-height: 21rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--jeju-sky-pastel);
+  color: var(--jeju-forest);
+  font-size: .88rem;
+}
+
+.mini3d-pin-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .18s ease;
+}
+.mini3d-pin-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+.mini3d-pin-btn.is-selected {
+  transform: translateY(-4px) scale(1.1);
+}
+.mini3d-pin-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: .28rem;
+  background: #FFFFFF;
+  color: var(--jeju-forest);
+  border: 2px solid var(--jeju-sea);
+  border-bottom-width: 3.5px;
+  border-radius: 999px;
+  padding: .2rem .58rem;
+  font-size: .74rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(47, 93, 80, .18);
+}
+.mini3d-pin-btn.is-selected .mini3d-pin-bubble {
+  background: var(--jeju-forest);
+  color: #FFFFFF;
+  border-color: #1F4238;
+  box-shadow: 0 0 0 3px rgba(169, 215, 243, .75), 0 6px 14px rgba(47, 93, 80, .25);
+}
+.mini3d-pin-sub {
+  margin-top: .1rem;
+  font-size: .64rem;
+  font-weight: 700;
+  background: rgba(255, 253, 247, .94);
+  color: #465257;
+  padding: .04rem .38rem;
+  border-radius: 999px;
+}
+.mini3d-pin-btn.is-selected .mini3d-pin-sub {
+  background: var(--jeju-mint-pastel);
+  color: var(--jeju-forest);
+  font-weight: 800;
+}

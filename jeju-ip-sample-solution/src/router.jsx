@@ -4,6 +4,9 @@ import Home from './pages/Home'
 import Places from './pages/Places'
 import Heritage from './pages/Heritage'
 import Agent from './pages/Agent'
+import GuidePreview from './pages/GuidePreview'
+import Explore from './pages/Explore'
+import StoryDetail from './pages/StoryDetail'
 import My from './pages/My'
 import NotFound from './pages/NotFound'
 
@@ -13,9 +16,11 @@ import NotFound from './pages/NotFound'
 // ※ Places/Heritage 는 샘플 이름입니다. 자신의 주제에 맞게 바꾸세요.
 export const NAV_ITEMS = [
   { to: '/', label: '홈', icon: 'house' },
+  { to: '/explore', label: '이야기 탐험', icon: 'compass' },
   { to: '/places', label: '관광·문화', icon: 'geo-alt' },
   { to: '/heritage', label: '국가유산', icon: 'bank' },
   { to: '/agent', label: 'AI 가이드', icon: 'robot' },
+  { to: '/guide-preview', label: '안내원 미리보기', icon: 'moon-stars' },
   { to: '/my', label: '내 즐겨찾기', icon: 'star' },
 ]
 
@@ -26,9 +31,12 @@ export const router = createBrowserRouter([
     errorElement: <NotFound />,   // 없는 주소로 들어오면
     children: [
       { index: true, element: <Home /> },
+      { path: 'explore', element: <Explore /> },
+      { path: 'explore/:storyId', element: <StoryDetail /> },
       { path: 'places', element: <Places /> },
       { path: 'heritage', element: <Heritage /> },
       { path: 'agent', element: <Agent /> },
+      { path: 'guide-preview', element: <GuidePreview /> },
       { path: 'my', element: <My /> },
     ],
   },
