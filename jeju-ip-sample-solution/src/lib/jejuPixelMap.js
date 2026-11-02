@@ -152,15 +152,21 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
   const sun = new THREE.DirectionalLight(0xffffff, .45 * lk); sun.position.set(-.5, 10, .8); scene.add(sun)
   const frustum = 50
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -900, 900)
-  const mesh = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshLambertMaterial({ color: 0xffffff }), cells.length)
-  scene.add(mesh)
+  // 칸마다 상자를 쌓으면 같은 높이로 붙은 칸 사이에 안 보여야 할 옆면이 생겨, 돌릴 때 모서리에서 어두운 점이 튄다.
+  // 그래서 윗면 + "이웃보다 높은 쪽"의 옆면만 가진 지도 모양 하나를 만든다.
+  const terrain = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshLambertMaterial({ vertexColors: true }))
+  scene.add(terrain)
   // 바다 칸 밖으로 이어지는 바다 판 — 칸 윗면과 같은 높이로 두어 가장자리 옆면이 보이지 않게 한다(겹침은 polygonOffset 으로 정리)
   const ocean = new THREE.Mesh(new THREE.PlaneGeometry(2400, 2400),
     new THREE.MeshLambertMaterial({ color: SEA[2], polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 2 }))
   ocean.rotation.x = -Math.PI / 2; ocean.position.y = .1; scene.add(ocean)
 
-  const dm = new THREE.Object3D(), col = new THREE.Color(), seaIdx = []
-  cells.forEach((c, n) => { if (c.sea) seaIdx.push(n); else mesh.setColorAt(n, col.setHex(c.col)) })
+  const BASE = -.3                                                       // 땅 밑면 높이
+  const topY = (c, hScale) => (c.sea ? .1 : eh(c.h, hScale) + BASE)       // 칸 윗면 높이
+  const rgb = hex => [(hex >> 16 & 255) / 255, (hex >> 8 & 255) / 255, (hex & 255) / 255]
+  let colorAttr = null
+  const seaTop = new Map()                                                // 바다 칸 번호 → 윗면 꼭짓점 시작 번호(물결 색 갱신용)
+  const sprBase = c => topY(c, getView().hScale) + .3                       // 오브젝트는 땅 위로 살짝 띄워 지형에 가려지지 않게
 
   const U = .45, texCache = {}
   const spriteFor = name => {
@@ -182,18 +188,43 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
 
   function rebuild() {
     const { hScale } = getView()
+    const pos = [], nor = [], colr = [], idx = []
+    const quad = (p0, p1, p2, p3, n, c) => {
+      const b = pos.length / 3
+      pos.push(...p0, ...p1, ...p2, ...p3)
+      for (let k = 0; k < 4; k++) { nor.push(...n); colr.push(...c) }
+      idx.push(b, b + 1, b + 2, b, b + 2, b + 3)
+    }
+    seaTop.clear()
+    const at = (i, j) => (i < 0 || j < 0 || i >= W || j >= H ? null : cells[j * W + i])
     cells.forEach((c, n) => {
-      const ht = c.sea ? .4 : eh(c.h, hScale)
-      dm.position.set(c.i - W / 2 + .5, ht / 2 - .3, c.j - H / 2 + .5); dm.scale.set(1, Math.max(.1, ht), 1); dm.updateMatrix()
-      mesh.setMatrixAt(n, dm.matrix)
+      const x0 = c.i - W / 2, x1 = x0 + 1, z0 = c.j - H / 2, z1 = z0 + 1, y = topY(c, hScale)
+      const color = rgb(c.sea ? SEA[2] : c.col)
+      if (c.sea) seaTop.set(n, pos.length / 3)
+      quad([x0, y, z0], [x0, y, z1], [x1, y, z1], [x1, y, z0], [0, 1, 0], color)
+      if (c.sea) return
+      // 이웃이 더 낮을 때만 그 높이 차이만큼 옆면을 만든다(격자 밖은 만들지 않음)
+      const nb = (di, dj) => { const q = at(c.i + di, c.j + dj); return q ? topY(q, hScale) : y }
+      let yb = nb(1, 0);  if (yb < y) quad([x1, yb, z1], [x1, yb, z0], [x1, y, z0], [x1, y, z1], [1, 0, 0], color)
+      yb = nb(-1, 0);     if (yb < y) quad([x0, yb, z0], [x0, yb, z1], [x0, y, z1], [x0, y, z0], [-1, 0, 0], color)
+      yb = nb(0, 1);      if (yb < y) quad([x0, yb, z1], [x1, yb, z1], [x1, y, z1], [x0, y, z1], [0, 0, 1], color)
+      yb = nb(0, -1);     if (yb < y) quad([x1, yb, z0], [x0, yb, z0], [x0, y, z0], [x1, y, z0], [0, 0, -1], color)
     })
-    mesh.instanceMatrix.needsUpdate = true
-    sprites.forEach((s, n) => spriteObjs[n].position.set(s.i - W / 2 + .5, eh(s.h, hScale) + spriteObjs[n].userData.hh / 2, s.j - H / 2 + .5))
+    terrain.geometry.dispose()
+    const g = new THREE.BufferGeometry()
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3))
+    colorAttr = new THREE.Float32BufferAttribute(colr, 3)
+    g.setAttribute('color', colorAttr)
+    g.setIndex(idx)
+    terrain.geometry = g
+    sprites.forEach((s, n) => spriteObjs[n].position.set(s.i - W / 2 + .5, sprBase(cells[s.j * W + s.i]) + spriteObjs[n].userData.hh / 2, s.j - H / 2 + .5))
+    lastSea = -1
   }
+  let lastSea = -1
   rebuild()
 
-  const cc = new THREE.Color(), v = new THREE.Vector3()
-  let lastSea = -1
+  const v = new THREE.Vector3()
   return {
     name: 'three.js (WebGL)',
     rebuild,
@@ -210,8 +241,11 @@ function makeThree(THREE, { canvas, data, getSize, getView }) {
       const f = reduce ? 0 : Math.floor(t / 400)
       if (f !== lastSea) {
         lastSea = f
-        for (const n of seaIdx) mesh.setColorAt(n, cc.setHex(seaTone(cells[n], f)))
-        mesh.instanceColor.needsUpdate = true
+        for (const [n, start] of seaTop) {
+          const [r, g, b] = rgb(seaTone(cells[n], f))
+          for (let k = 0; k < 4; k++) colorAttr.setXYZ(start + k, r, g, b)
+        }
+        colorAttr.needsUpdate = true
       }
       BOATS.forEach((b, n) => {
         const bx = b.x + Math.sin(t / 2500 * b.sp) * 6, bz = b.z + Math.cos(t / 3000 * b.sp) * 2, o = boatObjs[n]
