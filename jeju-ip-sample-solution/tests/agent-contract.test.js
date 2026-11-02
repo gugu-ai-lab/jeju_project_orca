@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { runAgent, openAITools, LIMITS } from '../server/agent.js'
+import { runAgent, openAITools, LIMITS, SYSTEM } from '../server/agent.js'
 const call = (name, args, id) => ({ type: 'function_call', name, arguments: JSON.stringify(args), call_id: id })
 const final = text => ({ output: [{ type: 'message', content: [{ type: 'output_text', text }] }] })
 const populated = () => ({ items: [{ title: '확인된 자료' }], count: 1, complete: true, fetchedAt: '2026-11-02T00:00:00Z' })
@@ -15,6 +15,8 @@ test('five tools use automatic selection; ordered results and sources survive JS
       if (turn++ === 0) return { output: [call(tool.name, args, 'one')] }
       const payload = JSON.parse(request.input.at(-1).output)
       assert.ok(payload.sourceUrl.startsWith('https://www.data.go.kr/'))
+      assert.equal(payload.fetchedAtKst, '2026-11-02 09:00:00 KST')
+      assert.match(SYSTEM, /정확히 같은 이름의 항목이 없는 것과 관련 자료가 없는 것을 구분/)
       return final('확인된 자료를 안내합니다.')
     } })
     const transported = JSON.parse(JSON.stringify(result))
