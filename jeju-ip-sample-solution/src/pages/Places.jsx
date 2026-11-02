@@ -14,6 +14,8 @@ const PAGE_SIZE = 9
 
 export default function Places() {
   const addFavorite = useAppStore((s) => s.addFavorite)   // STEP 5에서 사용
+  const favorites = useAppStore((s) => s.favorites)
+  const loadFavorites = useAppStore((s) => s.loadFavorites)
   const [keyword, setKeyword] = useState('')
   const [type, setType] = useState('')
   const [places, setPlaces] = useState([])               // ① 데이터
@@ -38,6 +40,9 @@ export default function Places() {
     finally { setLoading(false) }
   }
   useEffect(() => { search(1) }, [])                      // 처음 한 번 자동 검색
+  useEffect(() => {
+    if (import.meta.env?.VITE_INTEGRATION_READ_ONLY !== 'true') loadFavorites()
+  }, [loadFavorites])
 
   async function openDetail(place) {
     const requestId = ++detailRequest.current
@@ -84,6 +89,7 @@ export default function Places() {
           {places.map((p) => (
             <Col key={p.id}>
               <ItemCard title={p.title} subtitle={p.addr} image={p.image} badge={TYPES[p.type]} onOpen={() => openDetail(p)}
+                isFavorite={favorites.some(favorite => favorite.storyId === `tour:${p.id}`)}
                 onSave={() => addFavorite({ source: 'tour', id: p.id, title: p.title })} />
             </Col>
           ))}

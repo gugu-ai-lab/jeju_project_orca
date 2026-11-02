@@ -12,6 +12,8 @@ import { useAppStore } from '../store/useAppStore'
 export default function Heritage() {
   const pageSize = 9
   const addFavorite = useAppStore((s) => s.addFavorite)
+  const favorites = useAppStore((s) => s.favorites)
+  const loadFavorites = useAppStore((s) => s.loadFavorites)
   const [keyword, setKeyword] = useState('')
   const [list, setList] = useState([])
   const [totalCount, setTotalCount] = useState(0)
@@ -35,6 +37,9 @@ export default function Heritage() {
     finally { setLoading(false) }
   }
   useEffect(() => { search(1) }, [])
+  useEffect(() => {
+    if (import.meta.env?.VITE_INTEGRATION_READ_ONLY !== 'true') loadFavorites()
+  }, [loadFavorites])
 
   async function openDetail(heritage) {
     const requestId = ++detailRequest.current
@@ -77,6 +82,7 @@ export default function Heritage() {
                   <a href={h.imageSourceUrl} target="_blank" rel="noopener noreferrer">사진: {h.imageSource}</a>
                   {' · '}<a href={h.imageLicenseUrl} target="_blank" rel="noopener noreferrer">{h.imageLicense}</a>
                 </>}</>} badge={h.kind} onOpen={() => openDetail(h)}
+                isFavorite={favorites.some(favorite => favorite.storyId === `heritage:${h.name}`)}
                 onSave={() => addFavorite({ source: 'heritage', id: h.name, title: h.name })} />
             </Col>
           ))}
