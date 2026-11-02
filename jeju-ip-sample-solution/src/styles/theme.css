@@ -201,6 +201,12 @@ h1, h2, h3, h4, .font-myth {
   overflow: hidden;
   background: var(--jeju-sky-pastel);
 }
+.myth-art .myth-pixel-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
 .tone-sky .myth-art { background: var(--jeju-sky-pastel); }
 .tone-mint .myth-art,
 .tone-sea .myth-art,
@@ -349,6 +355,13 @@ h1, h2, h3, h4, .font-myth {
   height: auto;
   object-fit: contain;
   border-radius: .75rem;
+}
+.story-figure-frame img.story-pixel-art {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: 16 / 9;
+  image-rendering: pixelated;
 }
 .scene-pastel-canvas {
   width: 100%;
@@ -523,7 +536,7 @@ h1, h2, h3, h4, .font-myth {
 .story-card.is-selected { border-color: var(--jeju-forest); box-shadow: 0 0 0 2px var(--jeju-forest); }
 .story-card-thumb { flex: none; width: 4.5rem; height: 4.5rem; border-radius: .75rem; overflow: hidden; display: flex; align-items: center; justify-content: center;
   background: var(--jeju-sky-pastel); color: var(--jeju-sea); font-size: 1.6rem; }
-.story-card-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.story-card-thumb img { width: 100%; height: 100%; object-fit: contain; object-position: center; image-rendering: pixelated; }
 .story-card-body { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
 .story-card-title { font-size: 1.1rem; font-weight: 700; color: var(--jeju-forest); }
 .story-card-meta { font-size: .82rem; color: #5b6468; }
@@ -663,7 +676,7 @@ h1, h2, h3, h4, .font-myth {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 10.5rem;
+  min-height: 0;
   border-radius: .75rem;
   overflow: hidden;
   transition: border-radius .35s ease, transform .2s ease;
@@ -693,7 +706,8 @@ h1, h2, h3, h4, .font-myth {
 .puzzle-tile-art-slice img {
   position: absolute;
   max-width: none;
-  object-fit: cover;
+  object-fit: fill;
+  image-rendering: pixelated;
   user-select: none;
   pointer-events: none;
 }

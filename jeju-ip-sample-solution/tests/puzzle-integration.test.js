@@ -72,11 +72,11 @@ test('each myth awards exactly one piece per correct answer and never awards one
   }
 })
 
-test('only Seolmundae has an image path until Gemini illustrations are supplied', () => {
-  assert.equal(getMythQuizPuzzle('seolmundae').artwork.src, '/myth/seolmundae-2.jpg')
-  for (const storyId of ['samsinin', 'honinji', 'jacheongbi', 'suwolbong', 'sanbangdeok', 'yeongdeung']) {
-    assert.equal(getMythQuizPuzzle(storyId).artwork.src, null)
-    assert.match(getMythQuizPuzzle(storyId).artwork.caption, /대표 삽화/)
+test('all seven story puzzles use their second shared pixel-art scene', () => {
+  for (const storyId of ['seolmundae', 'samsinin', 'honinji', 'jacheongbi', 'suwolbong', 'sanbangdeok', 'yeongdeung']) {
+    assert.equal(getMythQuizPuzzle(storyId).artwork.src, `/myth-pixel/${storyId}-scene-02-pixel-16x9.jpg`)
+    assert.equal(getMythQuizPuzzle(storyId).artwork.width, 1376)
+    assert.equal(getMythQuizPuzzle(storyId).artwork.height, 768)
   }
   assert.equal(getMythQuizPuzzle('unknown'), null)
 })

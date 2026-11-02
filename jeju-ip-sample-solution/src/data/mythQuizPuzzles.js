@@ -1,4 +1,4 @@
-import { MYTH_SOURCE } from './mythStories.js'
+import { MYTH_PIXEL_ART } from './mythPixelArt.js'
 
 /**
  * 제주 신화 퀴즈 & 그림 퍼즐 데이터 (Gemini 공공데이터 검증 완료 기준)
@@ -14,21 +14,20 @@ export const MYTH_QUIZ_PUZZLES = {
     storyId: 'seolmundae',
     puzzleId: 'puzzle-seolmundae-3piece-v1',
     title: '설문대할망 신화 그림 퍼즐',
-    subtitle: '이야기 속 3가지 퀴즈를 맞히고 가려진 설문대할망 공식 삽화를 완성해 보세요!',
+    subtitle: '이야기 속 3가지 퀴즈를 맞히고 가려진 설문대할망 픽셀 그림을 완성해 보세요!',
     grid: {
       rows: 1,
       cols: 3,
       totalPieces: 3,
     },
     artwork: {
-      src: '/myth/seolmundae-2.jpg',
-      alt: '설문대할망과 오백장군 전설 공식 삽화',
-      width: 1100,
-      height: 713,
-      caption: '설문대할망과 오백장군 전설 (공공데이터포털 원본 삽화 · 16_8_20160725-02)',
-      description:
-        '설문대할망이 오백 명의 아들들에게 줄 죽을 끓이던 큰 가마솥과 어머니를 그리워하는 오백장군의 모습을 담은 제주특별자치도 공식 신화 삽화예요.',
-      source: MYTH_SOURCE,
+      src: MYTH_PIXEL_ART.seolmundae.puzzleImage,
+      alt: '설문대할망 2장면 픽셀 아트',
+      width: MYTH_PIXEL_ART.seolmundae.width,
+      height: MYTH_PIXEL_ART.seolmundae.height,
+      caption: '설문대할망 · 2장면 픽셀 아트',
+      description: '설문대할망 이야기의 두 번째 장면을 담은 2D 픽셀 아트예요.',
+      source: null,
     },
     pieces: [
       {
@@ -116,6 +115,7 @@ export const MYTH_QUIZ_PUZZLES = {
 }
 
 function createThreePiecePuzzle({ storyId, title, questions }) {
+  const pixelArt = MYTH_PIXEL_ART[storyId]
   const pieces = questions.map((question, index) => ({
     pieceId: `${storyId}-piece-${index + 1}`,
     pieceIndex: index,
@@ -150,12 +150,12 @@ function createThreePiecePuzzle({ storyId, title, questions }) {
     grid: { rows: 1, cols: 3, totalPieces: 3 },
     // Gemini 삽화가 준비되면 각 이야기의 src만 지정하면 기존 3분할 보드가 사용한다.
     artwork: {
-      src: null,
-      alt: `${title} 대표 삽화`,
-      width: 1100,
-      height: 713,
-      caption: `${title} 대표 삽화`,
-      description: `${title} 이야기의 대표 장면을 담을 그림입니다.`,
+      src: pixelArt?.puzzleImage ?? null,
+      alt: `${title} 2장면 픽셀 아트`,
+      width: pixelArt?.width ?? 1376,
+      height: pixelArt?.height ?? 768,
+      caption: `${title} · 2장면 픽셀 아트`,
+      description: `${title} 이야기의 두 번째 장면을 담은 2D 픽셀 아트예요.`,
       source: null,
     },
     pieces,

@@ -73,9 +73,10 @@ export default function StoryPanel({
 }) {
   const [showOriginalArt, setShowOriginalArt] = useState(false)
   const image = scene?.image
+  const archiveImage = scene?.archiveImage
+  const displayedImage = showOriginalArt && archiveImage ? archiveImage : image
   const text = scene?.text
   const lines = scene?.studentLines
-  const usePastel = preferPastelArt && !showOriginalArt
   const isLastScene = sceneIndex >= Math.max(sceneCount, 1) - 1
 
   return (
@@ -85,26 +86,25 @@ export default function StoryPanel({
           <span className="story-step-pill">
             📖 장면 {sceneIndex + 1} / {Math.max(sceneCount, 1)}
           </span>
-          {preferPastelArt && image && (
+          {preferPastelArt && archiveImage && (
             <button
               type="button"
               className="btn-archive-toggle"
               onClick={() => setShowOriginalArt((v) => !v)}
             >
-              {showOriginalArt ? '🎨 부드러운 그림책 보기' : '🖼️ 공공데이터 원본 삽화 보기'}
+              {showOriginalArt ? '🎨 픽셀 그림 보기' : '🖼️ 공공데이터 원본 삽화 보기'}
             </button>
           )}
         </div>
 
         <div className="story-figure-frame">
-          {usePastel ? (
-            <ScenePastelArt storyId={storyId} sceneIndex={sceneIndex} />
-          ) : image ? (
+          {displayedImage ? (
             <img
-              src={image.src}
-              alt={image.alt}
-              width={image.width}
-              height={image.height}
+              className={displayedImage === image ? 'story-pixel-art' : 'story-archive-art'}
+              src={displayedImage.src}
+              alt={displayedImage.alt}
+              width={displayedImage.width}
+              height={displayedImage.height}
               loading="lazy"
             />
           ) : (
@@ -203,8 +203,8 @@ export default function StoryPanel({
           <SourceCredit source={source} />
           {preferPastelArt && (
             <p className="source-distinction mb-0">
-              · 카드 그림: 학생 탐험용 파스텔 일러스트(자체 제작) · 이야기 근거: Gemini 공공데이터 교차 검증 완료
-              {image ? ' · 원본 삽화: 토글 버튼으로 열람 가능' : ''}
+              · 카드와 장면 그림: Gemini 제작 2D 픽셀 아트 · 이야기 근거: Gemini 공공데이터 교차 검증 완료
+              {archiveImage ? ' · 공식 원본 삽화는 버튼으로 따로 볼 수 있어요.' : ''}
             </p>
           )}
         </div>

@@ -197,6 +197,7 @@ export default function Home() {
         </div>
 
         <StoryPanel
+          key={selected.id}
           storyId={selected.id}
           title={selected.title}
           question={selected.question}

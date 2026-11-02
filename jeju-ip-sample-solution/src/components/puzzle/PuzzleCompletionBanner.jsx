@@ -62,7 +62,7 @@ export default function PuzzleCompletionBanner({
         </div>
       </div>
 
-      {/* 완성된 공식 삽화 크게 보기 모달 */}
+      {/* 완성된 신화 그림 크게 보기 모달 */}
       {isLargeViewOpen && (
         <div
           className="puzzle-lightbox-backdrop"

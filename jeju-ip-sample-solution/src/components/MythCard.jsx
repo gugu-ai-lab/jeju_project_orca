@@ -95,7 +95,11 @@ export default function MythCard({ myth, selected, onSelect }) {
               : `📍 ${myth.mapPin.shortPlace}`}
           </span>
         ) : null}
-        <PastelMythIllustration id={myth.id} icon={myth.icon} />
+        {myth.thumbnailImage ? (
+          <img className="myth-pixel-thumbnail" src={myth.thumbnailImage} alt="" loading="lazy" />
+        ) : (
+          <PastelMythIllustration id={myth.id} icon={myth.icon} />
+        )}
       </span>
       <span className="myth-body">
         <span className="myth-title">{myth.title}</span>

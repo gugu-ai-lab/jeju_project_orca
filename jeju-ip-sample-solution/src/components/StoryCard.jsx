@@ -2,12 +2,12 @@ import { CATEGORY_LABEL, isVerified } from '../lib/storyFilter'
 
 // 이야기 목록 카드 — 표현 전용. story 는 storyCatalog 항목 형식.
 export default function StoryCard({ story, selected, onSelect }) {
-  const thumb = story.scenes?.find((s) => s.image)?.image
+  const thumb = story.thumbnailImage || story.scenes?.find((s) => s.image)?.image
   const verified = isVerified(story)
   return (
     <button type="button" className={`story-card${selected ? ' is-selected' : ''}`} aria-pressed={selected} onClick={() => onSelect(story.id)}>
       <span className="story-card-thumb" aria-hidden="true">
-        {thumb ? <img src={thumb.src} alt="" loading="lazy" /> : <i className="bi bi-journal-bookmark" />}
+        {thumb ? <img src={typeof thumb === 'string' ? thumb : thumb.src} alt="" loading="lazy" /> : <i className="bi bi-journal-bookmark" />}
       </span>
       <span className="story-card-body">
         <span className="d-flex flex-wrap gap-1">
