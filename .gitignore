@@ -1,0 +1,12 @@
+# Local and generated files
+.DS_Store
+node_modules/
+dist/
+.vercel/
+*.log
+
+# Secrets: commit only the empty example template
+.env
+.env.*
+!.env.example
+*.local
