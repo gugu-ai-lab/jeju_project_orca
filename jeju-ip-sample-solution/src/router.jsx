@@ -9,6 +9,8 @@ import GuidePreview from './pages/GuidePreview'
 import Explore from './pages/Explore'
 import StoryDetail from './pages/StoryDetail'
 import My from './pages/My'
+import Shop from './pages/Shop'
+import Cart from './pages/Cart'
 import NotFound from './pages/NotFound'
 
 // ── 메뉴 목록 ────────────────────────────────────────────
@@ -21,6 +23,7 @@ export const NAV_ITEMS = [
   { to: '/places', label: '관광·문화', icon: 'geo-alt' },
   { to: '/heritage', label: '국가유산', icon: 'bank' },
   { to: '/agent', label: '신화안내원', icon: 'robot' },
+  { to: '/shop', label: '기념품 가게', icon: 'shop' },
   { to: '/my', label: '내 즐겨찾기', icon: 'star' },
 ]
 
@@ -37,6 +40,8 @@ export const router = createBrowserRouter([
       { path: 'heritage', element: <Heritage /> },
       { path: 'agent', element: <Agent /> },
       { path: 'guide-preview', element: <GuidePreview /> },
+      { path: 'shop', element: <Shop /> },
+      { path: 'cart', element: <Cart /> },
       { path: 'my', element: <My /> },
       { path: '*', element: <NotFound /> },
     ],

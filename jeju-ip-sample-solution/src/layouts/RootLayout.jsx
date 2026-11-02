@@ -4,6 +4,8 @@ import { NAV_ITEMS } from '../router'
 import { useAppStore } from '../store/useAppStore'
 import PixelBackdrop from '../components/PixelBackdrop'
 import MotionToggle from '../components/MotionToggle'
+import CartNavLink from '../components/CartNavLink'
+import CartToast from '../components/CartToast'
 
 export default function RootLayout() {
   const toasts = useAppStore((s) => s.toasts)
@@ -12,6 +14,7 @@ export default function RootLayout() {
   return (
     <div className="d-flex flex-column min-vh-100 has-pixel-backdrop">
       <PixelBackdrop />
+      <CartToast />
       <Navbar expand="md" className="jeju-nav" collapseOnSelect sticky="top">
         <Container>
           <Navbar.Brand as={Link} to="/" title="시작 화면으로">
@@ -27,6 +30,7 @@ export default function RootLayout() {
                 </Nav.Link>
               ))}
             </Nav>
+            <Nav><CartNavLink /></Nav>
             {nickname && (
               <Navbar.Text><i className="bi bi-person-circle me-1" />{nickname}</Navbar.Text>
             )}

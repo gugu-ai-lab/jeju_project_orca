@@ -66,6 +66,20 @@ const SYMBOLS = {
     }); sparkle(p, 21, 5); sparkle(p, 3, 7, '#fff') } },
 }
 
+// 상점 상품용 추가 아이콘: 돌하르방, 감귤
+const DOL = ['....KKKKKK....', '...KFFFFFFK...', '..KFFFFFFFFK..', '.KFFFFFFFFFFK.', '.KKKKKKKKKKKK.', '..KFFFFFFFFK..', '..KFBFFFFBFK..', '..KFFFFFFFFK..', '..KFFFKKFFFK..', '..KFFFKKFFFK..', '..KFFFFFFFFK..', '...KFFBBFFK...', '...KFFFFFFK...', '..KFFFFFFFFK..', '.KFFFFFFFFFFK.', '.KFFKFFFFKFFK.', '.KFFFFFFFFFFK.', '..KFFFFFFFFK..', '..KFFFFFFFFK..', '..KKKKKKKKKK..']
+SYMBOLS.dolhareubang = { bg: '#e9e4d8', draw: (p) => {
+  p(0, 22, '#69b84a', N, 2)
+  DOL.forEach((row, j) => [...row].forEach((c, i) => { if (c === '.') return; const l = row[i - 1], r = row[i + 1]
+    p(5 + i, 1 + j, c === 'K' || c === 'B' ? '#2b2b2b' : l === 'K' ? '#b9b6ad' : r === 'K' ? '#77746e' : '#9c9993') }))
+  sparkle(p, 3, 5, '#fff'); sparkle(p, 21, 9, '#fff') } }
+SYMBOLS.tangerine = { bg: '#fdebd0', draw: (p) => {
+  p(0, 21, '#8a5a2e', N, 3); p(0, 21, '#a9763f', N, 1)
+  disc(p, 12, 14, 7, '#F28C28'); disc(p, 12, 15, 6, '#F28C28'); p(7, 18, '#c9650f', 10, 2); p(9, 20, '#c9650f', 6, 1) // 아랫쪽 음영
+  p(8, 10, '#ffb04a', 3, 2); p(9, 9, '#ffd9a0', 2, 1) // 윤기
+  p(11, 6, '#6b4423', 2, 2); p(13, 5, '#2d7a3e', 5, 2); p(14, 4, '#4aa357', 3, 1); p(8, 6, '#2d7a3e', 3, 1) // 꼭지와 잎
+  sparkle(p, 20, 6); sparkle(p, 4, 9, '#fff') } }
+
 const cache = new Map()
 // id 에 해당하는 상징이 있으면 { url, bg } 를, 없으면 null 을 돌려준다(호출하는 쪽이 기존 썸네일로 대체).
 export function storySymbol(id) {
