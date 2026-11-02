@@ -59,6 +59,9 @@ h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 7
 .btn:active:not(:disabled) { transform: translateY(3px); box-shadow: none; }
 .btn:disabled { box-shadow: none; }
 .btn-primary { --bs-btn-bg: var(--px-ink); --bs-btn-border-color: var(--px-deep); --bs-btn-hover-bg: #2c6b63; --bs-btn-hover-border-color: var(--px-deep); --bs-btn-active-bg: #2c6b63; --bs-btn-active-border-color: var(--px-deep); }
+.story-favorite-button.btn-outline-primary { color: var(--px-ink); background-color: #fffdf7; border-color: var(--px-ink); }
+.story-favorite-button.btn-outline-primary:hover:not(:disabled) { color: var(--px-ink); background-color: #cfe9f6; border-color: var(--px-ink); }
+.story-favorite-button.btn-outline-primary:disabled { color: var(--px-ink); background-color: #eef8fd; border-color: var(--px-ink); }
 .btn-outline-sea { --bs-btn-border-color: var(--px-ink); --bs-btn-bg: #fffdf7; --bs-btn-hover-bg: #cfe9f6; --bs-btn-hover-border-color: var(--px-ink); }
 .btn-citrus { --bs-btn-border-color: #2b1a05; --bs-btn-disabled-bg: #f6c796; --bs-btn-disabled-border-color: #8a6a45; }
 .form-control, .input-group-text { border: var(--px-border); border-radius: 0; background: #fff; }
