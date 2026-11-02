@@ -37,13 +37,24 @@ export async function getWeather({ place = '제주시' } = {}) {
   if (String(data?.response?.header?.resultCode) !== '00') throw new Error('UPSTREAM_UNAVAILABLE')
   const items = data?.response?.body?.items?.item ?? [];
   if (!items.length) throw new Error('UPSTREAM_UNAVAILABLE')
-  const slots = {}; // "날짜 시간" → { TMP, SKY, PTY, POP }
+  const forecast = normalizeForecast(items, place)
+  if (!forecast.length) throw new Error('UPSTREAM_UNAVAILABLE')
+  return forecast
+}
+
+// 기상청은 과거 시간대도 포함할 수 있으므로 현재 KST 시간대 이후만 제공한다.
+export function normalizeForecast(items, place, now = Date.now()) {
+  const kst = new Date(now + 9 * 3600e3)
+  const firstHour = kst.toISOString().slice(0, 10).replaceAll('-', '') + ' ' + String(kst.getUTCHours()).padStart(2, '0') + '00'
+  const slots = {}
   for (const it of items) {
-    const key = `${it.fcstDate} ${it.fcstTime}`;
-    (slots[key] ??= {})[it.category] = it.fcstValue;
+    const key = it.fcstDate + ' ' + it.fcstTime
+    ;(slots[key] ??= {})[it.category] = it.fcstValue
   }
-  return Object.entries(slots).slice(0, 6).map(([time, v]) => ({
-    id: time, title: place + ' ' + time + ' 예보', place, time, temp: v.TMP === undefined ? null : Number(v.TMP), sky: SKY[v.SKY] ?? v.SKY,
-    rain: PTY[v.PTY] ?? v.PTY, pop: v.POP === undefined ? null : Number(v.POP), // pop = 강수확률(%)
-  }));
+  return Object.entries(slots).filter(([time]) => time >= firstHour)
+    .sort(([left], [right]) => left.localeCompare(right)).slice(0, 6).map(([time, v]) => ({
+      id: time, title: place + ' ' + time + ' 예보', place, time,
+      temp: v.TMP === undefined ? null : Number(v.TMP), sky: SKY[v.SKY] ?? v.SKY,
+      rain: PTY[v.PTY] ?? v.PTY, pop: v.POP === undefined ? null : Number(v.POP),
+    }))
 }

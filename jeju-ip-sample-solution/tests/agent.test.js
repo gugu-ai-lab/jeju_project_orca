@@ -100,8 +100,8 @@ test('weather success and HTTP-200 upstream error are distinguished; raw errors 
   process.env.DATA_GO_KR_KEY='test-data-key'
   try {
     globalThis.fetch=async()=>({ok:true,text:async()=>JSON.stringify({response:{header:{resultCode:'00'},body:{items:{item:[
-      {fcstDate:'20261102',fcstTime:'1200',category:'TMP',fcstValue:'19'},
-      {fcstDate:'20261102',fcstTime:'1200',category:'POP',fcstValue:'30'},
+      {fcstDate:'20990101',fcstTime:'1200',category:'TMP',fcstValue:'19'},
+      {fcstDate:'20990101',fcstTime:'1200',category:'POP',fcstValue:'30'},
     ]}}}})})
     const result=await getWeather({place:'제주시'});assert.equal(result[0].temp,19);assert.equal(result[0].pop,30)
     globalThis.fetch=async()=>({ok:true,text:async()=>JSON.stringify({response:{header:{resultCode:'30',resultMsg:'private-detail'}}})})
