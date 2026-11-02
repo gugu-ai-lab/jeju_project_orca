@@ -54,6 +54,15 @@ try {
   assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
   assert.equal(await page.locator('.jeju-nav .navbar-brand.active').count(), 0)
 
+  for (const story of HOME_STORIES) {
+    await page.goto(origin)
+    await page.getByRole('link', { name: `${story.title} 자세히 보기`, exact: true }).click()
+    assert.equal(new URL(page.url()).pathname, `/explore/${story.id}`)
+    await page.locator('.story-heading').getByText(story.title, { exact: true }).waitFor()
+    await page.waitForFunction(() => window.scrollY === 0)
+    assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
+  }
+
   // 설문대할망은 상세 첫 장면부터 열고, 사용자가 퀴즈 링크를 누를 때만 퍼즐로 이동한다.
   await page.goto(origin)
   await page.locator('.myth-card').filter({ hasText: '설문대할망' }).getByRole('link', { name: '설문대할망 자세히 보기', exact: true }).click()
