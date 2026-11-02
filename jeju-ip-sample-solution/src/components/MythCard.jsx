@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 // 부드러운 파스텔 톤의 제주 신화 그림책 일러스트 (강한 원색 없이 아이보리·파스텔 하늘·블루그린 조화)
 function PastelMythIllustration({ id, icon }) {
   switch (id) {
@@ -83,12 +84,8 @@ function PastelMythIllustration({ id, icon }) {
 // 신화 선택 카드 — 학생 눈높이에 맞춰 [부드러운 일러스트 + 신화 제목 + 호기심 질문] 3요소만 간결하게 표시한다.
 export default function MythCard({ myth, selected, onSelect }) {
   return (
-    <button
-      type="button"
-      className={`myth-card tone-${myth.tone || 'sky'}${selected ? ' is-selected' : ''}`}
-      aria-pressed={selected}
-      onClick={() => onSelect(myth.id)}
-    >
+    <article className={`myth-card tone-${myth.tone || 'sky'}${selected ? ' is-selected' : ''}`}>
+      <button type="button" className="myth-card-select" aria-pressed={selected} onClick={() => onSelect(myth.id)}>
       <span className="myth-art" aria-hidden="true">
         {myth.tag && <span className="myth-mini-tag">{myth.tag}</span>}
         {myth.mapPin ? (
@@ -104,6 +101,10 @@ export default function MythCard({ myth, selected, onSelect }) {
         <span className="myth-title">{myth.title}</span>
         <span className="myth-question">{myth.question || `${myth.place}에는 어떤 이야기가 숨어 있을까요?`}</span>
       </span>
-    </button>
+      </button>
+      <Link className="btn btn-outline-sea btn-sm mt-3 align-self-start" to={`/explore/${myth.id}`} aria-label={`${myth.title} 상세 이야기 보기`}>
+        상세 이야기 보기
+      </Link>
+    </article>
   )
 }

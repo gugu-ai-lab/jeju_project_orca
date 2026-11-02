@@ -16,7 +16,7 @@ try {
   await page.locator('.myth-card').first().waitFor()
   assert.equal(await page.locator('.myth-card').count(), HOME_STORIES.length)
   assert.deepEqual(await page.locator('.myth-title').allTextContents(), HOME_STORIES.map(s => s.title))
-  await page.getByText(`추천 이야기 ${HOME_STORIES.length}개 / 전체 이야기 ${STORY_CATALOG.length}개`, { exact: false }).waitFor()
+  await page.getByRole('heading', { name: '신화전설이야기', exact: true }).waitFor()
   await page.getByText(/실제 지도 장소 6곳과 전체 이야기 수는 달라요/).waitFor()
   for (const story of HOME_STORIES) {
     const link = page.getByRole('link', { name: `${story.title} 상세 이야기 보기`, exact: true })
@@ -50,6 +50,19 @@ try {
     await page.locator('.story-caption').getByText(story.scenes[1].caption, { exact: true }).waitFor()
     if (story.id === 'seolmundae') assert.equal(await page.locator('#myth-quiz-puzzle').count(), 1)
     console.log(JSON.stringify({ id: story.id, title: story.title, detailRouteCorrect: true, scenes: story.scenes.length }))
+  }
+  for (const width of [1280, 768, 390]) {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto(origin)
+    await page.locator('.myth-card a').first().waitFor()
+    const layout = await page.locator('.myth-card').evaluateAll(cards => cards.map(card => {
+      const link = card.querySelector('a'), c = card.getBoundingClientRect(), l = link.getBoundingClientRect()
+      const overlaps = cards.some(other => { if (other === card) return false; const r = other.getBoundingClientRect(); return l.left < r.right && l.right > r.left && l.top < r.bottom && l.bottom > r.top })
+      return { inside: l.left >= c.left && l.right <= c.right && l.top >= c.top && l.bottom <= c.bottom, overlaps }
+    }))
+    assert.equal(layout.length, HOME_STORIES.length)
+    assert.ok(layout.every(item => item.inside && !item.overlaps))
+    console.log(JSON.stringify({ width, detailLinksInsideCards: layout.length, overlappingButtons: 0 }))
   }
   assert.deepEqual(errors, [])
   console.log(JSON.stringify({ home: HOME_STORIES.length, explore: STORY_CATALOG.length, locations: 6, imageFilter: 2, duplicateIds: 0, pageErrors: 0, paidRequests: 0, supabaseRequests: 0 }))

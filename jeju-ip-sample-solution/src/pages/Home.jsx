@@ -8,7 +8,7 @@ import MythCard from '../components/MythCard'
 import StoryPanel from '../components/StoryPanel'
 import mapPinsData from '../data/jejuMapPins.json'
 import { getMythQuizPuzzle } from '../data/mythQuizPuzzles'
-import { STORY_CATALOG, HOME_STORIES, VERIFIED_PLACE_COUNT } from '../data/storyCatalog'
+import { HOME_STORIES, VERIFIED_PLACE_COUNT } from '../data/storyCatalog'
 
 const PIN_BY_MYTH_ID = Object.fromEntries(mapPinsData.map((p) => [p.mythId, p]))
 
@@ -147,14 +147,14 @@ export default function Home() {
         <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
           <div>
             <h2 id="all-myth-cards" className="section-cute-title mb-0">
-              🧭 추천 이야기 {HOME_STORIES.length}개 / 전체 이야기 {STORY_CATALOG.length}개
+              신화전설이야기
             </h2>
             <p className="section-cute-sub mb-0">
               실제 지도 장소 {VERIFIED_PLACE_COUNT}곳과 전체 이야기 수는 달라요. 장소가 없는 이야기도 함께 읽어 보세요.
             </p>
           </div>
           <Link to="/explore" className="btn btn-outline-sea btn-sm btn-round">
-            <i className="bi bi-compass me-1" />전체 이야기 보기 ({STORY_CATALOG.length}개)
+            <i className="bi bi-compass me-1" />전체 이야기 보기
           </Link>
         </div>
 
@@ -166,9 +166,6 @@ export default function Home() {
                 selected={m.id === selectedId}
                 onSelect={handleSelectMyth}
               />
-              <Link className="btn btn-outline-sea btn-sm mt-2" to={`/explore/${m.id}`} aria-label={`${m.title} 상세 이야기 보기`}>
-                상세 이야기 보기
-              </Link>
             </Col>
           ))}
         </Row>
