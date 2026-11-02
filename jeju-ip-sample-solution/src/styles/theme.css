@@ -1673,3 +1673,13 @@ h1, h2, h3, h4, .font-myth {
 .jeju-map-pin.is-bouncing { transform: translate(-50%, -100%); animation: none; }
 .jeju-map-pin.is-bouncing .pin-marker-bubble { animation: pin-bubble-bounce .44s ease; }
 @keyframes pin-bubble-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* 장소 선택을 넉넉한 터치 영역으로 제공한다. */
+.explorer-map-card { justify-content: flex-start; gap: 1rem; }
+.explorer-map-topbar { margin-bottom: 0; gap: .8rem; }
+.btn-kakao-route { min-height: 46px; padding: .65rem .95rem; font-size: .95rem; display: inline-flex; align-items: center; }
+.explorer-map-topbar .map-badge-pill { padding: .5rem .8rem; font-size: .9rem; }
+.explorer-map-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; margin-top: 0; }
+.map-place-chip { min-height: 64px; padding: .7rem .85rem; flex-wrap: wrap; font-size: .95rem; text-align: left; }
+.map-place-chip small { width: 100%; font-size: .8rem; }
+.map-place-all { grid-column: 1 / -1; justify-content: center; min-height: 48px; }

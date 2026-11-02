@@ -25,6 +25,17 @@ try {
     }
     console.log(JSON.stringify({width,pinsAligned:6}))
   }
+  for (const id of ['seolmundae', 'honinji']) {
+    const pin = pins.find(p => p.mythId === id)
+    await page.locator('.explorer-map-chips .map-place-chip').filter({hasText: pin.placeName}).click()
+    assert.equal(await page.locator('.jeju-map-pin').count(), 1)
+    assert.ok((await page.locator('.jeju-map-pin').getAttribute('aria-label')).startsWith(pin.placeName))
+    await page.locator(`[data-place-id="${id}"]`).waitFor()
+  }
+  await page.getByRole('button', {name:'🗺️ 전체 장소 보기', exact:true}).click()
+  assert.equal(await page.locator('.jeju-map-pin').count(), 6)
+  assert.ok(await page.locator('.map-place-chip').first().evaluate(e => e.getBoundingClientRect().height >= 48))
+  console.log(JSON.stringify({singlePinSelectionWorks:true,restoreAllPins:6,largerButtons:true}))
   await page.setViewportSize({width:1280,height:900})
   await page.getByRole('button',{name:/혼인지.*신화 선택/}).click()
   await page.locator('[data-place-id="honinji"]').getByText('현재 관측값이 아닌 주변 지역의 예보예요.',{exact:true}).waitFor()

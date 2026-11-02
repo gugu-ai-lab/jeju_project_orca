@@ -14,8 +14,10 @@ export default function JejuMythExplorerMap({
   onSelectMyth,
 }) {
   const [bouncingPinId, setBouncingPinId] = useState(null)
+  const [focusOnly, setFocusOnly] = useState(false)
   const selectedPin = mapPinsData.find(p => p.mythId === selectedMythId) || verifiedPins[0]
   const isGlobalMythSelected = selectedPin && !selectedPin.hasVerifiedLocation
+  const visiblePins = focusOnly ? verifiedPins.filter(pin => pin.mythId === selectedMythId) : verifiedPins
   function handlePinClick(pin) {
     setBouncingPinId(pin.pinId)
     onSelectMyth?.(pin.mythId)
@@ -35,7 +37,7 @@ export default function JejuMythExplorerMap({
             🗺️ 신화 탐험 핀 <strong>{verifiedPins.length}곳</strong>
           </span>
           <span className="map-hint-text">
-            핀을 눌러 숨겨진 신화를 열어 보세요!
+            {focusOnly ? `${selectedPin.mythTitle}의 장소만 보고 있어요` : '아래 장소를 누르면 해당 핀만 보여요'}
           </span>
         </div>
 
@@ -434,7 +436,7 @@ export default function JejuMythExplorerMap({
 
             {/* 6. JSON 기반 클릭 가능한 스탠드형 신화 장소 핀 오버레이 */}
             <div className="pastel-map-pins-layer">
-              {verifiedPins.map((pin) => {
+              {visiblePins.map((pin) => {
                 const isSelected = selectedPin?.pinId === pin.pinId
                 const isBouncing = bouncingPinId === pin.pinId
                 return (
@@ -478,14 +480,17 @@ export default function JejuMythExplorerMap({
 
       {/* 지도 하단 JSON 핀 빠른 선택 칩 바 */}
       <div className="explorer-map-chips" aria-label="신화 장소 빠른 선택">
+        <button type="button" className={`map-place-chip map-place-all ${!focusOnly ? 'is-active' : ''}`}
+          aria-pressed={!focusOnly} onClick={() => setFocusOnly(false)}>🗺️ 전체 장소 보기</button>
         {verifiedPins.map((pin) => {
-          const active = selectedPin?.pinId === pin.pinId
+          const active = focusOnly && selectedPin?.pinId === pin.pinId
           return (
             <button
               key={pin.pinId}
               type="button"
               className={`map-place-chip ${active ? 'is-active' : ''}`}
-              onClick={() => handlePinClick(pin)}
+              aria-pressed={active}
+              onClick={() => { setFocusOnly(true); handlePinClick(pin) }}
             >
               <span>{pin.emoji}</span>
               <span>{pin.placeName}</span>
