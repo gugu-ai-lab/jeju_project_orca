@@ -192,3 +192,51 @@ body { background: #cfe9f8; }
   animation: px-sail 110s linear infinite, px-bob 3s steps(2, jump-none) infinite alternate; }
 @keyframes px-sail { from { left: -10%; } to { left: 110%; } }
 @media (max-width: 575.98px) { .px-island-big { right: -6%; } .px-island-small { display: none; } }
+
+/* ── 스크롤 잠수 연출: --d(잠수 0~1), --p(깊이 0~1), --e(바다 밑바닥 0~1)는 PixelBackdrop 이 스크롤에 맞춰 갱신한다 ── */
+.px-skygroup { position: absolute; inset: 0; opacity: calc(1 - var(--d, 0)); }
+.px-surface { position: absolute; inset: 0; transform: translateY(calc(var(--d, 0) * -100%)); will-change: transform; }
+.px-deep { position: absolute; left: 0; width: 100%; top: calc(100% - var(--cs) * 36px); height: 300%;
+  background: linear-gradient(#3aa9c9 0, #2386ac 5%, #1b6b94 12%, #14507c 24%, #0d3a64 40%, #0a2c52 100%); }
+.px-dark { position: absolute; inset: 0; background: #06182e; opacity: calc(var(--d, 0) * var(--p, 0) * .7); }
+.px-rays { position: absolute; top: 0; bottom: 0; left: -10%; width: 120%; opacity: calc(var(--d, 0) * (1 - var(--p, 0)) * .55);
+  background: repeating-linear-gradient(105deg, rgba(255, 255, 255, .2) 0 calc(var(--cs) * 6px), transparent calc(var(--cs) * 6px) calc(var(--cs) * 22px));
+  -webkit-mask-image: linear-gradient(#000, transparent 85%); mask-image: linear-gradient(#000, transparent 85%);
+  animation: px-sway 16s steps(8, jump-none) infinite alternate; }
+@keyframes px-sway { from { transform: translateX(calc(var(--cs) * -6px)); } to { transform: translateX(calc(var(--cs) * 6px)); } }
+
+/* 물고기·해녀: 잠수했을 때 화면 높이 --y% 에서 헤엄친다(표면 묶음 안이라 잠수할수록 아래에서 올라온다) */
+.px-fish, .px-haenyeo { position: absolute; image-rendering: pixelated; --u: calc((var(--cs) - var(--sz, 0)) * 1px); --w: calc(var(--fw, 12) * var(--u));
+  width: var(--w); height: calc(var(--fh, 6) * var(--u)); background-size: calc(var(--w) * var(--fn, 2)) 100%; background-repeat: no-repeat; }
+.px-fish { top: calc(100% + var(--y) * 1%); left: -80px; animation: px-tail .7s steps(1, end) infinite, px-swim-r var(--dur) linear infinite, px-fbob 5s steps(4, jump-none) infinite alternate; animation-delay: 0s, var(--delay), calc(var(--delay) / 4); }
+.px-fish-l { transform: scaleX(-1); animation-name: px-tail, px-swim-l, px-fbob; }
+.px-haenyeo { --sz: -2; top: calc(100% + 46%); left: -120px; animation: px-tail .9s steps(1, end) infinite, px-swim-r 95s linear infinite, px-hbob 8s steps(8, jump-none) infinite alternate; animation-delay: 0s, -28s, 0s; }
+@keyframes px-tail { 0% { background-position-x: 0; } 50% { background-position-x: calc(var(--w) * -1); } }
+@keyframes px-swim-r { from { left: -12%; } to { left: 112%; } }
+@keyframes px-swim-l { from { left: 112%; } to { left: -12%; } }
+@keyframes px-fbob { from { margin-top: 0; } to { margin-top: calc(var(--cs) * 4px); } }
+@keyframes px-hbob { from { margin-top: calc(var(--cs) * -6px); } to { margin-top: calc(var(--cs) * 8px); } }
+
+/* 수면의 테왁(해녀의 부표) */
+.px-tewak { position: absolute; left: 41%; bottom: calc(var(--cs) * 13px); image-rendering: pixelated; --u: calc((var(--cs) - 1) * 1px);
+  width: calc(var(--fw, 12) * var(--u)); height: calc(var(--fh, 8) * var(--u)); background-size: 100% 100%; animation: px-bob 3.4s steps(2, jump-none) infinite alternate; }
+
+/* 물방울 */
+.px-bubble { position: absolute; bottom: -4%; background: rgba(217, 244, 251, .8); box-shadow: inset 0 0 0 1px #fff; image-rendering: pixelated;
+  opacity: calc(var(--d, 0) * .9); animation: px-rise 12s linear infinite; }
+.px-bubble-1 { width: calc(var(--cs) * 2px); height: calc(var(--cs) * 2px); } .px-bubble-2 { width: calc(var(--cs) * 3px); height: calc(var(--cs) * 3px); }
+@keyframes px-rise { from { transform: translateY(0); } 50% { transform: translateY(-55vh) translateX(calc(var(--cs) * 3px)); } to { transform: translateY(-110vh) translateX(calc(var(--cs) * -2px)); } }
+
+/* 바다 밑바닥(페이지 끝에서 올라온다) */
+.px-seabed { position: absolute; left: 0; bottom: var(--foot, 50px); width: 100%; height: calc(var(--cs) * 28px); transform: translateY(calc((1 - var(--e, 0)) * 130%)); }
+.px-seabed-layer { position: absolute; inset: 0; background-repeat: repeat-x; background-position: left bottom; background-size: calc(80px * var(--cs)) calc(28px * var(--cs)); image-rendering: pixelated; }
+.px-seabed-weed { animation: px-weed 3s steps(2, jump-none) infinite alternate; }
+@keyframes px-weed { from { transform: translateX(0); } to { transform: translateX(calc(var(--cs) * 1px)); } }
+
+/* 물속에서는 카드 밖에 놓인 글자(페이지 제목·설명·섹션 제목)만 밝은색으로 — 카드 안 글자는 그대로 */
+.px-deep .myth-hero-title, .px-deep .myth-hero-sub, .px-deep .section-cute-title, .px-deep .section-cute-sub,
+.px-deep main .container > header h2, .px-deep main .container > header p,
+.px-deep main .container > p.small, .px-deep main .container > div.text-center.py-5 {
+  color: #fffdf7 !important; text-shadow: 2px 2px 0 #06182e; transition: color .3s;
+}
+.px-deep .myth-hero-sub, .px-deep .section-cute-sub, .px-deep main .container > header p { color: #d9f4fb !important; }

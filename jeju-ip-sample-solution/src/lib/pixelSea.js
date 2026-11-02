@@ -68,3 +68,51 @@ export function drawBoat(canvas) {
 const tileUrl = (draw) => { const c = document.createElement('canvas'); c.width = SEA_TILE.w; c.height = SEA_TILE.h; draw(c); return `url(${c.toDataURL()})` }
 export const seaTileUrl = () => tileUrl(drawSeaTile)
 export const waveTileUrl = (variant = 0) => tileUrl((c) => drawWaveTile(c, variant))
+
+// ── 바닷속: 물고기·해녀·테왁·바다 밑바닥 스프라이트 (모두 코드로 그림) ──
+// rows: 문자 지도, pal: 문자→색, frames: 같은 크기의 프레임 여러 장을 가로로 이어 붙인 스프라이트 시트를 만든다.
+function sheet(frames, pal) {
+  const fh = frames[0].length, fw = Math.max(...frames.flat().map((r) => r.length))
+  const c = document.createElement('canvas'); c.width = fw * frames.length; c.height = fh
+  const ctx = c.getContext('2d')
+  frames.forEach((rows, f) => rows.forEach((row, y) => [...row].forEach((ch, x) => { if (pal[ch]) { ctx.fillStyle = pal[ch]; ctx.fillRect(f * fw + x, y, 1, 1) } })))
+  return { url: `url(${c.toDataURL()})`, fw, fh, n: frames.length }
+}
+
+const FISH = [
+  ['....xxxx....', '.x.xxxxxxx..', 'xxxxxxxxxe..', 'xbbbbbbbbbb.', '.b.bbbbbbb..', '....bbbb....'],
+  ['....xxxx....', 'xx.xxxxxxx..', '.xxxxxxxxe..', '.bbbbbbbbbb.', 'bb.bbbbbbb..', '....bbbb....'],
+]
+export const FISH_KINDS = {
+  orange: { x: '#F28C28', b: '#ffd9a0', e: '#1d2a3a' }, // 감귤빛 물고기
+  yellow: { x: '#ffd23f', b: '#fff0a8', e: '#1d2a3a' }, // 자리돔
+  blue: { x: '#7fd3e6', b: '#d9f4fb', e: '#1d2a3a' },   // 작은 푸른 물고기
+}
+export const fishSheet = (kind) => sheet(FISH, FISH_KINDS[kind])
+
+// 해녀: 검은 잠수복, 물안경, 주황 오리발, 주황 망사리를 매단 채 헤엄치는 옆모습(발차기 2프레임)
+const HAENYEO_PAL = { k: '#1a1a1a', f: '#f1c9a5', L: '#a9d7f3', s: '#22313f', S: '#3a566c', o: '#F28C28', r: '#e9a23b', n: '#7a4b2a' }
+const H_A = ['................kkkk..', '...............kkkkkk.', '...............kLLffk.', '.......ssssssssSsffff..', '..ooo.ssssssssssss.....', '.ooo..sssssssssss......', 'ooo...........rrrr.....', '..............rnrnr....', '..............rrrr.....']
+const H_B = ['................kkkk..', '...............kkkkkk.', 'ooo............kLLffk.', '.ooo....ssssssSsffff...', '......ssssssssssss.....', '......sssssssssss......', '..............rrrr.....', '..............rnrnr....', '..............rrrr.....']
+export const haenyeoSheet = () => sheet([H_A.map((r) => r.padEnd(22, '.')), H_B.map((r) => r.padEnd(22, '.'))], HAENYEO_PAL)
+
+// 테왁: 해녀가 수면에 띄우는 주황 부표(윗부분만 물 위로 보이고, 아래로 망이 늘어짐)
+const TEWAK = ['...oooooo...', '..oOOOOOOo..', '.oOwOOOOOOo.', '.oOOOOOOOOo.', '..oooooooo..', '....n..n....', '....n..n....', '...nn..nn...']
+export const tewakSheet = () => sheet([TEWAK], { o: '#c9650f', O: '#F28C28', w: '#ffd9a0', n: '#7a4b2a' })
+
+export const SEABED_TILE = { w: 80, h: 28 }
+export function drawSeabed(canvas) { // 모래 + 현무암 + 감귤색 소라
+  const ctx = canvas.getContext('2d'); const p = pen(ctx); const rand = rng(63)
+  for (let x = 0; x < 80; x++) { const top = 13 + Math.round(1.2 * Math.sin((x / 40) * Math.PI * 2)); p(x, top, '#efe0b0'); p(x, top + 1, '#d9c58f', 1, 28 - top - 1) }
+  for (let n = 0; n < 40; n++) p(rand() * 78, 16 + rand() * 11, rand() > 0.5 ? '#c4ad76' : '#efe0b0', 1, 1)
+  const rock = (x, y, w, h) => { p(x, y, '#3b3f44', w, h); p(x + 1, y, '#6a7076', w - 3, 1); p(x, y + h - 1, '#24272b', w, 1) }
+  rock(8, 7, 14, 9); rock(14, 4, 8, 5); rock(50, 9, 12, 7)
+  p(34, 18, '#F28C28', 3, 2); p(36, 17, '#ffd9a0', 1, 1); p(66, 20, '#F28C28', 3, 2) // 소라
+}
+export function drawSeaweed(canvas) { // 흔들리는 해초(다른 레이어로 흔들어 준다)
+  const p = pen(canvas.getContext('2d'))
+  ;[[24, 15], [31, 11], [58, 14], [70, 10]].forEach(([x, h]) => { for (let y = 0; y < h; y++) { const dx = Math.round(Math.sin(y / 3 + x) * 1.2); p(x + dx, 27 - 14 - y + 14, y % 4 < 2 ? '#2d7a3e' : '#4aa357', 2, 1) } })
+}
+const tileUrl2 = (draw, w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c); return `url(${c.toDataURL()})` }
+export const seabedUrl = () => tileUrl2(drawSeabed, SEABED_TILE.w, SEABED_TILE.h)
+export const seaweedUrl = () => tileUrl2(drawSeaweed, SEABED_TILE.w, SEABED_TILE.h)
