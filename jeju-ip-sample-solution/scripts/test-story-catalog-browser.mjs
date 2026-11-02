@@ -17,9 +17,10 @@ async function assertSingleActiveMenu(page, label) {
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true })
 try {
   const page = await browser.newPage()
-  const errors = []; page.on('pageerror', () => errors.push('페이지 오류'))
+  const errors = []; let agentPosts = 0; page.on('pageerror', () => errors.push('페이지 오류'))
   await page.route('**/*', route => {
     const u = new URL(route.request().url())
+    if (u.pathname === '/api/agent' && route.request().method() === 'POST') agentPosts++
     if (u.pathname.startsWith('/api/') || u.hostname.endsWith('supabase.co') || u.hostname === 'api.openai.com' || u.hostname === 'dapi.kakao.com') return route.abort()
     return route.continue()
   })
@@ -30,6 +31,19 @@ try {
   await page.getByRole('heading', { name: '신화전설이야기', exact: true }).waitFor()
   await assertSingleActiveMenu(page, '홈')
   await page.getByText(/실제 지도 장소 6곳과 전체 이야기 수는 달라요/).waitFor()
+  assert.equal(await page.locator('.chat-panel').count(), 0, '홈에서는 AI 대화를 중복 제공하지 않는다')
+  assert.equal(await page.getByRole('link', { name: '안내원 미리보기', exact: true }).count(), 0)
+  await page.locator('.agent-intro-card').getByRole('link', { name: 'AI 안내원에게 질문하기', exact: true }).click()
+  assert.equal(new URL(page.url()).pathname, '/agent')
+  await assertSingleActiveMenu(page, 'AI 가이드')
+  await page.getByRole('textbox', { name: '질문 입력' }).waitFor()
+  await page.locator('.chat-log').waitFor()
+  assert.equal(await page.locator('.chat-log .chat-empty').count(), 1)
+  await page.goto(origin + '/guide-preview')
+  await page.waitForURL('**/agent')
+  await page.getByRole('textbox', { name: '질문 입력' }).waitFor()
+  assert.equal(agentPosts, 0, '소개 카드와 과거 미리보기 주소는 AI POST를 보내지 않는다')
+  await page.goto(origin)
   for (const story of HOME_STORIES) {
     const link = page.getByRole('link', { name: `${story.title} 자세히 보기`, exact: true })
     assert.equal(await link.getAttribute('href'), `/explore/${story.id}`)
@@ -47,6 +61,7 @@ try {
     const card = page.locator('.myth-card').filter({ hasText: story.title })
     await card.locator('.myth-card-select').click()
     await page.locator('#story-reader-section h2').getByText(story.title, { exact: false }).waitFor()
+    await page.waitForFunction(() => window.__scrollBehaviors?.length > 0)
     assert.equal(await card.locator('.myth-card-select').getAttribute('aria-pressed'), 'true')
     const scrollState = await page.evaluate(() => ({ behavior: window.__scrollBehaviors.at(-1), scrollY: window.scrollY }))
     assert.equal(scrollState.behavior, 'instant', `${story.id} 카드 선택은 즉시 이동해야 함`)
@@ -134,5 +149,6 @@ try {
     console.log(JSON.stringify({ width, detailLinksInsideCards: layout.length, overlappingButtons: 0 }))
   }
   assert.deepEqual(errors, [])
-  console.log(JSON.stringify({ home: HOME_STORIES.length, explore: STORY_CATALOG.length, locations: 6, imageFilter: 2, duplicateIds: 0, pageErrors: 0, paidRequests: 0, supabaseRequests: 0 }))
+  assert.equal(agentPosts, 0)
+  console.log(JSON.stringify({ home: HOME_STORIES.length, explore: STORY_CATALOG.length, locations: 6, imageFilter: 2, duplicateIds: 0, pageErrors: 0, agentPosts, paidRequests: 0, supabaseRequests: 0 }))
 } finally { await browser.close() }
