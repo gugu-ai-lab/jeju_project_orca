@@ -1,8 +1,12 @@
-/* 도트 게임 테마 — theme.css 위에 덮어쓴다. 한글 도트 폰트 Galmuri(SIL OFL 1.1). */
-@import url('https://cdn.jsdelivr.net/npm/galmuri@2.40.1/dist/galmuri.css');
+/* 도트 게임 테마 — theme.css 위에 덮어쓴다. 한글 도트 폰트 Galmuri11(SIL OFL 1.1)를 프로젝트에 포함해 쓴다(CDN 불필요). */
+@font-face { font-family: 'Jeju Pixel'; font-weight: 400; font-style: normal; font-display: swap;
+  src: url('/fonts/galmuri/Galmuri11-Condensed.woff2') format('woff2'); }
+@font-face { font-family: 'Jeju Pixel'; font-weight: 700; font-style: normal; font-display: swap;
+  src: url('/fonts/galmuri/Galmuri11-Bold.woff2') format('woff2'); }
 
 :root {
-  --px-font: 'Galmuri14', 'Galmuri11', ui-monospace, 'Apple SD Gothic Neo', monospace;
+  --px-font: 'Jeju Pixel', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --bs-body-font-family: var(--px-font);
   --px-ink: #1d4a45;
   --px-deep: #0f2e2a;
   --px-sky: #e6f4fc;
@@ -16,7 +20,7 @@
 }
 
 body { background: var(--px-sky); }
-h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 400; letter-spacing: 0; color: var(--px-ink); }
+h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 700; letter-spacing: 0; color: var(--px-ink); }
 
 /* 상단 바 */
 .jeju-nav { background: var(--px-ink); backdrop-filter: none; border-bottom: 4px solid var(--px-deep); font-family: var(--px-font); }
@@ -113,3 +117,28 @@ h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 4
 
 /* 이야기 패널 제목 */
 .story-panel h2, .story-panel h3, .selected-spot-panel h2, .selected-spot-panel h3, .quiz-card-box h3 { font-family: var(--px-font); color: var(--px-ink); }
+
+/* ── 픽셀 지도: 배경 그림과 핀은 같은 16:9 영역에 고정 ── */
+.pastel-jeju-map-wrap { aspect-ratio: 16 / 9 !important; background: #8fc4f5; }
+.pixel-map-bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; user-select: none; -webkit-user-drag: none; }
+.pastel-map-pins-layer { z-index: 1; }
+/* 핀: 평소엔 작은 마커만, 선택한 핀에만 이름·장소를 보여 서로 겹치지 않게 한다 */
+.jeju-map-pin .pin-myth-name, .jeju-map-pin .pin-place-sub, .jeju-map-pin .pin-tail { display: none; }
+.jeju-map-pin.is-selected .pin-myth-name, .jeju-map-pin.is-selected .pin-place-sub { display: block; }
+.jeju-map-pin .pin-marker-bubble { padding: 2px 4px; gap: 4px; border: 2px solid var(--px-ink) !important; background: #fffdf7 !important; box-shadow: 0 2px 0 var(--px-deep) !important; }
+.jeju-map-pin .pin-emoji { font-size: clamp(.8rem, 2.4vw, 1.1rem); line-height: 1; }
+.jeju-map-pin .pin-myth-name { font-family: var(--px-font); font-size: clamp(.6rem, 1.8vw, .8rem); color: var(--px-ink); white-space: nowrap; }
+.jeju-map-pin.is-selected { z-index: 6; }
+.jeju-map-pin.is-selected .pin-marker-bubble { background: #F28C28 !important; }
+.jeju-map-pin .pin-place-sub { font-size: clamp(.55rem, 1.5vw, .7rem); background: #fffdf7; border: 2px solid var(--px-ink); padding: 0 .25rem; margin-top: 2px; white-space: nowrap; }
+
+/* ── 사이트 전체 글꼴: 한글 도트 글꼴 하나로 통일 (Bootstrap Icons 글꼴은 그대로) ── */
+body, button, input, select, textarea, .form-control, .btn { font-family: var(--px-font); }
+body { font-size: 1rem; line-height: 1.75; font-synthesis: none; }
+.bi::before, [class^="bi-"]::before, [class*=" bi-"]::before { font-family: bootstrap-icons !important; } /* 아이콘 글꼴 유지 */
+/* 작은 화면: 도트 글꼴은 작아지면 획이 뭉개지므로 본문·입력창·버튼 글자 크기에 바닥을 둔다 */
+@media (max-width: 575.98px) {
+  body { font-size: 1.0625rem; }
+  .form-control, .form-select, .btn, .chat-input input { font-size: 1.0625rem; }
+  .small, small, .text-muted { font-size: .95rem; }
+}

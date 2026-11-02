@@ -1,7 +1,6 @@
 /* 랜딩 전용 스타일 — 도트 게임 타이틀 화면. 도트 폰트는 pixel-theme.css 에서 불러온다. */
 
 .landing {
-  --px-font: 'Galmuri14', 'Galmuri11', ui-monospace, 'Apple SD Gothic Neo', monospace;
   position: relative; min-height: 100vh; min-height: 100dvh; overflow: hidden;
   background: #4aa6ee; font-family: var(--px-font);
 }
@@ -29,7 +28,7 @@
   background: #1d4a45; border: 3px solid #fff6d8; box-shadow: 0 4px 0 #0f2e2a;
 }
 .landing-title {
-  margin: 0; font-family: var(--px-font); font-weight: 400; line-height: 1.15;
+  margin: 0; font-family: var(--px-font); font-weight: 700; line-height: 1.15;
   font-size: clamp(2.6rem, 10vw, 6rem); color: #fffdf7; letter-spacing: .02em;
   text-shadow: 0 4px 0 #1d4a45, 4px 0 0 #1d4a45, -4px 0 0 #1d4a45, 0 -4px 0 #1d4a45, 4px 4px 0 #1d4a45, -4px 4px 0 #1d4a45, 0 9px 0 #0f2e2a;
 }
