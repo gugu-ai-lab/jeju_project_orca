@@ -5,6 +5,7 @@ import ToolSteps from '../components/ToolSteps'
 import ChatPanel from '../components/ChatPanel'
 import { presentAgentMessage } from '../../services/agent-presentation'
 import { useAppStore } from '../store/useAppStore'
+import { useChatHistoryStore } from '../store/useChatHistoryStore'
 import { fetchAgentStatus, queryTool } from '../api/client'
 
 export default function Agent() {
@@ -12,6 +13,9 @@ export default function Agent() {
   const loading = useAppStore(s => s.chatLoading)
   const sendMessage = useAppStore(s => s.sendMessage)
   const chatError = useAppStore(s => s.chatError)
+  const previousQuestions = useChatHistoryStore(s => s.questions)
+  const rememberQuestion = useChatHistoryStore(s => s.remember)
+  const clearQuestionHistory = useChatHistoryStore(s => s.clear)
   const [status, setStatus] = useState(null)
   const [statusError, setStatusError] = useState('')
   const [tool, setTool] = useState('search_myths')
@@ -56,9 +60,9 @@ export default function Agent() {
       <p className="small text-muted">AI는 질문에 따라 필요한 도구를 선택하고, 결과를 확인한 뒤 출처와 함께 답합니다.</p>
     </Card.Body></Card>
     <div className="mb-4">
-      <ChatPanel messages={messages.map(presentAgentMessage)} loading={loading}
+      <ChatPanel messages={messages.map(presentAgentMessage)} loading={loading} previousQuestions={previousQuestions} onClearQuestionHistory={clearQuestionHistory}
         disabled={!status?.available}
-        onSend={text => sendMessage(text)}
+        onSend={text => { rememberQuestion(text); sendMessage(text) }}
         notice={status?.available ? '공공데이터를 확인한 뒤 출처와 함께 답합니다.' : '실제 AI 호출은 현재 비활성화되어 있습니다.'} />
     </div>
     {chatError && <Alert variant="warning" role="alert">{chatError.message}<ToolSteps steps={chatError.steps} /></Alert>}
