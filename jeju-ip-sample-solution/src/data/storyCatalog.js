@@ -5,7 +5,7 @@ import verified from './external/verified-stories.json' with { type: 'json' }
 
 // 이야기 출처 검증과 관광 장소 검증은 별개다. 장소가 없어도 이야기 목록에 포함한다.
 const categories = { seolmundae: 'myth', samsinin: 'myth', honinji: 'myth', suwolbong: 'legend', sanbangdeok: 'legend', yeongdeung: 'myth', jacheongbi: 'myth' }
-const aliases = { samsinin: ['삼성혈', '탐라 삼신인 개국 신화'], honinji: ['삼신인의 혼인', '삼신인과 벽랑국 3공주의 혼인'] }
+const aliases = { samsinin: ['삼성혈', '삼성혈 개국 신화'], honinji: ['삼신인의 혼인', '삼신인과 벽랑국 3공주의 혼인'] }
 const builtin = STUDENT_STORIES.map(story => {
   const pin = pins.find(p => p.mythId === story.id)
   return { ...story, category: categories[story.id], summary: story.shortIntro,

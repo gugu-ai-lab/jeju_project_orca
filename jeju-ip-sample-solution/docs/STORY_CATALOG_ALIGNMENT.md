@@ -10,7 +10,7 @@
 
 - Home: `Home.jsx` 안의 별도 하드코딩 배열 `STUDENT_MYTHS` 7개.
 - Explore 카탈로그: 3개. `external/verified-stories.json`은 빈 배열.
-- Explore 기본 표시: `onlyVerified=true`이므로 설문대할망·탐라 삼신인 2개.
+- Explore 기본 표시: `onlyVerified=true`이므로 설문대할망·삼성혈 2개.
 - 혼인지: 같은 ID인데 이전 제목 ‘삼신인의 혼인’과 오래된 `pending` 상태로 남아 기본 화면에서 제외됨.
 - 수월봉·산방덕이·영등할망·자청비: Home에는 있지만 Explore 카탈로그에 누락.
 - 기본 삽화 필터는 꺼져 있었으므로 기존 2개 표시의 원인은 삽화 여부가 아니라 별도 목록과 검증 상태였다.
@@ -19,7 +19,7 @@
 | ID | Home 기존 제목 | Explore 수정 전 | 수정 후 공통 제목 |
 | --- | --- | --- | --- |
 | seolmundae | 설문대할망 | 기본 표시 | 설문대할망 |
-| samsinin | 탐라 삼신인 | 기본 표시 | 탐라 삼신인 |
+| samsinin | 삼성혈 | 기본 표시 | 삼성혈 |
 | honinji | 혼인지 | ‘삼신인의 혼인’, 검증 대기로 숨김 | 혼인지 |
 | suwolbong | 수월봉과 녹고물 | 누락 | 수월봉과 녹고물 |
 | sanbangdeok | 산방덕이 | 누락 | 산방덕이 |

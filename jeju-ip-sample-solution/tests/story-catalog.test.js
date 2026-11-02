@@ -9,6 +9,8 @@ test('home and default explorer share the same seven verified unique story IDs',
   assert.deepEqual(filterStories(STORY_CATALOG,{onlyVerified:true}).map(s=>s.id),ids)
   assert.equal(new Set(STORY_CATALOG.map(s=>s.id)).size,STORY_CATALOG.length)
   assert.equal(VERIFIED_PLACE_COUNT,6)
+  assert.equal(STORY_CATALOG.find(s=>s.id==='samsinin').title,'삼성혈')
+  assert.equal(STORY_CATALOG.find(s=>s.id==='samsinin').mapPin.shortPlace,'제주 삼성혈')
 })
 test('migration preserves every existing scene, title and source without inventing stories', () => {
   for(const before of STUDENT_STORIES) {

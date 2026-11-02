@@ -44,7 +44,7 @@ export const STUDENT_STORIES = [
   },
   {
     id: 'samsinin',
-    title: '탐라 삼신인',
+    title: '삼성혈',
     tag: '개국 신화',
     tone: 'mint',
     icon: 'tree',
