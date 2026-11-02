@@ -19,13 +19,13 @@ try {
   await page.getByRole('heading', { name: '신화전설이야기', exact: true }).waitFor()
   await page.getByText(/실제 지도 장소 6곳과 전체 이야기 수는 달라요/).waitFor()
   for (const story of HOME_STORIES) {
-    const link = page.getByRole('link', { name: `${story.title} 상세 이야기 보기`, exact: true })
+    const link = page.getByRole('link', { name: `${story.title} 자세히 보기`, exact: true })
     assert.equal(await link.getAttribute('href'), `/explore/${story.id}`)
   }
   // 홈 카드의 장소 선택 동작을 보존한다. 상세 보기는 별도 링크로 제공한다.
   await page.locator('.myth-card').filter({ hasText: '자청비' }).click()
   assert.equal(await page.locator('.selected-place-map').count(), 0)
-  await page.getByRole('link', { name: '자청비 상세 이야기 보기', exact: true }).click()
+  await page.getByRole('link', { name: '자청비 자세히 보기', exact: true }).click()
   assert.equal(new URL(page.url()).pathname, '/explore/jacheongbi')
   await page.locator('.story-heading').getByText('자청비', { exact: true }).waitFor()
   await page.goto(origin)

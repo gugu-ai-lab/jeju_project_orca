@@ -102,8 +102,8 @@ export default function MythCard({ myth, selected, onSelect }) {
         <span className="myth-question">{myth.question || `${myth.place}에는 어떤 이야기가 숨어 있을까요?`}</span>
       </span>
       </button>
-      <Link className="btn btn-outline-sea btn-sm mt-3 align-self-end" to={`/explore/${myth.id}`} aria-label={`${myth.title} 상세 이야기 보기`}>
-        상세 이야기 보기
+      <Link className="btn btn-outline-sea btn-sm mt-3 align-self-end" to={`/explore/${myth.id}`} aria-label={`${myth.title} 자세히 보기`}>
+        자세히 보기
       </Link>
     </article>
   )
