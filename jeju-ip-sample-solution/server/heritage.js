@@ -51,11 +51,17 @@ async function approvedImage(h, fetchImpl) {
     return value
   } catch { return {} } // 사진 API 장애가 검색 목록 전체를 실패시키지 않도록 한다.
 }
-export async function searchHeritage({ keyword = '', rows = 10, fetchImpl = globalThis.fetch } = {}) {
-  const params = new URLSearchParams({ ccbaCtcd: '50', pageUnit: String(rows), pageIndex: '1' })
+export async function searchHeritagePage({ keyword = '', pageNo = 1, rows = 9, fetchImpl = globalThis.fetch } = {}) {
+  const page = Number(pageNo)
+  const pageSize = Number(rows)
+  if (typeof keyword !== 'string' || keyword.length > 80 || !Number.isInteger(page) || page < 1 || page > 10000 || !Number.isInteger(pageSize) || pageSize < 1 || pageSize > 9) throw new Error('INVALID_HERITAGE_QUERY')
+  // 사진이 확인된 항목만 골라 페이지를 구성하기 위해 제주 목록 전체를 받고,
+  // 사전 검토된 사진 ID만 이미지 상세 API로 확인한다.
+  const params = new URLSearchParams({ ccbaCtcd: '50', ccbaCncl: 'N', pageUnit: '1000', pageIndex: '1' })
   if (keyword) params.set('ccbaMnm1', keyword)
   const data = await readXml('https://www.khs.go.kr/cha/SearchKindOpenapiList.do?' + params, fetchImpl)
-  return Promise.all(array(data?.item).map(async h => ({
+  const photoRecords = array(data?.item).filter(h => approved.has(h.ccbaCpno))
+  const withPhotos = await Promise.all(photoRecords.map(async h => ({
     id: h.ccbaCpno || [h.ccbaKdcd, h.ccbaAsno, h.ccbaCtcd].join('-'),
     detailKey: { ccbaKdcd: h.ccbaKdcd, ccbaAsno: h.ccbaAsno, ccbaCtcd: h.ccbaCtcd },
     name: h.ccbaMnm1, kind: h.ccmaName, city: h.ccsiName,
@@ -63,6 +69,14 @@ export async function searchHeritage({ keyword = '', rows = 10, fetchImpl = glob
     lng: h.longitude == null || h.longitude === '' ? undefined : Number(h.longitude),
     ...await approvedImage(h, fetchImpl),
   })))
+  const available = withPhotos.filter(item => Boolean(item.image))
+  const start = (page - 1) * pageSize
+  return { items: available.slice(start, start + pageSize), totalCount: available.length, page, pageSize }
+}
+
+export async function searchHeritage({ keyword = '', rows = 10, fetchImpl = globalThis.fetch } = {}) {
+  const pageSize = Math.min(Number(rows) || 10, 9)
+  return (await searchHeritagePage({ keyword, pageNo: 1, rows: pageSize, fetchImpl })).items
 }
 
 export async function getHeritageDetail({ ccbaKdcd, ccbaAsno, ccbaCtcd, fetchImpl = globalThis.fetch } = {}) {

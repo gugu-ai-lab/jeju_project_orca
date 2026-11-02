@@ -37,8 +37,8 @@ export const fetchTourDetail = contentId =>
   get(`/api/tour?contentId=${encodeURIComponent(contentId)}`)
 export const fetchWeather = (place = '제주시') =>
   get(`/api/weather?place=${encodeURIComponent(place)}`)
-export const fetchHeritage = (keyword = '') =>
-  get(`/api/heritage?keyword=${encodeURIComponent(keyword)}`)
+export const fetchHeritage = (keyword = '', page = 1, rows = 9) =>
+  get(`/api/heritage?keyword=${encodeURIComponent(keyword)}&page=${page}&rows=${rows}`)
 export const fetchHeritageDetail = detailKey => {
   const params = new URLSearchParams(detailKey)
   return get(`/api/heritage?${params}`)

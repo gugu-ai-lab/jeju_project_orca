@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
+import { Button, Col, Form, InputGroup, Pagination, Row } from 'react-bootstrap'
 import PageHeader from '../components/PageHeader'
 import ItemCard from '../components/ItemCard'
 import { Empty, ErrorAlert, Loading } from '../components/Status'
@@ -10,9 +10,12 @@ import { STORY_CATALOG } from '../data/storyCatalog'
 import { useAppStore } from '../store/useAppStore'
 
 export default function Heritage() {
+  const pageSize = 9
   const addFavorite = useAppStore((s) => s.addFavorite)
   const [keyword, setKeyword] = useState('')
   const [list, setList] = useState([])
+  const [totalCount, setTotalCount] = useState(0)
+  const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedHeritage, setSelectedHeritage] = useState(null)
@@ -21,14 +24,17 @@ export default function Heritage() {
   const [detailError, setDetailError] = useState('')
   const detailRequest = useRef(0)
 
-  async function search(e) {
+  async function search(targetPage = 1, e) {
     e?.preventDefault()
-    setLoading(true); setError('')
-    try { setList(await fetchHeritage(keyword)) }
+    setPage(targetPage); setLoading(true); setError('')
+    try {
+      const result = await fetchHeritage(keyword, targetPage, pageSize)
+      setList(result.items); setTotalCount(result.totalCount)
+    }
     catch (err) { setError(err.message) }
     finally { setLoading(false) }
   }
-  useEffect(() => { search() }, [])
+  useEffect(() => { search(1) }, [])
 
   async function openDetail(heritage) {
     const requestId = ++detailRequest.current
@@ -53,7 +59,7 @@ export default function Heritage() {
   return (
     <>
       <PageHeader icon="bank" title="국가유산" subtitle="국가유산청 국가유산 검색" />
-      <Form onSubmit={search} className="mb-4">
+      <Form onSubmit={(e) => search(1, e)} className="mb-4">
         <InputGroup>
           <Form.Control value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="예: 관덕정, 돌하르방" />
           <Button type="submit"><i className="bi bi-search" /></Button>
@@ -61,6 +67,8 @@ export default function Heritage() {
       </Form>
       <ErrorAlert error={error} />
       {loading ? <Loading /> : list.length === 0 ? <Empty /> : (
+        <>
+        <p className="small text-secondary mb-3">사진이 확인된 국가유산 {totalCount.toLocaleString()}개 · {page} / {Math.max(1, Math.ceil(totalCount / pageSize))}페이지</p>
         <Row xs={1} sm={2} lg={3} className="g-3">
           {list.map((h, i) => (
             <Col key={h.id || i}>
@@ -73,6 +81,17 @@ export default function Heritage() {
             </Col>
           ))}
         </Row>
+        {totalCount > pageSize && <Pagination className="justify-content-center mt-4" aria-label="국가유산 페이지 선택">
+          <Pagination.Prev disabled={page <= 1 || loading} onClick={() => search(page - 1)} />
+          {Array.from({ length: Math.min(5, Math.ceil(totalCount / pageSize)) }, (_, index) => {
+            const pageCount = Math.ceil(totalCount / pageSize)
+            const firstPage = Math.min(Math.max(1, page - 2), Math.max(1, pageCount - 4))
+            const pageNumber = firstPage + index
+            return <Pagination.Item key={pageNumber} active={pageNumber === page} disabled={loading} onClick={() => search(pageNumber)}>{pageNumber}</Pagination.Item>
+          })}
+          <Pagination.Next disabled={page >= Math.ceil(totalCount / pageSize) || loading} onClick={() => search(page + 1)} />
+        </Pagination>}
+        </>
       )}
       <PublicRecordDetailModal type="heritage" record={selectedHeritage} detail={heritageDetail} loading={detailLoading} error={detailError} relatedStory={relatedStory} onClose={closeDetail} />
     </>
