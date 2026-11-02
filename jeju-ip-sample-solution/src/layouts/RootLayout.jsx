@@ -2,13 +2,16 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { Container, Nav, Navbar, Toast, ToastContainer } from 'react-bootstrap'
 import { NAV_ITEMS } from '../router'
 import { useAppStore } from '../store/useAppStore'
+import PixelBackdrop from '../components/PixelBackdrop'
+import MotionToggle from '../components/MotionToggle'
 
 export default function RootLayout() {
   const toasts = useAppStore((s) => s.toasts)
   const nickname = useAppStore((s) => s.nickname)
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100 has-pixel-backdrop">
+      <PixelBackdrop />
       <Navbar expand="md" className="jeju-nav" collapseOnSelect sticky="top">
         <Container>
           <Navbar.Brand as={NavLink} to="/home">
@@ -40,6 +43,7 @@ export default function RootLayout() {
       <footer className="py-3 jeju-footer">
         <Container className="small">
           제주 신화·전설 AI 관광 안내 · 신화 삽화·설명: 제주특별자치도 「제주신화전설 삽화 정보」(공공데이터포털, 공공저작물 자유이용 제0유형)
+          <MotionToggle className="ms-md-3" />
         </Container>
       </footer>
 

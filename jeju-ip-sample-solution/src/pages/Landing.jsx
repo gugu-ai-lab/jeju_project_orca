@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PixelScene from '../components/PixelScene'
+import MotionToggle from '../components/MotionToggle'
 import '../styles/landing.css'
 
 // 랜딩 — 2D 도트 게임 타이틀 화면처럼 시작해서 홈(/home)으로 들어간다.
@@ -27,6 +28,7 @@ export default function Landing() {
         </Link>
         <p className="landing-hint">Enter 키를 눌러도 시작돼요</p>
       </div>
+      <MotionToggle className="motion-toggle-fixed" />
     </main>
   )
 }

@@ -101,7 +101,8 @@ h1, h2, h3, h4, .font-myth {
 .placeholder-img > span:first-child { font-size: 2rem; line-height: 1; }
 .placeholder-img > span:last-child { font-size: .875rem; line-height: 1.3; }
 
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+/* 시스템이 동작 줄이기면 움직임을 멈춘다. 사용자가 사이트 안에서 켜면(html.allow-motion) 적용하지 않는다(lib/motion.js). */
+@media (prefers-reduced-motion: reduce) { html:not(.allow-motion) * { transition: none !important; animation: none !important; } }
 
 /* ── 1. 메인 히어로 (단색 파스텔·화이트 톤, 제목 1줄 + 소개 1문장) ── */
 .myth-hero {

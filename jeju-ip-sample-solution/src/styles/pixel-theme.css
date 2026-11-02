@@ -142,3 +142,37 @@ body { font-size: 1rem; line-height: 1.75; font-synthesis: none; }
   .form-control, .form-select, .btn, .chat-input input { font-size: 1.0625rem; }
   .small, small, .text-muted { font-size: .95rem; }
 }
+
+/* ── 움직이는 도트 배경: 내용 뒤(z-index 0), 클릭 통과 ── */
+body { background: #cfe9f8; }
+.pixel-backdrop {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  background: linear-gradient(#bfe2f7 0 25%, #cfe9f8 25% 50%, #dcf0fb 50% 75%, #e6f4fc 75%);
+}
+.has-pixel-backdrop > main, .has-pixel-backdrop > footer { position: relative; z-index: 1; }
+.has-pixel-backdrop > .jeju-nav { z-index: 1030; }
+.px-layer { position: absolute; left: 0; width: 100%; }
+.px-layer canvas { display: block; height: calc(80px * var(--cs)); width: calc(640px * var(--cs)); image-rendering: pixelated; animation: px-drift 140s linear infinite; }
+.pixel-backdrop { --cs: 4; }
+.px-clouds-near { top: 4%; opacity: .95; }
+.px-clouds-far { top: 34%; opacity: .6; --cs: 3; }
+.px-clouds-far canvas { animation-duration: 220s; animation-direction: reverse; }
+@keyframes px-drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (max-width: 575.98px) { .pixel-backdrop { --cs: 3; } .px-clouds-far { --cs: 2; } }
+
+.px-sparkle { position: absolute; width: 4px; height: 4px; background: #fff; animation: px-twinkle 3.2s steps(2, jump-none) infinite; }
+@keyframes px-twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+.px-bird { position: absolute; left: -60px; width: 24px; height: 12px; background-size: 48px 12px; image-rendering: pixelated;
+  animation: px-flap .5s steps(1, end) infinite, px-fly 38s linear infinite; }
+.px-bird-0 { top: 14%; animation-delay: 0s, -4s; }
+.px-bird-1 { top: 22%; animation-delay: .2s, -20s; transform: scale(.8); }
+.px-bird-2 { top: 9%; animation-delay: .1s, -31s; transform: scale(.65); }
+@keyframes px-flap { 0% { background-position: 0 0; } 50% { background-position: -24px 0; } }
+@keyframes px-fly { from { left: -60px; margin-top: 0; } 50% { margin-top: 18px; } to { left: calc(100% + 60px); margin-top: 0; } }
+
+/* 움직임 켜기/끄기 버튼 (동작 줄이기 환경에서만 표시) */
+.motion-toggle { font-family: var(--px-font); font-size: .85rem; color: #fffdf7; background: transparent; border: 2px solid #fffdf7; padding: .15rem .6rem; }
+.motion-toggle:hover { background: #2c6b63; }
+.motion-toggle-fixed { position: fixed; right: .75rem; bottom: .75rem; z-index: 5; color: #fffdf7; background: var(--px-ink); box-shadow: 0 3px 0 var(--px-deep); }
+.jeju-footer .container { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; justify-content: space-between; }

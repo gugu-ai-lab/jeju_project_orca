@@ -10,6 +10,9 @@ import './styles/theme.css'
 import './styles/pixel-theme.css' // 도트 게임 테마 — 이 줄을 빼면 이전 디자인으로 돌아간다
 
 import { router } from './router'
+import { initMotion } from './lib/motion'
+
+initMotion()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
