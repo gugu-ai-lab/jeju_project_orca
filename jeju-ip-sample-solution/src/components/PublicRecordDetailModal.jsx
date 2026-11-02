@@ -30,7 +30,7 @@ export default function PublicRecordDetailModal({ type, record, detail, loading,
   const photoLicense = heritage ? record.imageLicense : null
   const infoSource = heritage ? detail?.source || '국가유산청 국가유산포털' : detail?.source || '한국관광공사 TourAPI'
   const infoSourceUrl = heritage
-    ? `https://www.khs.go.kr/cha/SearchKindOpenapiDt.do?${new URLSearchParams(record.detailKey || {})}`
+    ? 'https://www.heritage.go.kr/'
     : TOUR_INFO_URL
   const directionUrl = coords ? `https://map.kakao.com/link/to/${encodeURIComponent(title)},${coords.lat},${coords.lng}` : null
 
