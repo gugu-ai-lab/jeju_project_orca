@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { searchHeritage } from '../server/heritage.js'
+import { getHeritageDetail, searchHeritage } from '../server/heritage.js'
 const item = '<ccbaCpno>1123903220000</ccbaCpno><ccbaKdcd>12</ccbaKdcd><ccbaAsno>0003220000000</ccbaAsno><ccbaCtcd>50</ccbaCtcd><ccbaMnm1>제주 관덕정</ccbaMnm1><latitude>33.5</latitude>'
 const photo = license => '<ccbaKdcd>12</ccbaKdcd><ccbaAsno>0003220000000</ccbaAsno><ccbaCtcd>50</ccbaCtcd><item><imageUrl>http://www.khs.go.kr/unisearch/images/treasure/1623059.jpg</imageUrl><imageNuri>' + license + '</imageNuri><ccimDesc>제주 관덕정 (촬영:문화재청)</ccimDesc></item>'
 function mock(body, verify = () => {}) {
@@ -12,6 +12,7 @@ test('approved photo keeps exact identifier, HTTPS, caption and attribution', as
   assert.match(rows[0].imageLicense, /제1유형/)
   assert.match(rows[0].imageSourceUrl, /ccimId=1623059/)
   assert.equal(rows[0].lat, 33.5)
+  assert.deepEqual(rows[0].detailKey, { ccbaKdcd: '12', ccbaAsno: '0003220000000', ccbaCtcd: '50' })
 })
 test('restricted license, different identifier and different photo never get linked', async () => {
   for (const body of [photo('D/F'), photo('A/F').replace('0003220000000', '0011870000000'), photo('A/F').replace('1623059.jpg', '1623060.jpg')]) {
@@ -31,4 +32,16 @@ test('reviewed photo file name and official photo ID can differ; no fuzzy matchi
   const rows = await searchHeritage({ fetchImpl: async url => new Response('<result>' + (url.includes('SearchImage') ? body : '<item>' + item.replace('1123903220000', '1125019020000').replace('0003220000000', '0019020000000') + '</item>') + '</result>') })
   assert.match(rows[0].image, /2016061316550500.JPG$/)
   assert.match(rows[0].imageSourceUrl, /ccimId=3487850/)
+})
+
+test('official heritage detail lookup uses exact identifiers and returns designated fields', async () => {
+  let requested
+  const detailXml = '<result><ccmaName>보물</ccmaName><ccbaMnm1>제주 관덕정</ccbaMnm1><ccbaCtcdNm>제주특별자치도</ccbaCtcdNm><ccsiName>제주시</ccsiName><ccbaLcad>제주시 관덕로 19</ccbaLcad><ccbaQuan>1동</ccbaQuan><ccbaAsdt>19630121</ccbaAsdt><ccceName>조선 후기</ccceName><ccbaAdmin>제주시</ccbaAdmin><content><![CDATA[<p>역사 설명</p>]]></content></result>'
+  const detail = await getHeritageDetail({ ccbaKdcd: '12', ccbaAsno: '0003220000000', ccbaCtcd: '50', fetchImpl: async url => { requested = new URL(url); return new Response(detailXml) } })
+  assert.ok(requested.pathname.endsWith('/SearchKindOpenapiDt.do'))
+  assert.equal(requested.searchParams.get('ccbaAsno'), '0003220000000')
+  assert.equal(detail.name, '제주 관덕정'); assert.equal(detail.kind, '보물')
+  assert.equal(detail.address, '제주시 관덕로 19'); assert.equal(detail.designationDate, '19630121')
+  assert.equal(detail.description, '역사 설명'); assert.equal(detail.period, '조선 후기')
+  await assert.rejects(getHeritageDetail({ ccbaKdcd: 'bad', ccbaAsno: '1', ccbaCtcd: '50' }), /INVALID_HERITAGE_ID/)
 })

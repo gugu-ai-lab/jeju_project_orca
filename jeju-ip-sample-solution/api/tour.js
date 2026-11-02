@@ -1,8 +1,12 @@
-import { searchTour } from '../server/tour.js'
+import { getTourDetail, searchTour } from '../server/tour.js'
 import { safeErrors } from '../server/myth-tools.js'
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET 요청만 지원합니다.' })
   try {
+    if (req.query.contentId !== undefined) {
+      const detail = await getTourDetail({ contentId: req.query.contentId })
+      return detail ? res.status(200).json(detail) : res.status(404).json({ error: '상세 정보를 찾지 못했습니다.' })
+    }
     const { keyword = '', type = '12' } = req.query
     return res.status(200).json(await searchTour({ keyword, contentTypeId: type }))
   } catch (error) {

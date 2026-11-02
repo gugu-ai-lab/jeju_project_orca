@@ -53,6 +53,20 @@ export async function searchTour({ keyword = '', contentTypeId = '12', rows = 10
   return result.items.map(normalize)
 }
 // AI와 직접 조회가 공유한다. 상세 호출은 상위 3건으로 제한한다.
+export async function getTourDetail({ contentId } = {}) {
+  if (typeof contentId !== 'string' || !/^\d{1,20}$/.test(contentId)) throw new Error('INVALID_TOOL_INPUT')
+  const result = await requestTour('detailCommon2', { contentId, numOfRows: '1' })
+  const place = result.items[0]
+  if (!place) return null
+  return {
+    ...normalize(place),
+    description: plain(place.overview),
+    phone: plain(place.tel),
+    source: SOURCE,
+    imageSource: place.firstimage ? SOURCE : undefined,
+  }
+}
+
 export async function searchTourPlaces({ keyword }) {
   const records = (await searchTour({ keyword, rows: 3 })).slice(0, 3)
   const items = await Promise.all(records.map(async p => {

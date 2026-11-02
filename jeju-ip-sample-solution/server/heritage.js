@@ -14,6 +14,7 @@ const approved = new Map([
 ])
 const cache = new Map()
 const array = value => value == null ? [] : Array.isArray(value) ? value : [value]
+const plain = value => String(value || '').replace(/<br\s*\/?\s*>/gi, ' ').replace(/<\/p>/gi, ' ').replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
 async function readXml(url, fetchImpl) {
   const r = await fetchImpl(url, { signal: AbortSignal.timeout(8000) })
   if (!r.ok) throw new Error('국가유산 정보를 조회하지 못했습니다.')
@@ -55,8 +56,29 @@ export async function searchHeritage({ keyword = '', rows = 10, fetchImpl = glob
   if (keyword) params.set('ccbaMnm1', keyword)
   const data = await readXml('https://www.khs.go.kr/cha/SearchKindOpenapiList.do?' + params, fetchImpl)
   return Promise.all(array(data?.item).map(async h => ({
+    id: h.ccbaCpno || [h.ccbaKdcd, h.ccbaAsno, h.ccbaCtcd].join('-'),
+    detailKey: { ccbaKdcd: h.ccbaKdcd, ccbaAsno: h.ccbaAsno, ccbaCtcd: h.ccbaCtcd },
     name: h.ccbaMnm1, kind: h.ccmaName, city: h.ccsiName,
-    lat: h.latitude == null ? undefined : Number(h.latitude), lng: h.longitude == null ? undefined : Number(h.longitude),
+    lat: h.latitude == null || h.latitude === '' ? undefined : Number(h.latitude),
+    lng: h.longitude == null || h.longitude === '' ? undefined : Number(h.longitude),
     ...await approvedImage(h, fetchImpl),
   })))
+}
+
+export async function getHeritageDetail({ ccbaKdcd, ccbaAsno, ccbaCtcd, fetchImpl = globalThis.fetch } = {}) {
+  if (!/^\d{2}$/.test(String(ccbaKdcd || '')) || !/^\d{1,20}$/.test(String(ccbaAsno || '')) || !/^\d{2}$/.test(String(ccbaCtcd || ''))) {
+    throw new Error('INVALID_HERITAGE_ID')
+  }
+  const params = new URLSearchParams({ ccbaKdcd, ccbaAsno, ccbaCtcd })
+  const data = await readXml('https://www.khs.go.kr/cha/SearchKindOpenapiDt.do?' + params, fetchImpl)
+  const h = data?.item || data
+  if (!h?.ccbaMnm1) return null
+  return {
+    name: h.ccbaMnm1, kind: h.ccmaName,
+    province: h.ccbaCtcdNm, city: h.ccsiName,
+    address: plain(h.ccbaLcad), quantity: plain(h.ccbaQuan),
+    designationDate: plain(h.ccbaAsdt), period: plain(h.ccceName),
+    administrator: plain(h.ccbaAdmin), description: plain(h.content),
+    source: '국가유산청 국가유산포털',
+  }
 }

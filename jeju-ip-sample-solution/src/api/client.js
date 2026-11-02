@@ -33,10 +33,16 @@ export const ping = () => get('/api/hello')
 // STEP 2~4: 공공데이터 API
 export const fetchPlaces = (keyword = '', type = '12') =>
   get(`/api/tour?keyword=${encodeURIComponent(keyword)}&type=${type}`)
+export const fetchTourDetail = contentId =>
+  get(`/api/tour?contentId=${encodeURIComponent(contentId)}`)
 export const fetchWeather = (place = '제주시') =>
   get(`/api/weather?place=${encodeURIComponent(place)}`)
 export const fetchHeritage = (keyword = '') =>
   get(`/api/heritage?keyword=${encodeURIComponent(keyword)}`)
+export const fetchHeritageDetail = detailKey => {
+  const params = new URLSearchParams(detailKey)
+  return get(`/api/heritage?${params}`)
+}
 
 // STEP 6: 에이전트
 export const askAgent = (message, history) => post('/api/agent', { message, history })

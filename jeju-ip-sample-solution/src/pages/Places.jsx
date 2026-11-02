@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
 import PageHeader from '../components/PageHeader'
 import ItemCard from '../components/ItemCard'
 import { Empty, ErrorAlert, Loading } from '../components/Status'
-import { fetchPlaces } from '../api/client'
+import { fetchPlaces, fetchTourDetail } from '../api/client'
+import PublicRecordDetailModal from '../components/PublicRecordDetailModal'
+import mapPinsData from '../data/jejuMapPins.json' with { type: 'json' }
+import { STORY_CATALOG } from '../data/storyCatalog'
 import { useAppStore } from '../store/useAppStore'
 
 const TYPES = { 12: '관광지', 14: '문화시설', 15: '축제·행사' }
@@ -15,6 +18,11 @@ export default function Places() {
   const [places, setPlaces] = useState([])               // ① 데이터
   const [loading, setLoading] = useState(true)           // ② 로딩
   const [error, setError] = useState('')                 // ③ 에러
+  const [selectedPlace, setSelectedPlace] = useState(null)
+  const [placeDetail, setPlaceDetail] = useState(null)
+  const [detailLoading, setDetailLoading] = useState(false)
+  const [detailError, setDetailError] = useState('')
+  const detailRequest = useRef(0)
 
   async function search(e) {
     e?.preventDefault()                                  // 폼 제출 시 새로고침 막기
@@ -24,6 +32,25 @@ export default function Places() {
     finally { setLoading(false) }
   }
   useEffect(() => { search() }, [])                      // 처음 한 번 자동 검색
+
+  async function openDetail(place) {
+    const requestId = ++detailRequest.current
+    setSelectedPlace(place); setPlaceDetail(null); setDetailError(''); setDetailLoading(true)
+    try {
+      const detail = await fetchTourDetail(place.id)
+      if (requestId === detailRequest.current) {
+        if (!detail) throw new Error('상세 정보가 없습니다.')
+        setPlaceDetail(detail)
+      }
+    } catch (err) { if (requestId === detailRequest.current) setDetailError(err.message) }
+    finally { if (requestId === detailRequest.current) setDetailLoading(false) }
+  }
+  function closeDetail() {
+    detailRequest.current++
+    setSelectedPlace(null); setPlaceDetail(null); setDetailError(''); setDetailLoading(false)
+  }
+  const relatedPin = selectedPlace && mapPinsData.find(pin => pin.hasVerifiedLocation && String(pin.location?.recordId) === String(selectedPlace.id))
+  const relatedStory = relatedPin && STORY_CATALOG.find(story => story.id === relatedPin.mythId)
 
   return (
     <>
@@ -43,12 +70,13 @@ export default function Places() {
         <Row xs={1} sm={2} lg={3} className="g-3">
           {places.map((p) => (
             <Col key={p.id}>
-              <ItemCard title={p.title} subtitle={p.addr} image={p.image} badge={TYPES[p.type]}
+              <ItemCard title={p.title} subtitle={p.addr} image={p.image} badge={TYPES[p.type]} onOpen={() => openDetail(p)}
                 onSave={() => addFavorite({ source: 'tour', id: p.id, title: p.title })} />
             </Col>
           ))}
         </Row>
       )}
+      <PublicRecordDetailModal type="tour" record={selectedPlace} detail={placeDetail} loading={detailLoading} error={detailError} relatedStory={relatedStory} onClose={closeDetail} />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { searchTour, searchTourPlaces } from '../server/tour.js'
+import { getTourDetail, searchTour, searchTourPlaces } from '../server/tour.js'
 import { executeTool, tools } from '../server/myth-tools.js'
 import { runAgent } from '../server/agent.js'
 
@@ -64,4 +64,18 @@ test('TourAPI failure does not prevent following weather tool; no paid requests'
     return {count:1,source:'기상청 단기예보',items:[{title:'제주시 예보'}],complete:true}
   }})
   assert.deepEqual(result.steps.map(s=>s.status),['error','success']);assert.equal(result.steps[0].upstreamCode,'30')
+})
+
+test('TourAPI detailCommon2 returns official description, photo and coordinates for a selected place',async t=>{
+  fixture(t,async url=>{
+    const u=new URL(url)
+    assert.ok(u.pathname.endsWith('/detailCommon2'))
+    assert.equal(u.searchParams.get('contentId'),'1544730')
+    assert.equal(u.searchParams.get('numOfRows'),'1')
+    return reply([{...place,contentid:'1544730',title:'제주돌문화공원',addr1:'제주시 조천읍 남조로 2023',mapx:'126.6639',mapy:'33.4466',firstimage:'https://example.invalid/photo.jpg',overview:'<p>확인된 소개</p>',tel:'064-000-0000'}])
+  })
+  const detail=await getTourDetail({contentId:'1544730'})
+  assert.equal(detail.title,'제주돌문화공원');assert.equal(detail.description,'확인된 소개')
+  assert.equal(detail.lat,'33.4466');assert.equal(detail.lng,'126.6639')
+  assert.equal(detail.image,'https://example.invalid/photo.jpg');assert.equal(detail.imageSource,'한국관광공사 TourAPI')
 })
