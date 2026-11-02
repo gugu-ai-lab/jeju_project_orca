@@ -36,7 +36,11 @@ export default function Heritage() {
         <Row xs={1} sm={2} lg={3} className="g-3">
           {list.map((h, i) => (
             <Col key={i}>
-              <ItemCard title={h.name} subtitle={h.city} badge={h.kind}
+              <ItemCard title={h.name} image={h.image} subtitle={<>{h.city}{h.image && <>
+                  <br />{h.imageCaption}<br />
+                  <a href={h.imageSourceUrl} target="_blank" rel="noopener noreferrer">사진: {h.imageSource}</a>
+                  {' · '}<a href={h.imageLicenseUrl} target="_blank" rel="noopener noreferrer">{h.imageLicense}</a>
+                </>}</>} badge={h.kind}
                 onSave={() => addFavorite({ source: 'heritage', id: h.name, title: h.name })} />
             </Col>
           ))}
