@@ -1,0 +1,1950 @@
+{
+  "auditDate": "2026-11-02",
+  "sourceZip": "/Users/jeongyeol/Downloads/제주특별자치도_제주신화전설_삽화_정보_20160810.zip",
+  "zipSha256": "c5807d615f524840254d46ff23b3c1f4fbdedda25c0029f3e35367eeb2a4941c",
+  "csvMember": "신화전설_삽화_설명.csv",
+  "csvEncoding": "CP949",
+  "csvSha256": "2c2ba3e7b2eb20c6aa659a3d9e3e717c4c422a24a59e631010896d05eab987f3",
+  "counts": {
+    "images": 42,
+    "csvRows": 59,
+    "directOrSpaceMatches": 39,
+    "explicitAliases": 3,
+    "illustratedEditorialGroups": 35,
+    "textOnlyEditorialGroups": 14,
+    "allEditorialGroups": 49
+  },
+  "license": {
+    "type": "KOGL-0",
+    "datasetUrl": "https://www.data.go.kr/data/15051457/fileData.do",
+    "termsUrl": "https://www.kogl.or.kr/info/license.do",
+    "basis": "dataset-level current public metadata; no separate license document inside ZIP"
+  },
+  "images": [
+    {
+      "index": 1,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_가문장아기.jpg",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "c2d5d952e896fa62fe6081b9e10ffdb3bd5a8208f7368feda5fab8cecc6a59c5",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 1,
+      "csvTitle": "가문장아기",
+      "group": "가믄장아기",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 2,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_감목관김씨.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "7f07470b672ad4bee24fdc313d7afb0983f96b90326d8022c6274a0937a702b3",
+      "rightsMetadata": {},
+      "csvRow": 4,
+      "csvTitle": "감목관김씨",
+      "group": "감목관김씨",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 3,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_고종달.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "40ea8c5f34aa2d51fec7934d374e94ab4000b4adc9b99f6d57d0936608d141c6",
+      "rightsMetadata": {},
+      "csvRow": 5,
+      "csvTitle": "고종달",
+      "group": "고종달",
+      "matchMethod": "exact",
+      "sceneReview": "additional_review",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 4,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_궤네깃도.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "3c02c068488f70a0f92663fbbe6c739aa68c154f0f341ddcc874b4dd5f190910",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 6,
+      "csvTitle": "궤네깃도",
+      "group": "궤네깃도",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 5,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_김녕사굴.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "1bfb1328a4170442914fee0798a3e68aab394affe76736fd9464eb579c81c5c3",
+      "rightsMetadata": {},
+      "csvRow": 7,
+      "csvTitle": "김녕사굴",
+      "group": "김녕사굴",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 6,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_김녕사굴뱀과의싸움.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "28dbeed690cff7a3c89101d83a32beafbdf271c1752faad5e12ccdd85c3497f2",
+      "rightsMetadata": {},
+      "csvRow": 8,
+      "csvTitle": "김녕사굴뱀과의싸움",
+      "group": "김녕사굴",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 7,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_날아온섬비양도.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "7d53b107aa0e8f93c650652e4bc4d5ffcce1c58b8b75b7191eb3797de7e32dbe",
+      "rightsMetadata": {},
+      "csvRow": 9,
+      "csvTitle": "날아온섬비양도",
+      "group": "날아온섬비양도",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 8,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_남편따라죽은부인.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "328002e9fa4ee6ec98ace2f2585b3dedd1d3e92cf18e4c6ea8edd2bbd131bd08",
+      "rightsMetadata": {},
+      "csvRow": 10,
+      "csvTitle": "남편따라죽은부인",
+      "group": "남편따라죽은부인",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 9,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_돼지가된어머니.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "53b758be578c871b7388ccc967bc8d3f822fdfaa534c9e267b1b9018a02a4d53",
+      "rightsMetadata": {},
+      "csvRow": 12,
+      "csvTitle": "돼지가된어머니",
+      "group": "돼지가된어머니",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 10,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_무당의조상이야기.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "cb6c0d058054cfef3e203e0f83a72f640e6c21238c7b5e4edda2a5a53d6df212",
+      "rightsMetadata": {},
+      "csvRow": 14,
+      "csvTitle": "무당의 조상이야기",
+      "group": "무당의조상이야기",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 11,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_문만호의힘센며느리.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "903efd9aff2b011169a1889be90a9b5d8ffeed7c6d7b6c8b337b7f053a0edb8c",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 16,
+      "csvTitle": "문만호의 힘센며느리",
+      "group": "문만호의힘센며느리",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 12,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_산방덕이1.png",
+      "format": "JPEG",
+      "width": 2237,
+      "height": 1702,
+      "sha256": "9068941bfe0632708d9a656112300e55fa91d276a8be2a1dcc87854bd2b83daf",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 19,
+      "csvTitle": "산방덕이1",
+      "group": "산방덕이",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 13,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_산방덕이2.png",
+      "format": "JPEG",
+      "width": 2172,
+      "height": 1754,
+      "sha256": "b555bada9d43d698702e199a4a8b637b14ffe25d0e8ef0d3c0bffcdeb929c4df",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 20,
+      "csvTitle": "산방덕이2",
+      "group": "산방덕이",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 14,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_삼성혈(삼신의3공주).png",
+      "format": "JPEG",
+      "width": 1805,
+      "height": 2009,
+      "sha256": "a2dca3bb852f54e73c0b3a7c28b1a33801d1af4d10f47d6a07f5fd5cbdfca815",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 23,
+      "csvTitle": "삼성혈(삼신인의 3공주)",
+      "group": "삼성혈",
+      "matchMethod": "explicit_alias",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 15,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_삼성혈.png",
+      "format": "JPEG",
+      "width": 2202,
+      "height": 1506,
+      "sha256": "24417c240790dce81172377f6417d8c62d50de51e9f720637f9ec0a04d064c7a",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 22,
+      "csvTitle": "삼성혈",
+      "group": "삼성혈",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 16,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_삼승할망.png",
+      "format": "JPEG",
+      "width": 2000,
+      "height": 1500,
+      "sha256": "3559468505008580152e7e9259cf852784770d8bc0a6b1c2cf4bdee0d7668df8",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 24,
+      "csvTitle": "삼승할망",
+      "group": "삼승할망",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 17,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_삼승할망본풀이(삼승할망행차).png",
+      "format": "JPEG",
+      "width": 768,
+      "height": 1024,
+      "sha256": "9bbcf81755f021f23ef1b913bab2c4642dea03e4ca6e757ef62f92cc7b61c02d",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 25,
+      "csvTitle": "삼승할망본풀이(삼승할망행차)",
+      "group": "삼승할망",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 18,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_서촌꽃놀이(구삼싱할망).png",
+      "format": "JPEG",
+      "width": 768,
+      "height": 1024,
+      "sha256": "8489ce44985e681cf640af51c8f9ac016b56c5a5736b700738dc1aa6ad486032",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 27,
+      "csvTitle": "서천꽃놀이(구삼싱할망)",
+      "group": "서천꽃놀이(구삼싱할망)",
+      "matchMethod": "explicit_alias",
+      "sceneReview": "additional_review",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 19,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_설문대할망과오백장군전설.png",
+      "format": "JPEG",
+      "width": 2342,
+      "height": 1519,
+      "sha256": "48e24bb0b97b93bf37c9fa3280080550009a53be6e2f6886382bcb22c1aaa1c5",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 29,
+      "csvTitle": "설문대할망과 오백장군 전설",
+      "group": "설문대할망",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 20,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_설문대할망전설.png",
+      "format": "JPEG",
+      "width": 1767,
+      "height": 2150,
+      "sha256": "652bc530dd3c92ab0ed25e662b0a8d3d4c29c44a0475c4b26650a8946aa00b93",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 28,
+      "csvTitle": "설문대할망 전설",
+      "group": "설문대할망",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 21,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_소별왕과두태양.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "f017e05b0dab59e40f0c45fbd229cb5e3ea428d52a0faf830191591f3100c139",
+      "rightsMetadata": {},
+      "csvRow": 30,
+      "csvTitle": "소별왕과두태양",
+      "group": "소별왕과두태양",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 22,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_수월봉과녹고물.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "e0e142c97d0d99f94803b57f0a894c3fbb71525667a16f27c069ec5ff8907ce4",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 31,
+      "csvTitle": "수월봉과 녹고물",
+      "group": "수월봉과녹고물",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 23,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_아흔아홉골.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "60cc8af1e2f7b1ef5142d98ad02802cce935f5271e472fbbdbb093c71076b9b5",
+      "rightsMetadata": {},
+      "csvRow": 32,
+      "csvTitle": "아흔아홉 골",
+      "group": "아흔아홉골",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 24,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_앉은뱅이와황금.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "e3c899b56de47cbf68eb4ba587591c060e9b2d8e812a6a303d8f0942dfbe1580",
+      "rightsMetadata": {},
+      "csvRow": 33,
+      "csvTitle": "앉은뱅이와황금",
+      "group": "앉은뱅이와황금",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 25,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_여우물.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "dc9082a7371edf8f48a884339eb334374e511858d399295268ddbe5130c6aecb",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 34,
+      "csvTitle": "여우물",
+      "group": "여우물",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 26,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_여우잡은소금장수.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "7366ec6645dd9e961e67ea9afb7ed737444b4cca205d190e2efb3371c0b0e9f2",
+      "rightsMetadata": {},
+      "csvRow": 35,
+      "csvTitle": "여우잡은소금장수",
+      "group": "여우잡은소금장수",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 27,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_영등할망(외눈박이거인).png",
+      "format": "JPEG",
+      "width": 2185,
+      "height": 1741,
+      "sha256": "60343bd37d88cbbbd54df4fd977cfb4b38a7ec0304eb38f84c0ed576299fd4f8",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 37,
+      "csvTitle": "영등할망(외눈박이 거인)",
+      "group": "영등할망",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 28,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_영등할망전설.png",
+      "format": "JPEG",
+      "width": 2208,
+      "height": 1729,
+      "sha256": "a9a74adce5a6ee2e524534d2c0d3fd5d47c952e80e237471528aff41b35293f8",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 36,
+      "csvTitle": "영등할망 전설",
+      "group": "영등할망",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 29,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_오찰방.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "586263417b5685902ed3b75996ff8e99c35c66c96e254accc0a145d52d997287",
+      "rightsMetadata": {},
+      "csvRow": 38,
+      "csvTitle": "오찰방",
+      "group": "오찰방",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 30,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_용감한병둥이.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "d888bce135f4f0bf1c9c698eaa28b61b84fd76d4c12c89bce0987fef64e5fc23",
+      "rightsMetadata": {},
+      "csvRow": 39,
+      "csvTitle": "용감한병둥이",
+      "group": "용감한병둥이",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 31,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_유반석무반석.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "e587d30e94cbe6fae83deaaea5a9a290aa23fb96d14d122f9010ca251ae13ec1",
+      "rightsMetadata": {},
+      "csvRow": 42,
+      "csvTitle": "유반석무반석",
+      "group": "유반석무반석",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 32,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_은혜갚으노루.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "2180b02d8d2378ad8f3ed0f0b130e810ad3373ed5174e7d7383cec895b57e995",
+      "rightsMetadata": {},
+      "csvRow": 43,
+      "csvTitle": "은혜갚은노루",
+      "group": "은혜갚은노루",
+      "matchMethod": "explicit_alias",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 33,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_자청비1.png",
+      "format": "JPEG",
+      "width": 2122,
+      "height": 1543,
+      "sha256": "e87d745f19d1a14d7eeb37dbb7fb611419478541e176d0ebe4996a62e3192c44",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 44,
+      "csvTitle": "자청비1",
+      "group": "자청비",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 34,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_자청비2.png",
+      "format": "JPEG",
+      "width": 2029,
+      "height": 1682,
+      "sha256": "bc47186ed94c90173234eec544d1e38db91940a4476964d32299cfb71ab71a3f",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 45,
+      "csvTitle": "자청비2",
+      "group": "자청비",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 35,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_장사구운문.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "10bcee7b94b73bf350c59f1be640d52c4edcb351b7131ab095504419bd210ffa",
+      "rightsMetadata": {},
+      "csvRow": 46,
+      "csvTitle": "장사구운문",
+      "group": "장사구운문",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 36,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_장사한씨.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "dce93cf5cdba413c065ea0b607cf3bf2b1b27e9991b28e4efe6c6159724c734c",
+      "rightsMetadata": {},
+      "csvRow": 47,
+      "csvTitle": "장사한씨",
+      "group": "장사한씨",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 37,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_장수무덤.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "6f36b643695b07f4d730512fd21085ec8c5d1fa2fd258eb5cdbb6799307ed72f",
+      "rightsMetadata": {},
+      "csvRow": 48,
+      "csvTitle": "장수무덤",
+      "group": "장수무덤",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 38,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_장원급제한어부아들.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "568acd0b0349e3da38ba41f16eb9ce67fafc0ac1d8f88efbde2ed40dc24d87d2",
+      "rightsMetadata": {},
+      "csvRow": 49,
+      "csvTitle": "장원 급제한 어부아들",
+      "group": "장원급제한어부아들",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 39,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_한라산의고려장설화.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "7bd49ba911b8308941ceef7ac6ce7ae81073db14fc826f08eebfa0d5f73b9469",
+      "rightsMetadata": {
+        "comment": "b'LEAD Technologies Inc. V1.01\\x00'"
+      },
+      "csvRow": 54,
+      "csvTitle": "한라산의 고려장 설화",
+      "group": "한라산의고려장설화",
+      "matchMethod": "whitespace_normalized",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 40,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_홍리고대각.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "0f044b08011899fb0a76a82075339fdc1d3381f3ba9b128e481f1f6582ac853a",
+      "rightsMetadata": {},
+      "csvRow": 56,
+      "csvTitle": "홍리고대각",
+      "group": "홍리고대각",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 41,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_힘센남매.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "bf92ea6b0ef0dba9473b0a7bee6708eb6c9c26850be22df9708ad539c9179cda",
+      "rightsMetadata": {},
+      "csvRow": 58,
+      "csvTitle": "힘센남매",
+      "group": "힘센남매",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    },
+    {
+      "index": 42,
+      "path": "제주특별자치도_제주신화전설_삽화/제주신화전설_힘센종막산이.png",
+      "format": "JPEG",
+      "width": 1024,
+      "height": 768,
+      "sha256": "147118efd5b443f241d146b2980aa1265eab77173436cc5df05c8a8455689e14",
+      "rightsMetadata": {},
+      "csvRow": 59,
+      "csvTitle": "힘센종막산이",
+      "group": "힘센종막산이",
+      "matchMethod": "exact",
+      "sceneReview": "topic_aligned",
+      "license": "KOGL-0",
+      "licenseBasis": "https://www.data.go.kr/data/15051457/fileData.do",
+      "licenseEligibility": "eligible_under_dataset_license",
+      "appImported": false
+    }
+  ],
+  "csvRows": [
+    {
+      "row": 1,
+      "파일명": "가문장아기",
+      "설명": "거지 부부는 가믄장아기를 쫓아낸 후 다시 거지가 되고 눈까지 멀어 두 딸들에게 버림을 받게 됩니다. 그 사실을 알게 된 가믄장아기는 맹인 잔치를 열어 부모를 기다리고, 잔치 마지막 날 가믄장아기의 부모가 찾아오자 가믄장아기는 그들에게 술을 권하며 자신이 쫓겨난 가믄장이라는 사실을 밝힙니다. 그러자 부부가 놀라 딸을 보려는 순간 그들의 눈이 뜨여 앞을 볼 수 있게 되고, 거지 부부와 가믄장아기는 죽을 때까지 잘 살았다고 합니다."
+    },
+    {
+      "row": 2,
+      "파일명": "가믄장아기",
+      "설명": "거지 부부가 딸 셋을 차례로 낳아, 그 중에 셋째 딸은 검은 나무 그릇으로 먹여 살렸으니 가믄장 아기라 불렀다. 가믄장 아기가 복덩어리인지라, 거지 부부는 셋째 딸을 얻고 부자가 되었다. 하루는 거지 대감이 딸들을 한 명씩 불러 누구 덕에 사느냐고 물었다. 이에 가믄장 아기만이 대답을 잘못하여 집에서 쫓겨나게 된다. 갖은 역경을 헤치고 가믄장 아기는 셋째 마퉁이와 부부의 연을 맺고 산을 내려오게 되었다. 가믄장 아기와 마퉁이는 돌밭을 일궈 볍씨를 뿌리고 풍년을 맞았다. 한편 가믄장 아기가 집을 나간 후, 거지 부부는 재산을 잃고 장님이 되었다. 거지 부부가 구걸을 하며 떠돌다 이른 곳은 가믄장 아기와 마퉁이가 수확한 쌀로 잔치를 베푸는 마을이었다. 부모, 형제들과 화해한 가믄장 아기와 마퉁이는 하늘의 자궁인 땅에 제를 올리고 마을 잔치를 연다."
+    },
+    {
+      "row": 3,
+      "파일명": "감목관김댁",
+      "설명": "지리에 능한 한 제주목사가 제주경주김씨 묏자리를 봐주고 명당을 골라줬는데, 아차하는 순간 용맥이 비둘기가 되어 날아가버려, 100년 뒤에야 발복을 하게 됐다는 이야기. 그 묏자리 덕분에 말부자가 되어 감목관을 지냈다는 것."
+    },
+    {
+      "row": 4,
+      "파일명": "감목관김씨",
+      "설명": "이상한 일은 그 뒤로 계속 일어났다. 그 말이 들어온 후부터 낯선 말이 한두 마리씩 매일매일 집으로 들어오는 것이었다. 그렇게 해서 들어온 말이 한 서른 마리 이상 되었다. <발췌 : 제주도 이야기 2권_p.40>"
+    },
+    {
+      "row": 5,
+      "파일명": "고종달",
+      "설명": "옛날 천하를 통일한 진시왕은 자기 외에 다시 천하를 지배할 왕이 태어나게 될 징조를 알았다. 자세히 알아보니 조선나라 남쪽 작은 섬이 심상치 않은 땅임을 알고, 고종달이라는 풍수사를 파견하여 인물이 날만한 혈을 끊어버리도록 했다. 그러면 인물도 날 수 없게 될 것이라고 믿었다."
+    },
+    {
+      "row": 6,
+      "파일명": "궤네깃도",
+      "설명": "\"아이는 아버지를 만났으니 어리광을 부리노라고 아버지 무릎에 앉아 삼각수(三角須)를 뽑고 가슴팍을 치곤 했다. 아버지인 소천국은 화를 내었다. 「이 자식 밴 때도 일이 글러서 살림이 분산되더니 나서도 이런 불효한 행동을 하니 죽여야 마땅할 것이로되 그럴 수는 없고 동해바다로 띄워 버려라」 무쇠석갑에 세 살난 아들을 자물쇠로 잠그고 동해바다에 띄워 버렸다.\""
+    },
+    {
+      "row": 7,
+      "파일명": "김녕사굴",
+      "설명": "구좌읍 김녕리에 굴이 있는데 큰 뱀이 살았다하여 김녕뱀굴이라 부른다. 매년 마을에서는 뱀에게 처녀를 제물로 바치는데 마침 서련 이라는 젊은 판관이 부임한다. 이런 사실을 알고 서판관은 군졸들과 함께 뱀을 죽여 버린다. 무당은 피하라고 했고 절대로 뒤를 보지 말라고 했으나 무심코 뒤를 돌아보는 순간 그 자리에 쓰러져 죽고 만다."
+    },
+    {
+      "row": 8,
+      "파일명": "김녕사굴뱀과의싸움",
+      "설명": "서련 판관은 잠시 숨어 기다리며 굿이 더욱 무르익어 뱀이 나타나기만을 기다렸다. 그렇게 한참을 숨죽이며 기다리는데 굴의 저 안쪽 깊고 어두운 곳에서 무언가 슬슬 움직이는 게 보이기 시작했다. 서련 판관은 그것이 요망한 뱀이라고 믿었다. 그 뱀이 커다란 그림자를 드리우며 나타나자 처녀는 기절해 버렸고, 서련 판관은 달려들어 단칼에 뱀의 목을 베었다."
+    },
+    {
+      "row": 9,
+      "파일명": "날아온섬비양도",
+      "설명": "고려시대 때 화산이 폭발하여 만들어진 섬이다. 이를 두고 많은 전설이 전해지고 있다. 중국에 있던 오름이 날아와 지금 위치에 자리 잡았다고 하기도 하고 잘못 날아왔다고 해서 돌아서다가 그 자리에 멈추게 되어 자리했는데 그래서 비양도 오름이 돌아앉은 형체라고 한다."
+    },
+    {
+      "row": 10,
+      "파일명": "남편따라죽은부인",
+      "설명": "용수에 풍랑에 죽은 남편을 따라 죽은 부부의 묘가 있는데 한 선비가 시를 지어 읊어주었다. 과거 낙방 후 부인이 공부를 계속하라고 하고는 사라졌다 마음을 잡은 선비는 결국 합격한다. <발췌 : 제주도 이야기 2권_p.181>"
+    },
+    {
+      "row": 11,
+      "파일명": "도깨비불 때문에 마을 이름을 바꾼 사연",
+      "설명": "옛날 이 마을에 밤마다 도깨비불이 나타나 집들을 태우곤 해서, 당시 목사가 직접 사건을 조사하러 갔다고 한다.  결국 마을 이름 때문에 화재가 잦다고 하여 옛 마을 이름인 괴이리가 지금의 한동리로 바뀌게 되었다."
+    },
+    {
+      "row": 12,
+      "파일명": "돼지가된어머니",
+      "설명": "정육점을 하는 사람이 있었다. 돼지를 한 마리 샀는데 우리 밖을 나오지 않았다. 보살에게 물어 보았더니 종이를 두 장 준비하라고 했다."
+    },
+    {
+      "row": 13,
+      "파일명": "마라도 처녀당신이 된 애기업개",
+      "설명": "아기 때 버려져 해녀의 아기업개로 자란 소녀가 마라도에 물질하러 간 해녀들을 따라 마라도에 들어갔다가 혼자 남겨져 외롭게 죽었다. 훗날 마라도에 들어간 해녀들이 소녀의 뼈를 모아 장사지내 주었고, 사람이 살기 시작하면서 마을당 신으로 모시게 됐다는 마라도당신화를 애니메이션으로 구성했다."
+    },
+    {
+      "row": 14,
+      "파일명": "무당의 조상이야기",
+      "설명": "임대감은 자식이 없어 불공을 드린 끝에 딸을 낳았는데 그만 시집을 가기도 전에 애를 갖게 되어 쫓겨났다. 세 아들을 낳아 훌륭히 키워 급제에 까지 올랐으나 과거가 들통나 낙향하게 된다.어머니가 돌아가신 후 아버지를 찾으러 가다가 돌담에서 잠이 들고 꿈에 아버지가 나타나 큰 힘을 주겠다고 하는데, 바로 무당의 조상이 그들인 것이다. <발췌 : 제주도이야기 2권_p.7>    "
+    },
+    {
+      "row": 15,
+      "파일명": "문국성과 소목사",
+      "설명": "옛날 애월 납읍리 출신 문국성은 기골이 장대한 사람으로 서울에 올라가 장안을 주름잡고 다녔다고 한다. 임금이 지리에 능한 목사를 제주에 보내 문국성의 선묘자리를 옮기게 했고 그로 인해 문국성은 영웅이 되지 못했다는 이야기"
+    },
+    {
+      "row": 16,
+      "파일명": "문만호의 힘센며느리",
+      "설명": "사람들은 장정 여러 사람이 들어야 던질 수 있는 들음돌이 밭에 있는 것을 보자 놀라 누가 그랬는지 궁금해 했다. 그러다가 문만호의 며느리가 한 것이 밝혀졌다. 이 사실을 안 시아버지가 며느리를 나무라며 다시 제자리에 갖다 놓으라고 했다. 그래서 문만호 며느리가 다시 들음돌을 들어다 놓았다"
+    },
+    {
+      "row": 17,
+      "파일명": "백록이 먹는 물, 백록담",
+      "설명": "옛날 한라산은 신선이 살아 함부로 갈 수 없는 산이었다.  한 사냥꾼이 한라산에 들어갔다가 신선이 타고 다니는 하얀 사슴을 잘못 건드렸는데 엎드려 싹싹 빌고 살아났다는 전설을 재구성했다."
+    },
+    {
+      "row": 18,
+      "파일명": "산방덕이",
+      "설명": "산방덕은 본래 고씨 성을 가진 사내의 첩이었다. 고씨는 신분은 천하였으나 비범하고 부지런하여 열심히 일했고 둘은 큰 부자가 되었다. 이를 시샘한 목사는 고씨의 재산과 산방덕을 차지하려 하였다. 그래서 그가 역모를 꾸민다 하여 그를 잡아들인다. 고씨는 곧 멀리 귀양을 가게되고 산방덕은 남편을 그리워하다 결국 바위로 변하게되었다."
+    },
+    {
+      "row": 19,
+      "파일명": "산방덕이1",
+      "설명": "산방산의 정기를 받고 태어난 암굴의 여신이다. 여신이긴 하나, 인간 세계에 나온 이상, 인간적인 고뇌에 부딪치면 시련을 겪는다. 사랑하는 남편이 억눌한 누명으로 옥살이를 하게 된다."
+    },
+    {
+      "row": 20,
+      "파일명": "산방덕이2",
+      "설명": "산방산의 정기를 받고 태어난 암굴의 여신이다. 여신이긴 하나, 인간 세계에 나온 이상, 인간적인 고뇌에 부딪치면 시련을 겪는다. 죄악으로 가득 찬 인간세계를 내려온 것을 한탄한다."
+    },
+    {
+      "row": 21,
+      "파일명": "산호해녀",
+      "설명": "모슬포에 살던 한 해녀가 우연히 바다거북을 구해주었다. 물질하러 바다에 들었다가 그 바다거북이 용궁의 자식이라는 사실을 알게 된다. 그 공으로 후한 대접을 받고 산호를 얻어 와 평생 마마 한 번 걸리지 않고 건강하게 살았다는 이야기 "
+    },
+    {
+      "row": 22,
+      "파일명": "삼성혈",
+      "설명": "삼성혈은 제주도 사람의 전설적인 발상지이다. 삼신인인 고을나,부을나, 양을나가 이곳에서 동시에 태어나 수렵생활을 하다가 오곡의 종자를 가지고 온 벽랑국 3공주를 맞이한다. 삼신인은 각자 정주할 생활터전을 마련하기 위하여 도읍을 정하기로 하고, 한라산 중턱에 올라가 활을 쏘아 도읍을 정하였다."
+    },
+    {
+      "row": 23,
+      "파일명": "삼성혈(삼신인의 3공주)",
+      "설명": "삼성혈은 제주도 사람의 전설적인 발상지이다. 삼신인인 고을나 ,부을나, 양을나가 이곳에서 동시에 태어나 수렵생활을 하다가 오곡의 종자를 가지고 온 벽랑국 3공주를 맞이하면서부터 농경생활이 되었다."
+    },
+    {
+      "row": 24,
+      "파일명": "삼승할망",
+      "설명": "아기들을 키우고 돌보는 신이 되기 위하여 바다신(동해용왕)의 따님아기와 하늘신(멩진국)의 따님 아기가 꽃(생불화)가꾸기 경쟁을 벌인 결과 하늘신의 따님 아기가 꽃을 더 잘 가꾸워서 아기들의 양육을 관장하시는 삼승할망이 되었다."
+    },
+    {
+      "row": 25,
+      "파일명": "삼승할망본풀이(삼승할망행차)",
+      "설명": "삼승할망은 서천강에 명주다리를 놓게 하였다. 그제야 서천강 명주다리를 건너 대별상의 집으로 행차를 하였다. 삼승할망은 은결같은 손으로 서신국마누라의 허리를 두세 번 쓸어 내렸다. 서신국마누라는 구에문으로 무사히 해산하였다."
+    },
+    {
+      "row": 26,
+      "파일명": "서국굴의 동자 전설",
+      "설명": "서국굴을 지나던 한 선비가 비를 피해 굴안에서 잠을 청하게 되었는데, 꿈속에 한 동자가 나타나 배가 고프니 먹을 것을 달라고 하였다. 꿈이 너무나 생생해 젖은 흙을 이용해 동자의 모양을 빚어놓고, 지나가는 길손들이 남기는 음식이라도 얻어먹으라고 하고는 선비는 떠나게 되었다. 그런데, 그 후로는 그 앞을 지나는 소나 말들이 그 앞에만 오면 다리를 절뚝이고 넘어지는 것이었다. 다시 그 앞을 지나게 된 선비는 그것이 자신이 만든 동자석 때문이라 생각하고 동자석을 부러뜨려 버린다. 그러자 신기하게도 소나 말이 아무렇지 않게 그 앞을 지나다닐 수 있었다고 전해진다."
+    },
+    {
+      "row": 27,
+      "파일명": "서천꽃놀이(구삼싱할망)",
+      "설명": "이 놀이굿은 1982년 하도리 면수동 당굿에서 연행된 놀이굿이다. 하도리 면수동의 당신은 ’’여씨 삼신불도 할망’’ 으로 아이를 낳게 하고, 잘 보살펴주는 산육신이기 때문에 당굿에서 본향당신을 청할 때는 일반굿의 <불도맞이>처럼 불도할망을 청하고, 그와 동시에 아이를 저승으로 데려가는 ’’구삼싱할망’’ 을 내쫓는 <서천꽃놀이>를한다,"
+    },
+    {
+      "row": 28,
+      "파일명": "설문대할망 전설",
+      "설명": "선문대할망, 설명두할망, 설명뒤할망, 세명뒤할망, 세명주할망 설화라고도 하며, 신이담(神異譚) 중 초인담(超人譚)에 속하며, 제주 전역에 이야기가 전해진다. 설문대 할망은 치마 폭에 흙을 날라 제주도를 만든다."
+    },
+    {
+      "row": 29,
+      "파일명": "설문대할망과 오백장군 전설",
+      "설명": "선문대할망, 설명두할망, 설명뒤할망, 세명뒤할망, 세명주할망 설화라고도 하며, 신이담(神異譚) 중 초인담(超人譚)에 속하며, 제주 전역에 이야기가 전해진다. 500명의 아들에게 죽을 주기 위해 큰솔에 죽을 끊인다."
+    },
+    {
+      "row": 30,
+      "파일명": "소별왕과두태양",
+      "설명": "천근이나 되는 활로 해둘 달 둘인 이승을 구하고자 각각 하나씩 쏘아 떨어뜨림."
+    },
+    {
+      "row": 31,
+      "파일명": "수월봉과 녹고물",
+      "설명": "오갈피를 캐러 내려 갔던 수월은 절벽 밑으로 떨어져 죽고 말았다. 녹고는 슬픔에 겨워 한없이 울었으며, 그 눈물이 샘이 되어 흘렀다."
+    },
+    {
+      "row": 32,
+      "파일명": "아흔아홉 골",
+      "설명": "아주 오랜 옛날에 맹수들이 제주주민들을 괴롭혔다. 이를 불쌍히 여긴 어느 스님이 사람들에게 주문을 일러준다. 마을주민들이 주문을 외치자 원래 백 개였던 골짜기가 맹수들과 함께 한번에 사라져버려 아흔아홉 골이 되었다. 그 후부터 제주에는 맹수가 나타나지 않았다. 그런데 어떻게 된 일인지 맹수가 나지 않게 되자 왕도 큰 인물도 나지 않게 되었다고 한다."
+    },
+    {
+      "row": 33,
+      "파일명": "앉은뱅이와황금",
+      "설명": "앉은뱅이와 소경이 서로 도와 가며 동냥질을 하며 살아가고 있었다. 하루는 소경의 등에 업고 가는데 길가에 황금이 있어 앉은뱅이가 \"황금 이다\" 라고 소리치려다 말았다. 금이 하나라서 혹시 못 가진 사람이 섭섭할까봐서 였다. 그래서 앉은뱅이는 동네 장사꾼에게 말해줬다. 장사꾼이 그 장소에 가보니 아무것도 없었고 구렁이만 있었다. 장사꾼은 홧김에 칼로 뱀을 두 동강이 내버렸다. 그리고 돌아 와서 앉은뱅이를 반죽음이 되도록 때렸다. 얼마 지난 후 두 사람은 돌아가다가 그 자리에 들렸는데 거기에는 금이 두개가 있어서 서로 하나씩 나누어 가졌다."
+    },
+    {
+      "row": 34,
+      "파일명": "여우물",
+      "설명": "관원은 도포고름을 풀어 그 여자와 자기 몸을 꽁꽁 하나로 묶고는 다시 말에 채찍을 놓아 달렸다. 여자는 마을이 가까울수록 생각이 달라지기 시작하였다. 관리를 혼내주려던 애초의 생각에서 혹시 이 관리에게 당하지나 않을까 하는 두려움이 일기 시작하였다. 그래서 마을에 들어서자 내려달라고 졸랐다."
+    },
+    {
+      "row": 35,
+      "파일명": "여우잡은소금장수",
+      "설명": "소금 파는 장수는 주로 산골마을을 다니다 어느 날 잘 팔리지 않아 길가에서 쉬고 있는데 무슨 소리가 들렸다. "
+    },
+    {
+      "row": 36,
+      "파일명": "영등할망 전설",
+      "설명": "영등할망은 영등굿 기간동안 제주를 돌아다니며 해산물의 씨를 뿌려주고, 어부나 해녀들이 비는 소원을 들어주고 간다고 믿어지고 있다. 영등할망에 관한 전설도 구전으로 전해져 왔기 때문에 지역마다 조금씩 차이가 난다. 영등할망이 어부들을 구해주어 외눈박이 거인들이 분노를 산다. 맹수들에게 사지가 찢기게 된다."
+    },
+    {
+      "row": 37,
+      "파일명": "영등할망(외눈박이 거인)",
+      "설명": "영등할망은 영등굿 기간동안 제주를 돌아다니며 해산물의 씨를 뿌려주고, 어부나 해녀들이 비는 소원을 들어주고 간다고 믿어지고 있다. 영등할망에 관한 전설도 구전으로 전해져 왔기 때문에 지역마다 조금씩 차이가 난다. 영등할망이 제주 어부들을 외눈박이 거인으로 부터 구해주었다."
+    },
+    {
+      "row": 38,
+      "파일명": "오찰방",
+      "설명": "오찰방 아버지는 딸을 가졌을 때는 소 열마리를 잡아 먹이고, 오찰방을 가졌을 때에는 아홉 마리를 잡아 먹였다. 그러니 딸이 더 기운이 셌다. 씨름에서 진 오찰방이 기분이 상해 있자 누이는 그 사실을 말해준다. 한편 서울에 나타난 만주의 소탄 장군을 잡을 사람으로 제주도의 오찰방이 뽑혀 작은 꾀를 부려 소탄 장군을 잡는다."
+    },
+    {
+      "row": 39,
+      "파일명": "용감한병둥이",
+      "설명": "병둥이는 병에서 낫다고 해서 병둥이라고 이름이 되었다 마을의 처녀가 뒷산의 동굴로 납치되었다고 해서 병둥이는 처녀를 구하려고 동굴로 들어갔는데 그곳에는 새로운 세계가 펼쳐진다."
+    },
+    {
+      "row": 40,
+      "파일명": "용두암 전설",
+      "설명": "용두암은 제주시내 서쪽 바닷가에 튀어나온 특출한 형태의 기암이다. 이 바위에는 두 가지전설이 전해져 내려오는데, 하나는 여의주를 훔쳐 승천하려던 용이 산신령의 노여움을 타서 화살을 맞고 돌이 되었다는 전설이고, 다른 하나는 용이 되어 승천하기를 바라던 천리마가 한 장수에 의해 그 뜻이 막히어 한을 품고서 돌이 되었다는 것이다. 이번에 제작한 애니메이션은 잘 알려져 있지 않던 후자의 이야기를 구성하였다."
+    },
+    {
+      "row": 41,
+      "파일명": "용머리와 고종달",
+      "설명": "산방산 앞바다에 있는 기암 용머리에 전해지는 전설로 중국 진시황이 지관 고종달을 보내 왕후지지의 맥을 끊어버렸다는 이야기. "
+    },
+    {
+      "row": 42,
+      "파일명": "유반석무반석",
+      "설명": "현재 안덕면 화순리 마을 동쪽 동네 냇가 높은 언덕에 큰 바위가 있는데, 사람들은 이 바위를 유반석이라 했다. 그리고 서쪽 동네 속칭 썩은 다리 언덕에도 큰 바위가 있는데 이것은 무반석이라 했다. 서쪽 동네 사람들은 힘이 세서 바위를 세워 놓았고 동쪽 동네 사람들은 풍수사의 말을 믿고 서쪽 동네 바위를 무너뜨리기로 한다. 결국 동쪽 동네 사람들은 묘안을 내서 서쪽 동네의 큰 바위를 무너뜨리고 만다."
+    },
+    {
+      "row": 43,
+      "파일명": "은혜갚은노루",
+      "설명": "포수를 피해 도망 온 노루를 농부가 숨겨주었다. 그러자 노루는 농부의 옷자락을 끌고 어떤 곳에 이르게 된다."
+    },
+    {
+      "row": 44,
+      "파일명": "자청비1",
+      "설명": "제주 사람들이 농사를 지으면서 섬기기 시작한 농경, 오곡의 여신이다. 지상의 자청비와 천상의 문도령이 우여곡절 끝에 부부가 되어 농경신으로 된다. "
+    },
+    {
+      "row": 45,
+      "파일명": "자청비2",
+      "설명": "제주 사람들이 농사를 지으면서 섬기기 시작한 농경, 오곡의 여신이다. 지상의 자청비와 천상의 문도령이 우여곡절 끝에 부부가 된다. 자청비는 하늘에서 씨를 받아와 씨를 뿌려 농경신이 된다."
+    },
+    {
+      "row": 46,
+      "파일명": "장사구운문",
+      "설명": "옛날 구운문이라는 힘센 사람이 살았다. 그는 빠르기도 했지만 무척 힘도 셌다. 봄이 되자 보리가 자라기 시작했고 소들이 보리를 먹기 시작했는데 소들은 나라에서 키우는 가축이라 함부로 다룰 수도 없었다. 이때 구운문이 나가 달려드는 소들을 한 마리씩 잡아 냅다 연못으로 처박아 버렸다. 주인은 구운문에게 수확하면 보리를 한짐 주겠다고 했고 수확 후 그는 한짐 가득 가져갔는데 그게 그 밭의 전체 수확 양 이었다. "
+    },
+    {
+      "row": 47,
+      "파일명": "장사한씨",
+      "설명": "쌀가마니를 한손에 하나씩 해적에게 던지니 쌀가마니에 깔리고 기절하는 해적들…"
+    },
+    {
+      "row": 48,
+      "파일명": "장수무덤",
+      "설명": "남원에 어느 집에서 아기가 태어났다 하루는 아기가 없어져 놀랐는데 천정에서 놀고 있었다. 날개를 자르고 평범하게 키우려 하는데……"
+    },
+    {
+      "row": 49,
+      "파일명": "장원 급제한 어부아들",
+      "설명": "어부의 아들은 총명하였으나 몸종으로 선비들을 따라 가고 배나무 위에서 자라는 선비의 말에 자다가 대감의 딸에게 들키는데 …"
+    },
+    {
+      "row": 50,
+      "파일명": "정방폭포와 서불과차",
+      "설명": "진시황의 명령으로 불로초를 찾아 동남동녀 5백을 데리고 제주에 다녀가며 정방폭포 절벽에 ’’서불과차’’라는 글귀를 새겼다는 서불의 전설을 구성했다."
+    },
+    {
+      "row": 51,
+      "파일명": "조천석과 연북정",
+      "설명": "조천 연북정이 있는 자리에 원래는 조천석이라는 커다란 바위가 있었는데, 그것을 감추지 않으면 마을에 인물이 나지 않겠다는 지관의 말에 따라 그 위에 연북정을 짓게 됐다는 이야기다."
+    },
+    {
+      "row": 52,
+      "파일명": "토산당이 살아남은 사연",
+      "설명": "당오백, 절오백 이라는 말이 생겨날 정도로민간 무속신앙이 발달했던 제주에 부임한 목사는 민간신앙을 타파하고자 여러 곳의 당과 절을 파괴하던 중 토산당에 이르렀을때 그 당의 깃발을 일으켜보라 무당에게 지시를 하고 깃대가 저절로 일어서는 것을 본 목사는 그 당 만큼은 부수지 않고 지나갔다고 한다."
+    },
+    {
+      "row": 53,
+      "파일명": "한라산신과 호종단",
+      "설명": "중국 지관 호종단이 제주에 들어와 혈맥을 죄다 끊고 돌아가는데. 노한 한라산신이 매로 변해 호종달이 탄 배를 비양도바다에 좌초시켰다는 전설. 그 뒤 임금이 한라산신을 광양당신으로 봉해 제사를 지내 모시도록 했다는 이야기가 전해진다."
+    },
+    {
+      "row": 54,
+      "파일명": "한라산의 고려장 설화",
+      "설명": "옛날 제주도에서는 노인이 70세가 되도록 살면 이 사람은 신선이 될 사람이라 했다. 그래서 70세가 되는 날, 그 아들이 여러 가지 맛이 있는 음식을 차리고 어버이를 한라산으로 모셔 갔었다. 한라산 정상에 올라가 이 음식을 차려 놓고 어버이를 앉혀 두고 오면 그날로 신선이 되어 올라간다는 것이다."
+    },
+    {
+      "row": 55,
+      "파일명": "허웅아기",
+      "설명": "허웅아기는 나이 열 다섯의 어린 어머니였지만 어찌나 살림 솜씨가 좋았던지 저승의 염라대왕에게까지 소문이 들렸다. 그래서 염라대왕은 허웅아기를 데려다가 저승살림을 시키기로 했다. 할 수 없이 허웅아기는 저승에 가지 않기 위해 곳간에 숨어있었다. 올 때가 되어도 저승에 오지를 않자 저승의 사자들이 허웅아기를 잡으러 와 혼을 빼앗아 가버렸다."
+    },
+    {
+      "row": 56,
+      "파일명": "홍리고대각",
+      "설명": "산디를 가져간 사람을 용서했으나 훗날 벼로 가져가라는 얘기에 배안의 쌀을 전부 지게로 져서 가져와 버렸다."
+    },
+    {
+      "row": 57,
+      "파일명": "힘과 기예가 뛰어난 강씨",
+      "설명": "대포마을에 살고 있던 강씨는 무명을 짜서 파는 언청이였다. 하루는 텃세가 심하다는 냇기마을을 지나는데, 그 마을의 청년들과 사소한 시비가 붙어 듬돌을 들어 힘을 과시하게 되고, 지혜로 그 마을 청년들의 시험을 통과하여 주변 마을에 칭송이 자자했다고 한다."
+    },
+    {
+      "row": 58,
+      "파일명": "힘센남매",
+      "설명": "부부는 남매를 두었는데 힘이 무척 세었다. 동생은 씨름대회에 나가서 모든 사람들을 꺾고 기세가 등등해하자 누나는 동생을 아끼는 마음에서 남장을 하고 동생을 씨름으로 이기고 동생의 거만한 심성을 바로 잡았다."
+    },
+    {
+      "row": 59,
+      "파일명": "힘센종막산이",
+      "설명": "막산이는 너무 힘이 센 종이었다. 그래서 주인은 그를 노비에서 풀어 주었는데 한라산 도둑떼의 두목이 되었다. 사령은 주인에게 막산이를 잡게 해주라고 사정하여 막산이를 제주성에 내려오게 한다."
+    }
+  ],
+  "editorialGroups": [
+    {
+      "auditId": "topic-01",
+      "titleKey": "가믄장아기",
+      "sourceTitles": [
+        "가문장아기",
+        "가믄장아기"
+      ],
+      "csvRows": [
+        1,
+        2
+      ],
+      "imageIndices": [
+        1
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-02",
+      "titleKey": "감목관김씨",
+      "sourceTitles": [
+        "감목관김댁",
+        "감목관김씨"
+      ],
+      "csvRows": [
+        3,
+        4
+      ],
+      "imageIndices": [
+        2
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-03",
+      "titleKey": "고종달",
+      "sourceTitles": [
+        "고종달"
+      ],
+      "csvRows": [
+        5
+      ],
+      "imageIndices": [
+        3
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-04",
+      "titleKey": "궤네깃도",
+      "sourceTitles": [
+        "궤네깃도"
+      ],
+      "csvRows": [
+        6
+      ],
+      "imageIndices": [
+        4
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-05",
+      "titleKey": "김녕사굴",
+      "sourceTitles": [
+        "김녕사굴",
+        "김녕사굴뱀과의싸움"
+      ],
+      "csvRows": [
+        7,
+        8
+      ],
+      "imageIndices": [
+        5,
+        6
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-06",
+      "titleKey": "날아온섬비양도",
+      "sourceTitles": [
+        "날아온섬비양도"
+      ],
+      "csvRows": [
+        9
+      ],
+      "imageIndices": [
+        7
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-07",
+      "titleKey": "남편따라죽은부인",
+      "sourceTitles": [
+        "남편따라죽은부인"
+      ],
+      "csvRows": [
+        10
+      ],
+      "imageIndices": [
+        8
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-08",
+      "titleKey": "도깨비불때문에마을이름을바꾼사연",
+      "sourceTitles": [
+        "도깨비불 때문에 마을 이름을 바꾼 사연"
+      ],
+      "csvRows": [
+        11
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-09",
+      "titleKey": "돼지가된어머니",
+      "sourceTitles": [
+        "돼지가된어머니"
+      ],
+      "csvRows": [
+        12
+      ],
+      "imageIndices": [
+        9
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-10",
+      "titleKey": "마라도처녀당신이된애기업개",
+      "sourceTitles": [
+        "마라도 처녀당신이 된 애기업개"
+      ],
+      "csvRows": [
+        13
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-11",
+      "titleKey": "무당의조상이야기",
+      "sourceTitles": [
+        "무당의 조상이야기"
+      ],
+      "csvRows": [
+        14
+      ],
+      "imageIndices": [
+        10
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-12",
+      "titleKey": "문국성과소목사",
+      "sourceTitles": [
+        "문국성과 소목사"
+      ],
+      "csvRows": [
+        15
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-13",
+      "titleKey": "문만호의힘센며느리",
+      "sourceTitles": [
+        "문만호의 힘센며느리"
+      ],
+      "csvRows": [
+        16
+      ],
+      "imageIndices": [
+        11
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-14",
+      "titleKey": "백록이먹는물,백록담",
+      "sourceTitles": [
+        "백록이 먹는 물, 백록담"
+      ],
+      "csvRows": [
+        17
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-15",
+      "titleKey": "산방덕이",
+      "sourceTitles": [
+        "산방덕이",
+        "산방덕이1",
+        "산방덕이2"
+      ],
+      "csvRows": [
+        18,
+        19,
+        20
+      ],
+      "imageIndices": [
+        12,
+        13
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-16",
+      "titleKey": "산호해녀",
+      "sourceTitles": [
+        "산호해녀"
+      ],
+      "csvRows": [
+        21
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-17",
+      "titleKey": "삼성혈",
+      "sourceTitles": [
+        "삼성혈",
+        "삼성혈(삼신인의 3공주)"
+      ],
+      "csvRows": [
+        22,
+        23
+      ],
+      "imageIndices": [
+        14,
+        15
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-18",
+      "titleKey": "삼승할망",
+      "sourceTitles": [
+        "삼승할망",
+        "삼승할망본풀이(삼승할망행차)"
+      ],
+      "csvRows": [
+        24,
+        25
+      ],
+      "imageIndices": [
+        16,
+        17
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-19",
+      "titleKey": "서국굴의동자전설",
+      "sourceTitles": [
+        "서국굴의 동자 전설"
+      ],
+      "csvRows": [
+        26
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-20",
+      "titleKey": "서천꽃놀이(구삼싱할망)",
+      "sourceTitles": [
+        "서천꽃놀이(구삼싱할망)"
+      ],
+      "csvRows": [
+        27
+      ],
+      "imageIndices": [
+        18
+      ],
+      "hasIllustration": true,
+      "contentKind": "ritual",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-21",
+      "titleKey": "설문대할망",
+      "sourceTitles": [
+        "설문대할망 전설",
+        "설문대할망과 오백장군 전설"
+      ],
+      "csvRows": [
+        28,
+        29
+      ],
+      "imageIndices": [
+        19,
+        20
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-22",
+      "titleKey": "소별왕과두태양",
+      "sourceTitles": [
+        "소별왕과두태양"
+      ],
+      "csvRows": [
+        30
+      ],
+      "imageIndices": [
+        21
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-23",
+      "titleKey": "수월봉과녹고물",
+      "sourceTitles": [
+        "수월봉과 녹고물"
+      ],
+      "csvRows": [
+        31
+      ],
+      "imageIndices": [
+        22
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-24",
+      "titleKey": "아흔아홉골",
+      "sourceTitles": [
+        "아흔아홉 골"
+      ],
+      "csvRows": [
+        32
+      ],
+      "imageIndices": [
+        23
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-25",
+      "titleKey": "앉은뱅이와황금",
+      "sourceTitles": [
+        "앉은뱅이와황금"
+      ],
+      "csvRows": [
+        33
+      ],
+      "imageIndices": [
+        24
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-26",
+      "titleKey": "여우물",
+      "sourceTitles": [
+        "여우물"
+      ],
+      "csvRows": [
+        34
+      ],
+      "imageIndices": [
+        25
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-27",
+      "titleKey": "여우잡은소금장수",
+      "sourceTitles": [
+        "여우잡은소금장수"
+      ],
+      "csvRows": [
+        35
+      ],
+      "imageIndices": [
+        26
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-28",
+      "titleKey": "영등할망",
+      "sourceTitles": [
+        "영등할망 전설",
+        "영등할망(외눈박이 거인)"
+      ],
+      "csvRows": [
+        36,
+        37
+      ],
+      "imageIndices": [
+        27,
+        28
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-29",
+      "titleKey": "오찰방",
+      "sourceTitles": [
+        "오찰방"
+      ],
+      "csvRows": [
+        38
+      ],
+      "imageIndices": [
+        29
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-30",
+      "titleKey": "용감한병둥이",
+      "sourceTitles": [
+        "용감한병둥이"
+      ],
+      "csvRows": [
+        39
+      ],
+      "imageIndices": [
+        30
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-31",
+      "titleKey": "용두암전설",
+      "sourceTitles": [
+        "용두암 전설"
+      ],
+      "csvRows": [
+        40
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-32",
+      "titleKey": "용머리와고종달",
+      "sourceTitles": [
+        "용머리와 고종달"
+      ],
+      "csvRows": [
+        41
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-33",
+      "titleKey": "유반석무반석",
+      "sourceTitles": [
+        "유반석무반석"
+      ],
+      "csvRows": [
+        42
+      ],
+      "imageIndices": [
+        31
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-34",
+      "titleKey": "은혜갚은노루",
+      "sourceTitles": [
+        "은혜갚은노루"
+      ],
+      "csvRows": [
+        43
+      ],
+      "imageIndices": [
+        32
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-35",
+      "titleKey": "자청비",
+      "sourceTitles": [
+        "자청비1",
+        "자청비2"
+      ],
+      "csvRows": [
+        44,
+        45
+      ],
+      "imageIndices": [
+        33,
+        34
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-36",
+      "titleKey": "장사구운문",
+      "sourceTitles": [
+        "장사구운문"
+      ],
+      "csvRows": [
+        46
+      ],
+      "imageIndices": [
+        35
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-37",
+      "titleKey": "장사한씨",
+      "sourceTitles": [
+        "장사한씨"
+      ],
+      "csvRows": [
+        47
+      ],
+      "imageIndices": [
+        36
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-38",
+      "titleKey": "장수무덤",
+      "sourceTitles": [
+        "장수무덤"
+      ],
+      "csvRows": [
+        48
+      ],
+      "imageIndices": [
+        37
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-39",
+      "titleKey": "장원급제한어부아들",
+      "sourceTitles": [
+        "장원 급제한 어부아들"
+      ],
+      "csvRows": [
+        49
+      ],
+      "imageIndices": [
+        38
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-40",
+      "titleKey": "정방폭포와서불과차",
+      "sourceTitles": [
+        "정방폭포와 서불과차"
+      ],
+      "csvRows": [
+        50
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-41",
+      "titleKey": "조천석과연북정",
+      "sourceTitles": [
+        "조천석과 연북정"
+      ],
+      "csvRows": [
+        51
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-42",
+      "titleKey": "토산당이살아남은사연",
+      "sourceTitles": [
+        "토산당이 살아남은 사연"
+      ],
+      "csvRows": [
+        52
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-43",
+      "titleKey": "한라산신과호종단",
+      "sourceTitles": [
+        "한라산신과 호종단"
+      ],
+      "csvRows": [
+        53
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-44",
+      "titleKey": "한라산의고려장설화",
+      "sourceTitles": [
+        "한라산의 고려장 설화"
+      ],
+      "csvRows": [
+        54
+      ],
+      "imageIndices": [
+        39
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-45",
+      "titleKey": "허웅아기",
+      "sourceTitles": [
+        "허웅아기"
+      ],
+      "csvRows": [
+        55
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-46",
+      "titleKey": "홍리고대각",
+      "sourceTitles": [
+        "홍리고대각"
+      ],
+      "csvRows": [
+        56
+      ],
+      "imageIndices": [
+        40
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-47",
+      "titleKey": "힘과기예가뛰어난강씨",
+      "sourceTitles": [
+        "힘과 기예가 뛰어난 강씨"
+      ],
+      "csvRows": [
+        57
+      ],
+      "imageIndices": [],
+      "hasIllustration": false,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-48",
+      "titleKey": "힘센남매",
+      "sourceTitles": [
+        "힘센남매"
+      ],
+      "csvRows": [
+        58
+      ],
+      "imageIndices": [
+        41
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    },
+    {
+      "auditId": "topic-49",
+      "titleKey": "힘센종막산이",
+      "sourceTitles": [
+        "힘센종막산이"
+      ],
+      "csvRows": [
+        59
+      ],
+      "imageIndices": [
+        42
+      ],
+      "hasIllustration": true,
+      "contentKind": "story_pending_genre_review",
+      "publicationStatus": "editorial_review",
+      "places": []
+    }
+  ]
+}
