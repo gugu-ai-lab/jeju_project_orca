@@ -83,3 +83,33 @@ h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 4
 /* 대비 보정 */
 .jeju-nav .navbar-brand .font-myth { color: #fffdf7; }
 .myth-hero .lead { display: inline-block; padding: .35rem .8rem; background: var(--px-ink); border: 2px solid #fffdf7; text-shadow: none; }
+
+/* ── 통일 레이어: 기능 컴포넌트(지도·퀴즈·퍼즐·상세)를 도트 스타일로 ── */
+/* 도트 게임은 모서리가 각져 있다 — 모든 둥근 모서리를 없앤다 */
+*, *::before, *::after { border-radius: 0 !important; }
+
+/* 큰 면: 두꺼운 테두리 + 번지지 않는 그림자 */
+.item-card, .story-panel, .myth-quiz-puzzle-section, .puzzle-board-card, .quiz-card-box,
+.puzzle-complete-banner, .puzzle-lightbox-card, .explorer-map-card, .selected-spot-panel, .record-detail-description {
+  border: var(--px-border) !important; box-shadow: var(--px-shadow) !important; background: #fffdf7;
+}
+/* 작은 안내 상자: 얇은 테두리 */
+.story-term-tip, .story-easy-lines, .story-place-bridge, .story-puzzle-callout, .spot-place-box,
+.spot-evidence-note, .map-fallback-notice, .map-global-myth-banner, .record-detail-photo, .record-detail-photo-placeholder {
+  border: 2px solid var(--px-ink) !important; box-shadow: none !important; background: #eef8fd;
+}
+.explorer-map-stage, .puzzle-grid-frame, .puzzle-lightbox-image-wrap, .story-figure-frame, .scene-pastel-canvas {
+  border: 3px solid var(--px-ink) !important; box-shadow: none !important;
+}
+
+/* 퀴즈·탭 버튼 = 도트 버튼 */
+.quiz-tab-btn, .quiz-option-btn, .btn-round {
+  font-family: var(--px-font); border: 3px solid var(--px-ink) !important; background: #fffdf7; color: var(--px-ink);
+  box-shadow: 0 3px 0 var(--px-deep); transition: transform .08s, box-shadow .08s, background .12s;
+}
+.quiz-tab-btn:hover, .quiz-option-btn:hover:not(:disabled), .btn-round:hover { background: #cfe9f6; }
+.quiz-tab-btn:active, .quiz-option-btn:active:not(:disabled), .btn-round:active { transform: translateY(3px); box-shadow: none; }
+.quiz-tab-btn.active, .quiz-tab-btn.is-active, .quiz-option-btn.is-selected { background: #F28C28; color: #2b1a05; }
+
+/* 이야기 패널 제목 */
+.story-panel h2, .story-panel h3, .selected-spot-panel h2, .selected-spot-panel h3, .quiz-card-box h3 { font-family: var(--px-font); color: var(--px-ink); }
