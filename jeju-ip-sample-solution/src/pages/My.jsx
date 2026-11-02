@@ -15,7 +15,7 @@ export default function My() {
     {favError && <Alert variant="warning" role="alert">{favError}</Alert>}
     {favLoading ? <Loading /> : favorites.length === 0 ? <Empty text="아직 저장한 항목이 없어요" /> :
       <Row xs={1} sm={2} lg={3} className="g-3">{favorites.map(f => <Col key={f.id}>
-        <ItemCard title={f.storyTitle} badge={f.storyId.startsWith('tour:') || f.storyId.startsWith('heritage:') ? '장소' : '이야기'}
+        <ItemCard title={f.storyTitle} isFavorite badge={f.storyId.startsWith('tour:') || f.storyId.startsWith('heritage:') ? '장소' : '이야기'}
           subtitle={new Date(f.createdAt).toLocaleString('ko-KR')} />
         {STORY_CATALOG.some(story => story.id === f.storyId) && <Link className="btn btn-link btn-sm" to={`/explore/${encodeURIComponent(f.storyId)}`}>이야기 보기</Link>}
         <Button size="sm" variant="outline-secondary" disabled={favLoading} onClick={() => removeFavorite(f.storyId)}>즐겨찾기 삭제</Button>
