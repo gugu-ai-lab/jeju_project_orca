@@ -6,6 +6,7 @@ import Heritage from './pages/Heritage'
 import Agent from './pages/Agent'
 import GuidePreview from './pages/GuidePreview'
 import Explore from './pages/Explore'
+import StoryDetail from './pages/StoryDetail'
 import My from './pages/My'
 import NotFound from './pages/NotFound'
 
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'explore', element: <Explore /> },
+      { path: 'explore/:storyId', element: <StoryDetail /> },
       { path: 'places', element: <Places /> },
       { path: 'heritage', element: <Heritage /> },
       { path: 'agent', element: <Agent /> },

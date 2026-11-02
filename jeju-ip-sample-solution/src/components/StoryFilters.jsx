@@ -19,7 +19,7 @@ export default function StoryFilters({ value, onChange, categories, total, shown
         ))}
         <div className="form-check form-switch ms-md-auto mb-0">
           <input className="form-check-input" type="checkbox" id="f-verified" checked={value.onlyVerified} onChange={(e) => set({ onlyVerified: e.target.checked })} />
-          <label className="form-check-label small" htmlFor="f-verified">출처 확인된 것만</label>
+          <label className="form-check-label small" htmlFor="f-verified">출처 확인된 이야기만 보기</label>
         </div>
         <div className="form-check form-switch mb-0">
           <input className="form-check-input" type="checkbox" id="f-image" checked={value.onlyWithImage} onChange={(e) => set({ onlyWithImage: e.target.checked })} />

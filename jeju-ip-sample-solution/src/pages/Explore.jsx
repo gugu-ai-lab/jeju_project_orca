@@ -1,21 +1,20 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 import PageHeader from '../components/PageHeader'
 import StoryCard from '../components/StoryCard'
 import StoryFilters from '../components/StoryFilters'
-import StoryPanel from '../components/StoryPanel'
 import { STORY_CATALOG } from '../data/storyCatalog'
 import { filterStories, presentCategories } from '../lib/storyFilter'
 
-// 제주 이야기 탐험 — 카탈로그 전체를 검색·분류해서 본다. 항목 수가 늘어나도 이 화면은 그대로 쓴다.
+// 제주 이야기 탐험 — 카탈로그를 검색·분류해서 본다. 기본은 출처가 확인된 이야기만 보여주고,
+// 항목 수가 늘어나도 이 화면은 그대로 쓴다. 이야기를 고르면 /explore/:id 상세 화면으로 이동한다.
 export default function Explore() {
-  const [filters, setFilters] = useState({ query: '', category: 'all', onlyVerified: false, onlyWithImage: false })
-  const [selectedId, setSelectedId] = useState(null)
-  const [sceneIndex, setSceneIndex] = useState(0)
+  const [filters, setFilters] = useState({ query: '', category: 'all', onlyVerified: true, onlyWithImage: false })
+  const navigate = useNavigate()
 
   const categories = useMemo(() => presentCategories(STORY_CATALOG), [])
   const shown = useMemo(() => filterStories(STORY_CATALOG, filters), [filters])
-  const selected = STORY_CATALOG.find((s) => s.id === selectedId)
 
   return (
     <>
@@ -28,18 +27,12 @@ export default function Explore() {
         <Row className="g-3 mt-1">
           {shown.map((s) => (
             <Col key={s.id} xs={12} sm={6} lg={4}>
-              <StoryCard story={s} selected={s.id === selectedId} onSelect={(id) => { setSelectedId(id); setSceneIndex(0) }} />
+              <StoryCard story={s} selected={false} onSelect={(id) => navigate(`/explore/${id}`)} />
             </Col>
           ))}
         </Row>
       )}
 
-      {selected && (
-        <section className="mt-4" aria-live="polite" aria-label="선택한 이야기">
-          <StoryPanel title={selected.title} scene={selected.scenes[sceneIndex]} source={selected.source}
-            sceneIndex={sceneIndex} sceneCount={selected.scenes.length} onSceneChange={setSceneIndex} />
-        </section>
-      )}
     </>
   )
 }
