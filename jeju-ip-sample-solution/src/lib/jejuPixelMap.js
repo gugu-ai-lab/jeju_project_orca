@@ -1,7 +1,7 @@
 // 제주 도트 지도 — 지도 데이터(블록 높이·색·오브젝트)와 렌더러(three.js / 2D 캔버스 대체).
 // 해안선·높이·오브젝트 위치는 "일러스트용 근사값"이며 측량 자료가 아니다.
 // 핀은 jejuMapPins.json 의 실제 위경도(realGeoCoords)를 이 지도의 칸 좌표로 바꿔 놓는다(geoToMap).
-// three 는 npm 패키지 대신 public/vendor/three/three.min.js 를 불러와 쓰므로 THREE 를 인자로 받는다.
+// three 는 package.json 의 three 를 동적 import 로 불러와 THREE 인자로 넘겨받는다.
 
 const OUTLINE = [
   [126.55, 33.52], [126.64, 33.54], [126.76, 33.56], [126.86, 33.53], [126.93, 33.46], [126.90, 33.38],
@@ -141,10 +141,15 @@ const seaTone = (c, f) => {
 
 function makeThree(THREE, { canvas, data, getSize, getView }) {
   const { COLS: W, ROWS: H, cells, sprites } = data
+  // 최신 three 는 색을 sRGB 로 변환하고 조명을 물리 단위로 계산한다. 도트 팔레트의 색이 그대로 나오도록
+  // 색 변환을 끄고, 예전 방식과 같은 밝기가 되게 조명 세기에 π 를 곱한다.
+  if (THREE.ColorManagement) THREE.ColorManagement.enabled = false
+  const lk = Number(THREE.REVISION) >= 155 ? Math.PI : 1
   const gl = new THREE.WebGLRenderer({ canvas, antialias: false })     // WebGL 을 못 만들면 예외 → 2D 대체
+  if (THREE.LinearSRGBColorSpace) gl.outputColorSpace = THREE.LinearSRGBColorSpace
   const scene = new THREE.Scene(); scene.background = new THREE.Color(SEA[2])
-  scene.add(new THREE.AmbientLight(0xffffff, .55))
-  const sun = new THREE.DirectionalLight(0xffffff, .45); sun.position.set(-.5, 10, .8); scene.add(sun)
+  scene.add(new THREE.AmbientLight(0xffffff, .55 * lk))
+  const sun = new THREE.DirectionalLight(0xffffff, .45 * lk); sun.position.set(-.5, 10, .8); scene.add(sun)
   const frustum = 50
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -900, 900)
   const mesh = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshLambertMaterial({ color: 0xffffff }), cells.length)

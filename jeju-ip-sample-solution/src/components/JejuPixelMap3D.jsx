@@ -2,20 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { buildJejuMapData, createJejuMapRenderer, pinWorld } from '../lib/jejuPixelMap'
 import { systemReducesMotion } from '../lib/motion'
 
-// three.js 는 npm 패키지 대신 public/vendor/three/three.min.js 를 처음 필요할 때 한 번 불러온다.
-let threePromise = null
-function loadThree() {
-  if (window.THREE) return Promise.resolve(window.THREE)
-  threePromise ||= new Promise((resolve) => {
-    const s = document.createElement('script')
-    s.src = '/vendor/three/three.min.js'
-    s.async = true
-    s.onload = () => resolve(window.THREE || null)
-    s.onerror = () => { threePromise = null; resolve(null) }
-    document.head.appendChild(s)
-  })
-  return threePromise
-}
+// three.js(package.json 의 three)는 지도 화면을 열 때 한 번만 따로 내려받는다(코드 분할).
+const loadThree = () => import('three').catch(() => null)
 
 let cachedData = null
 const getData = () => (cachedData ||= buildJejuMapData())
