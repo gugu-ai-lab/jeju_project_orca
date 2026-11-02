@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
+import Landing from './pages/Landing'
 import Home from './pages/Home'
 import Places from './pages/Places'
 import Heritage from './pages/Heritage'
@@ -15,7 +16,7 @@ import NotFound from './pages/NotFound'
 // 아이콘 이름: https://icons.getbootstrap.com
 // ※ Places/Heritage 는 샘플 이름입니다. 자신의 주제에 맞게 바꾸세요.
 export const NAV_ITEMS = [
-  { to: '/', label: '홈', icon: 'house' },
+  { to: '/home', label: '홈', icon: 'house' },
   { to: '/explore', label: '이야기 탐험', icon: 'compass' },
   { to: '/places', label: '관광·문화', icon: 'geo-alt' },
   { to: '/heritage', label: '국가유산', icon: 'bank' },
@@ -24,12 +25,12 @@ export const NAV_ITEMS = [
 ]
 
 export const router = createBrowserRouter([
+  { path: '/', element: <Landing />, errorElement: <NotFound /> },   // 도트 게임 느낌의 시작 화면
   {
-    path: '/',
-    element: <RootLayout />,      // 모든 페이지에 공통으로 보이는 틀(메뉴·푸터)
-    errorElement: <NotFound />,   // 없는 주소로 들어오면
+    element: <RootLayout />,      // 모든 내부 페이지에 공통으로 보이는 틀(메뉴·푸터)
+    errorElement: <NotFound />,
     children: [
-      { index: true, element: <Home /> },
+      { path: 'home', element: <Home /> },
       { path: 'explore', element: <Explore /> },
       { path: 'explore/:storyId', element: <StoryDetail /> },
       { path: 'places', element: <Places /> },
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: 'agent', element: <Agent /> },
       { path: 'guide-preview', element: <GuidePreview /> },
       { path: 'my', element: <My /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ])

@@ -11,7 +11,7 @@ export default function RootLayout() {
     <div className="d-flex flex-column min-vh-100">
       <Navbar expand="md" className="jeju-nav" collapseOnSelect sticky="top">
         <Container>
-          <Navbar.Brand as={NavLink} to="/" end>
+          <Navbar.Brand as={NavLink} to="/home">
             <span className="brand-mark" aria-hidden="true" />
             <span className="font-myth">탐라 이야기길</span>
           </Navbar.Brand>
@@ -19,7 +19,7 @@ export default function RootLayout() {
           <Navbar.Collapse id="main-nav">
             <Nav className="me-auto">
               {NAV_ITEMS.map((item) => (
-                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/'} eventKey={item.to}>
+                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/home'} eventKey={item.to}>
                   <i className={`bi bi-${item.icon} me-1`} />{item.label}
                 </Nav.Link>
               ))}
