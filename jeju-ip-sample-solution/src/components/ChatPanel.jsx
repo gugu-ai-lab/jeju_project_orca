@@ -7,7 +7,7 @@ import ChatMessage from './ChatMessage'
 //   onSend     : (text) => void
 //   suggestions: 빠른 질문 문자열 배열(선택)
 //   notice     : 상단 안내 문구(선택, 예: 미리보기 안내)
-export default function ChatPanel({ messages, loading, onSend, suggestions = [], notice, placeholder = '신화에 대해 물어보세요' }) {
+export default function ChatPanel({ messages, loading, onSend, suggestions = [], notice, disabled = false, placeholder = '신화에 대해 물어보세요' }) {
   const [text, setText] = useState('')
   const endRef = useRef(null)
 
@@ -15,7 +15,7 @@ export default function ChatPanel({ messages, loading, onSend, suggestions = [],
 
   const submit = (value) => {
     const v = value.trim()
-    if (!v || loading) return
+    if (!v || loading || disabled) return
     onSend(v)
     setText('')
   }
@@ -45,7 +45,7 @@ export default function ChatPanel({ messages, loading, onSend, suggestions = [],
       {suggestions.length > 0 && (
         <div className="chat-suggest">
           {suggestions.map((q) => (
-            <button key={q} type="button" className="btn btn-outline-sea btn-sm" disabled={loading} onClick={() => submit(q)}>{q}</button>
+            <button key={q} type="button" className="btn btn-outline-sea btn-sm" disabled={loading || disabled} onClick={() => submit(q)}>{q}</button>
           ))}
         </div>
       )}
@@ -53,13 +53,14 @@ export default function ChatPanel({ messages, loading, onSend, suggestions = [],
       <form className="chat-input" onSubmit={(e) => { e.preventDefault(); submit(text) }}>
         <input
           className="form-control"
+          disabled={disabled || loading}
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={placeholder}
           aria-label="질문 입력"
           maxLength={300}
         />
-        <button type="submit" className="btn btn-citrus" disabled={loading || !text.trim()}>
+        <button type="submit" className="btn btn-citrus" disabled={loading || disabled || !text.trim()}>
           <i className="bi bi-send me-1" />보내기
         </button>
       </form>

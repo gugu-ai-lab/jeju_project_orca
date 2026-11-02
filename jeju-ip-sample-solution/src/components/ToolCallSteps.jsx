@@ -30,6 +30,16 @@ export default function ToolCallSteps({ steps }) {
               {s.count != null && <span className="tool-count">{s.count}건</span>}
               {args && <span className="tool-args">{args}</span>}
               {s.message && <span className="tool-message">{s.message}</span>}
+              {s.source && <div className="small text-secondary">{s.sourceUrl ? <a href={s.sourceUrl} target="_blank" rel="noopener noreferrer">{s.source}</a> : s.source}</div>}
+              {s.fetchedAtKst && <div className="small text-secondary">조회: {s.fetchedAtKst}</div>}
+              {s.preview?.length > 0 && <details><summary>조회 결과 보기</summary><ul>
+                {s.preview.map((p, n) => <li key={p.id || n}>
+                  {p.title || p.place}{p.description && <p>{p.description}</p>}
+                  {p.address && <div>{p.address}</div>}
+                  {p.latitude && p.longitude && <div>좌표 {p.latitude}, {p.longitude}</div>}
+                  {p.time && <div>{p.time} · {p.sky} · {p.temp ?? '—'}°C · 강수확률 {p.pop ?? '—'}%</div>}
+                </li>)}
+              </ul></details>}
             </li>
           )
         })}

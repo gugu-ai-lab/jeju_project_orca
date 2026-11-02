@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Alert, Badge, Button, Card, Form, InputGroup, Spinner } from 'react-bootstrap'
+import { Alert, Badge, Button, Card, Form, InputGroup } from 'react-bootstrap'
 import PageHeader from '../components/PageHeader'
 import ToolSteps from '../components/ToolSteps'
+import ChatPanel from '../components/ChatPanel'
+import { presentAgentMessage } from '../../services/agent-presentation'
 import { useAppStore } from '../store/useAppStore'
 import { fetchAgentStatus, queryTool } from '../api/client'
 
@@ -10,7 +12,6 @@ export default function Agent() {
   const loading = useAppStore(s => s.chatLoading)
   const sendMessage = useAppStore(s => s.sendMessage)
   const chatError = useAppStore(s => s.chatError)
-  const [input, setInput] = useState('')
   const [status, setStatus] = useState(null)
   const [statusError, setStatusError] = useState('')
   const [tool, setTool] = useState('search_myths')
@@ -27,12 +28,6 @@ export default function Agent() {
     return () => { active = false }
   }, [])
 
-  async function onSubmit(e) {
-    e.preventDefault()
-    if (!status?.available || !input.trim() || loading) return
-    const success = await sendMessage(input.trim())
-    if (success) setInput('')
-  }
   async function onLookup(e) {
     e.preventDefault()
     if (busy) return
@@ -60,24 +55,13 @@ export default function Agent() {
       </li>)}</ul>
       <p className="small text-muted">AI는 질문에 따라 필요한 도구를 선택하고, 결과를 확인한 뒤 출처와 함께 답합니다.</p>
     </Card.Body></Card>
-    <Card className="chat-box mb-3"><Card.Body aria-live="polite">
-      {messages.length === 0 && <p className="text-muted">예: 설문대할망 자료와 관련 역사문화를 찾아주고 제주시 날씨도 확인해 줘.</p>}
-      {messages.map((m, i) => <div key={i} className={'msg ' + m.role}>
-        <div className="small fw-bold">{m.role === 'user' ? '나' : 'AI 안내원'}</div>
-        <p style={{ whiteSpace: 'pre-wrap' }}>{m.text}</p>
-        {m.role === 'assistant' && <ToolSteps steps={m.steps} />}
-      </div>)}
-      {loading && <p><Spinner size="sm" /> AI가 자료를 확인하고 있습니다…</p>}
-    </Card.Body></Card>
+    <div className="mb-4">
+      <ChatPanel messages={messages.map(presentAgentMessage)} loading={loading}
+        disabled={!status?.available}
+        onSend={text => sendMessage(text)}
+        notice={status?.available ? '공공데이터를 확인한 뒤 출처와 함께 답합니다.' : '실제 AI 호출은 현재 비활성화되어 있습니다.'} />
+    </div>
     {chatError && <Alert variant="warning" role="alert">{chatError.message}<ToolSteps steps={chatError.steps} /></Alert>}
-    <Form onSubmit={onSubmit} className="mb-5">
-      <Form.Label htmlFor="agent-question">신화 여행 질문</Form.Label>
-      <InputGroup>
-        <Form.Control id="agent-question" value={input} maxLength={1500} onChange={e => setInput(e.target.value)}
-          disabled={!status?.available || loading} placeholder="어떤 제주 이야기를 탐험하고 싶나요?" />
-        <Button type="submit" disabled={!status?.available || loading || !input.trim()}>질문하기</Button>
-      </InputGroup>
-    </Form>
     <Card><Card.Body>
       <Card.Title>직접 자료 조회</Card.Title>
       <p>OpenAI 키 없이 공공데이터 도구를 직접 조회합니다. AI의 자율 호출과는 별개입니다.</p>
