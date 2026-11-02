@@ -1,134 +1,25 @@
-import { loadKakaoMaps } from '../lib/kakaoMaps'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import mapPinsData from '../data/jejuMapPins.json'
 const verifiedPins = mapPinsData.filter(p => p.hasVerifiedLocation && p.illustrationCoords)
 
 /**
- * JejuMythExplorerMap — 2.5D 그림책 스타일 SVG 제주 신화 탐험 지도(기본) + 카카오맵 연동
+ * JejuMythExplorerMap — 그림책 스타일 SVG 제주 신화 탐험 지도(기본) + 카카오맵 연동
  *
  * 참고:
  * - Three.js 기반 미니어처 컴포넌트(`src/components/JejuMiniature3D.jsx`)는 추후 재검토를 위해 파일로 보존하되,
- *   현재 화면과 지도 모드 선택 탭에서는 제외하여 밝고 깔끔한 2.5D SVG 일러스트 지도에 집중한다.
+ *   현재 화면과 지도 모드 선택 탭에서는 제외하여 밝고 깔끔한 SVG 일러스트 지도에 집중한다.
  */
 export default function JejuMythExplorerMap({
   selectedMythId,
   onSelectMyth,
 }) {
-  const kakaoKey =
-    import.meta.env.VITE_KAKAO_MAP_KEY ||
-    import.meta.env.VITE_KAKAO_JS_KEY ||
-    import.meta.env.VITE_KAKAO_APP_KEY ||
-    ''
-
-  const [mapMode, setMapMode] = useState('pastel') // 'pastel' (기본 2.5D SVG) | 'kakao'
-  const [kakaoStatus, setKakaoStatus] = useState(kakaoKey ? 'idle' : 'no-key')
   const [bouncingPinId, setBouncingPinId] = useState(null)
-
-  const mapContainerRef = useRef(null)
-  const kakaoMapInstanceRef = useRef(null)
-  const markersRef = useRef([])
-  const onSelectRef = useRef(onSelectMyth)
-
-  useEffect(() => {
-    onSelectRef.current = onSelectMyth
-  }, [onSelectMyth])
-
-  // JSON에서 실제 위치가 검증된 핀(6곳)만 필터링
-  const selectedPin = mapPinsData.find((p) => p.mythId === selectedMythId) || verifiedPins[0]
+  const selectedPin = mapPinsData.find(p => p.mythId === selectedMythId) || verifiedPins[0]
   const isGlobalMythSelected = selectedPin && !selectedPin.hasVerifiedLocation
-  const selectedPinRef = useRef(selectedPin)
-  useEffect(() => { selectedPinRef.current = selectedPin }, [selectedPin])
-
   function handlePinClick(pin) {
     setBouncingPinId(pin.pinId)
     onSelectMyth?.(pin.mythId)
   }
-
-  function handleSelectMode(nextMode) {
-    setMapMode(nextMode)
-    if (nextMode === 'kakao') {
-      if (!kakaoKey) {
-        setKakaoStatus('no-key')
-      } else if (kakaoStatus === 'idle') {
-        setKakaoStatus('loading')
-      }
-    }
-  }
-
-  // 실제 위치 및 길 찾기용 카카오맵 SDK 로드 (realGeoCoords 사용)
-  useEffect(() => {
-    if (mapMode !== 'kakao' || !kakaoKey || isGlobalMythSelected) return
-
-    let cancelled = false
-
-    function initKakaoMap(maps) {
-      if (cancelled || !mapContainerRef.current) return
-      if (!window.kakao || !window.kakao.maps) {
-        setKakaoStatus('error')
-        return
-      }
-
-      try {
-        const centerLat = selectedPinRef.current?.realGeoCoords?.lat || 33.3846
-        const centerLng = selectedPinRef.current?.realGeoCoords?.lng || 126.5535
-        const map = new maps.Map(mapContainerRef.current, {
-          center: new maps.LatLng(centerLat, centerLng),
-          level: 10,
-        })
-        kakaoMapInstanceRef.current = map
-
-        markersRef.current.forEach((m) => m.setMap(null))
-        markersRef.current = []
-
-        verifiedPins.forEach((pin) => {
-          if (!pin.realGeoCoords) return
-          const pos = new maps.LatLng(
-            pin.realGeoCoords.lat,
-            pin.realGeoCoords.lng
-          )
-          const marker = new maps.Marker({
-            position: pos,
-            title: `${pin.mythTitle} · ${pin.placeName}`,
-          })
-          marker.setMap(map)
-          maps.event.addListener(marker, 'click', () => {
-            onSelectRef.current?.(pin.mythId)
-          })
-          markersRef.current.push(marker)
-        })
-
-        setKakaoStatus('ready')
-      } catch {
-        setKakaoStatus('error')
-      }
-    }
-
-    loadKakaoMaps(kakaoKey).then(initKakaoMap).catch(() => { if (!cancelled) setKakaoStatus('error') })
-
-    return () => {
-      cancelled = true
-      markersRef.current.forEach(marker => marker.setMap(null))
-      markersRef.current = []
-      kakaoMapInstanceRef.current = null
-    }
-  }, [mapMode, kakaoKey, isGlobalMythSelected])
-
-  // 선택한 핀이 바뀌면 카카오맵 중심 이동
-  useEffect(() => {
-    if (
-      mapMode === 'kakao' &&
-      kakaoStatus === 'ready' &&
-      kakaoMapInstanceRef.current &&
-      window.kakao?.maps &&
-      selectedPin?.realGeoCoords
-    ) {
-      const moveLatLon = new window.kakao.maps.LatLng(
-        selectedPin.realGeoCoords.lat,
-        selectedPin.realGeoCoords.lng
-      )
-      kakaoMapInstanceRef.current.panTo(moveLatLon)
-    }
-  }, [selectedPin, mapMode, kakaoStatus])
 
   // 카카오맵 외부 길찾기 URL 생성 (실제 좌표 기준)
   const kakaoDirectionsUrl = selectedPin?.realGeoCoords
@@ -161,57 +52,13 @@ export default function JejuMythExplorerMap({
               실제 위치·길찾기
             </a>
           )}
-          <div className="map-mode-switch" role="tablist" aria-label="지도 표시 방식 선택">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={mapMode === 'pastel'}
-              className={`map-mode-btn ${mapMode === 'pastel' ? 'is-active' : ''}`}
-              onClick={() => handleSelectMode('pastel')}
-            >
-              🎨 2.5D 그림책 지도
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={mapMode === 'kakao'}
-              className={`map-mode-btn ${mapMode === 'kakao' ? 'is-active' : ''}`}
-              onClick={() => handleSelectMode('kakao')}
-            >
-              📍 카카오맵
-            </button>
-          </div>
+          <span className="map-badge-pill">🎨 그림책지도</span>
         </div>
       </div>
 
       {/* 메인 지도 스테이지 */}
       <div className="explorer-map-stage">
-        {mapMode === 'kakao' && kakaoKey && kakaoStatus !== 'error' && !isGlobalMythSelected ? (
-          <div
-            ref={mapContainerRef}
-            className="kakao-map-canvas"
-            aria-label="카카오맵 제주 신화 실제 위치 지도"
-          />
-        ) : (
           <div className="pastel-jeju-map-wrap is-popup-25d">
-            {/* 카카오맵 모드를 선택했으나 API 키가 없거나 로드 전인 경우 안내 배너 */}
-            {mapMode === 'kakao' && kakaoStatus === 'no-key' && (
-              <div className="map-fallback-notice" role="status">
-                <strong>💡 실제 지도는 잠시 준비 중이에요</strong>
-                <span>
-                  그림책 지도는 계속 이용할 수 있어요. 길찾기를 누르면 실제 위치가 열려요.
-                </span>
-              </div>
-            )}
-            {mapMode === 'kakao' && kakaoStatus === 'error' && (
-              <div className="map-fallback-notice" role="status">
-                <strong>💡 카카오맵 연결 안내</strong>
-                <span>
-                  실제 지도를 불러오지 못해 그림책 지도를 보여드려요. 이야기와 길찾기는 계속 이용할 수 있어요.
-                </span>
-              </div>
-            )}
-
             {/* 단일 고정 위치가 없는 신화(자청비) 선택 시 안내 배너 */}
             {isGlobalMythSelected && (
               <div className="map-global-myth-banner" role="status">
@@ -225,15 +72,15 @@ export default function JejuMythExplorerMap({
               </div>
             )}
 
-            {/* 2.5D 팝업북 입체감을 더한 제주도 SVG 일러스트 지도 (800×480, 밝은 아이보리·하늘·민트·블루그린 톤) */}
+            {/* 팝업북 입체감을 더한 제주도 SVG 일러스트 지도 (800×480, 밝은 아이보리·하늘·민트·블루그린 톤) */}
             <svg
               viewBox="0 0 800 480"
               className="pastel-jeju-svg"
               role="img"
-              aria-label="한라산, 오름, 현무암, 바다가 입체적으로 표현된 2.5D 제주도 신화 탐험 일러스트 지도"
+              aria-label="한라산, 오름, 현무암, 바다가 입체적으로 표현된 제주도 신화 탐험 일러스트 지도"
             >
               <defs>
-                {/* 2.5D 팝업북 종이 단차 그림자 필터 (칙칙한 회색 없이 맑은 청록/하늘 그림자 사용) */}
+                {/* 팝업북 종이 단차 그림자 필터 (칙칙한 회색 없이 맑은 청록/하늘 그림자 사용) */}
                 <filter id="popup-island-shadow" x="-8%" y="-8%" width="116%" height="122%">
                   <feDropShadow dx="0" dy="7" stdDeviation="3.5" floodColor="#4FA3B7" floodOpacity="0.2" />
                 </filter>
@@ -244,7 +91,7 @@ export default function JejuMythExplorerMap({
 
               {/* 1. 파스텔 제주 바다 배경 장식 (잔잔한 물결, 나침반, 구름, 배) */}
               <g className="svg-sea-decor" aria-hidden="true">
-                {/* 귀여운 2.5D 탐험 나침반 (좌측 상단) */}
+                {/* 귀여운 탐험 나침반 (좌측 상단) */}
                 <g transform="translate(68, 66)" filter="url(#popup-piece-shadow)">
                   <circle cx="0" cy="4" r="26" fill="#A9D7F3" />
                   <circle cx="0" cy="0" r="26" fill="#FFFDF7" stroke="#4FA3B7" strokeWidth="2.5" />
@@ -280,7 +127,7 @@ export default function JejuMythExplorerMap({
                 </g>
               </g>
 
-              {/* 2. 제주 부속 섬 2.5D 일러스트 (아래 두께 단면 + 위 섬 표면) */}
+              {/* 2. 제주 부속 섬 일러스트 (아래 두께 단면 + 위 섬 표면) */}
               <g className="svg-sub-islands" aria-hidden="true" filter="url(#popup-piece-shadow)">
                 {/* 북서쪽 비양도 (한림 앞바다) */}
                 <path
@@ -309,7 +156,7 @@ export default function JejuMythExplorerMap({
                 />
                 <text x="84" y="257" textAnchor="middle" fill="#4FA3B7" fontSize="10" fontWeight="700">차귀도</text>
 
-                {/* 동쪽 우도 (성산 앞바다 소 모양 섬 — 2.5D 두께 단차) */}
+                {/* 동쪽 우도 (성산 앞바다 소 모양 섬 — 두께 단차) */}
                 <path
                   d="M 720 150 C 714 136, 732 121, 746 128 C 756 134, 758 154, 748 164 C 736 172, 723 162, 720 150 Z"
                   fill="#4FA3B7"
@@ -332,9 +179,9 @@ export default function JejuMythExplorerMap({
                 <text x="188" y="462" textAnchor="middle" fill="#4FA3B7" fontSize="9.5" fontWeight="700">마라도</text>
               </g>
 
-              {/* 3. 제주 본섬 2.5D 입체 지형 (밝은 파스텔 바다 턱 + 블루그린 해안 단면 + 아이보리 모래 + 민트 들판) */}
+              {/* 3. 제주 본섬 입체 지형 (밝은 파스텔 바다 턱 + 블루그린 해안 단면 + 아이보리 모래 + 민트 들판) */}
               <g className="svg-main-island" filter="url(#popup-island-shadow)">
-                {/* [2.5D 1층] 바닷속 얕은 파스텔 하늘 턱 */}
+                {/* [1층] 바닷속 얕은 파스텔 하늘 턱 */}
                 <path
                   transform="translate(0, 11)"
                   d="M 116 266
@@ -359,7 +206,7 @@ export default function JejuMythExplorerMap({
                   strokeLinejoin="round"
                 />
 
-                {/* [2.5D 2층] 제주 섬 입체 블록 측면 두께 */}
+                {/* [2층] 제주 섬 입체 블록 측면 두께 */}
                 <path
                   transform="translate(0, 6)"
                   d="M 116 266
@@ -384,7 +231,7 @@ export default function JejuMythExplorerMap({
                   strokeLinejoin="round"
                 />
 
-                {/* [2.5D 3층] 아이보리 모래 해안선 테두리 & 밝은 민트 들판 */}
+                {/* [3층] 아이보리 모래 해안선 테두리 & 밝은 민트 들판 */}
                 <path
                   d="M 116 266
                      C 110 245, 130 222, 152 204
@@ -408,7 +255,7 @@ export default function JejuMythExplorerMap({
                   strokeLinejoin="round"
                 />
 
-                {/* [2.5D 4층] 중산간 곶자왈 입체 단차 */}
+                {/* [4층] 중산간 곶자왈 입체 단차 */}
                 <path
                   transform="translate(0, 4)"
                   d="M 192 252
@@ -431,7 +278,7 @@ export default function JejuMythExplorerMap({
                   strokeWidth="2"
                 />
 
-                {/* [2.5D 5층] 한라산 기슭 고원 단차 */}
+                {/* [5층] 한라산 기슭 고원 단차 */}
                 <ellipse cx="408" cy="236" rx="132" ry="56" fill="#A8DDD2" />
                 <ellipse cx="408" cy="232" rx="132" ry="56" fill="#C4EAE2" stroke="#FFFDF7" strokeWidth="1.5" />
               </g>
@@ -447,7 +294,7 @@ export default function JejuMythExplorerMap({
                 opacity="0.72"
               />
 
-              {/* 5. 제주 자연·문화 2.5D 팝업 피스 요소 (한라산·백록담·오름·현무암·산방산·성산일출봉) */}
+              {/* 5. 제주 자연·문화 팝업 피스 요소 (한라산·백록담·오름·현무암·산방산·성산일출봉) */}
               <g className="svg-jeju-landmarks" aria-hidden="true">
                 {/* 중앙 한라산과 백록담 */}
                 <g transform="translate(398, 224)" filter="url(#popup-piece-shadow)">
@@ -497,7 +344,7 @@ export default function JejuMythExplorerMap({
                   </text>
                 </g>
 
-                {/* 동쪽 오름 군락 (2.5D 입체 오름) */}
+                {/* 동쪽 오름 군락 (입체 오름) */}
                 <g transform="translate(546, 174)" filter="url(#popup-piece-shadow)">
                   <ellipse cx="4" cy="19" rx="32" ry="5" fill="#4FA3B7" opacity="0.3" />
                   <path d="M -28 18 Q -12 -10 4 18 Z" fill="#A9D7F3" stroke="#2F5D50" strokeWidth="2" strokeLinejoin="round" />
@@ -585,7 +432,7 @@ export default function JejuMythExplorerMap({
               </g>
             </svg>
 
-            {/* 6. JSON 기반 클릭 가능한 2.5D 스탠드형 신화 장소 핀 오버레이 */}
+            {/* 6. JSON 기반 클릭 가능한 스탠드형 신화 장소 핀 오버레이 */}
             <div className="pastel-map-pins-layer">
               {verifiedPins.map((pin) => {
                 const isSelected = selectedPin?.pinId === pin.pinId
@@ -603,8 +450,8 @@ export default function JejuMythExplorerMap({
                       .filter(Boolean)
                       .join(' ')}
                     style={{
-                      left: `${pin.illustrationCoords.xPercent}%`,
-                      top: `${pin.illustrationCoords.yPercent}%`,
+                      left: `${pin.illustrationCoords.svgX / 800 * 100}%`,
+                      top: `${pin.illustrationCoords.svgY / 480 * 100}%`,
                     }}
                     onClick={() => handlePinClick(pin)}
                     onAnimationEnd={() => setBouncingPinId(null)}
@@ -626,11 +473,7 @@ export default function JejuMythExplorerMap({
               })}
             </div>
           </div>
-        )}
 
-        {mapMode === 'kakao' && kakaoStatus === 'loading' && (
-          <p className="small text-secondary" role="status">실제 지도를 준비하고 있어요.</p>
-        )}
       </div>
 
       {/* 지도 하단 JSON 핀 빠른 선택 칩 바 */}

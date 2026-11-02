@@ -1663,3 +1663,13 @@ h1, h2, h3, h4, .font-myth {
   color: var(--jeju-forest);
   font-weight: 800;
 }
+
+/* 그림과 핀은 항상 같은 800×480 좌표계를 사용한다. */
+.pastel-jeju-map-wrap { aspect-ratio: 5 / 3; min-height: 0; display: block; }
+.pastel-jeju-svg { width: 100%; height: 100%; max-height: none; }
+.jeju-map-pin,
+.jeju-map-pin:hover,
+.jeju-map-pin.is-selected,
+.jeju-map-pin.is-bouncing { transform: translate(-50%, -100%); animation: none; }
+.jeju-map-pin.is-bouncing .pin-marker-bubble { animation: pin-bubble-bounce .44s ease; }
+@keyframes pin-bubble-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }

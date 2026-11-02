@@ -43,15 +43,14 @@ try {
     assert.ok(events.some(e => e.type === 'marker' && e.lat === expected.lat && e.lng === expected.lng))
     record({ test: '장소 선택 자동 갱신', id, weather: '실제 기상청', map: '모의 SDK 중심·마커 확인', directions: url })
   }
-  await page.locator('.map-mode-switch button').nth(1).click()
-  await page.locator('.kakao-map-canvas').waitFor()
+  assert.equal(await page.locator('.map-mode-switch').count(), 0)
   const before = weatherRequests.length
   await page.locator('.myth-card').filter({ hasText: '자청비' }).click()
   assert.equal(await page.locator('.selected-place-map').count(), 0)
   assert.equal(await page.locator('.selected-spot-panel a[href*="map.kakao.com"]').count(), 0)
   assert.equal(weatherRequests.length, before)
   await page.getByRole('button', { name: /돌문화공원.*신화 선택/ }).click()
-  await page.locator('.kakao-map-canvas').waitFor()
+  await page.locator('svg.pastel-jeju-svg').waitFor()
   await page.waitForFunction(() => document.querySelector('.selected-place-map')?.dataset.mapStatus === 'ready')
   record({ test: '자청비 위치·날씨·길찾기 미제공 및 실제 장소 복귀', passed: true })
 
