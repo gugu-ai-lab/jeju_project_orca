@@ -17,7 +17,8 @@ export function normalizeStory(raw) {
 export function mergeCatalog(...lists) {
   const byId = new Map()
   for (const list of lists) for (const raw of list ?? []) {
-    const s = normalizeStory(raw)
+    const previous = byId.get(raw?.id)
+    const s = normalizeStory(previous ? { ...previous, ...raw, scenes: raw.scenes ?? previous.scenes } : raw)
     if (s) byId.set(s.id, s) // 뒤쪽 목록(검증 결과)이 같은 id 를 덮어쓴다
   }
   return [...byId.values()]
@@ -31,7 +32,7 @@ export function filterStories(stories, { query = '', category = 'all', onlyVerif
     if (onlyVerified && !isVerified(s)) return false
     if (onlyWithImage && !s.scenes.some((sc) => sc.image)) return false
     if (!q) return true
-    return [s.title, s.summary, s.place].some((f) => norm(f).includes(q))
+    return [s.title, s.summary, s.place, ...(s.aliases || [])].some((f) => norm(f).includes(q))
   })
 }
 

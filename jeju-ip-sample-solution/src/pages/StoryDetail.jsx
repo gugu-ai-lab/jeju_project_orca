@@ -10,6 +10,9 @@ import { CATEGORY_LABEL, isVerified } from '../lib/storyFilter'
 // 이야기 상세 — /explore/:storyId. 카탈로그에 있는 항목만 보여주고, 없으면 안내한다.
 export default function StoryDetail() {
   const { storyId } = useParams()
+  return <StoryDetailContent key={storyId} storyId={storyId} />
+}
+function StoryDetailContent({ storyId }) {
   const story = STORY_CATALOG.find((s) => s.id === storyId)
   const [sceneIndex, setSceneIndex] = useState(0)
   const hasQuizPuzzle = Boolean(story && getMythQuizPuzzle(story.id))
@@ -29,6 +32,8 @@ export default function StoryDetail() {
           <StoryPanel
             storyId={story.id}
             title={story.title}
+            question={story.question}
+            placeBridge={story.placeBridge}
             scene={story.scenes[sceneIndex]}
             source={story.source}
             sceneIndex={sceneIndex}
