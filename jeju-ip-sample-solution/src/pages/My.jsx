@@ -1,28 +1,23 @@
 import { useEffect } from 'react'
-import { Col, Form, Row } from 'react-bootstrap'
+import { Alert, Button, Col, Row } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ItemCard from '../components/ItemCard'
 import { Empty, Loading } from '../components/Status'
 import { useAppStore } from '../store/useAppStore'
-
-// 즐겨찾기 — store 의 favorites 를 그대로 보여줍니다 (STEP 5)
 export default function My() {
-  const { nickname, setNickname, favorites, favLoading, loadFavorites } = useAppStore()
-
-  useEffect(() => { loadFavorites() }, [nickname, loadFavorites])
-
-  return (
-    <>
-      <PageHeader icon="star" title="내 즐겨찾기" subtitle="Supabase favorites 테이블 — 안내서 STEP 5" />
-      <Form.Control className="mb-4" style={{ maxWidth: 320 }} placeholder="닉네임"
-        value={nickname} onChange={(e) => setNickname(e.target.value)} />
-      {favLoading ? <Loading /> : favorites.length === 0 ? <Empty text="아직 저장한 항목이 없어요" /> : (
-        <Row xs={1} sm={2} lg={3} className="g-3">
-          {favorites.map((f) => (
-            <Col key={f.id}><ItemCard title={f.title} badge={f.source} subtitle={new Date(f.created_at).toLocaleString('ko-KR')} /></Col>
-          ))}
-        </Row>
-      )}
-    </>
-  )
+  const { favorites, favLoading, favError, loadFavorites, removeFavorite } = useAppStore()
+  useEffect(() => { loadFavorites() }, [loadFavorites])
+  return <>
+    <PageHeader icon="star" title="내 즐겨찾기" subtitle="이 브라우저에서 저장한 이야기와 장소를 다시 만나보세요" />
+    <p className="text-secondary small">익명 인증으로 나의 기록만 저장합니다. 브라우저 데이터를 지우면 기존 기록에 다시 접근하지 못할 수 있어요.</p>
+    {favError && <Alert variant="warning" role="alert">{favError}</Alert>}
+    {favLoading ? <Loading /> : favorites.length === 0 ? <Empty text="아직 저장한 항목이 없어요" /> :
+      <Row xs={1} sm={2} lg={3} className="g-3">{favorites.map(f => <Col key={f.id}>
+        <ItemCard title={f.storyTitle} badge={f.storyId.startsWith('tour:') || f.storyId.startsWith('heritage:') ? '장소' : '이야기'}
+          subtitle={new Date(f.createdAt).toLocaleString('ko-KR')} />
+        {!f.storyId.includes(':') && <Link className="btn btn-link btn-sm" to={`/explore/${encodeURIComponent(f.storyId)}`}>이야기 보기</Link>}
+        <Button size="sm" variant="outline-secondary" disabled={favLoading} onClick={() => removeFavorite(f.storyId)}>즐겨찾기 삭제</Button>
+      </Col>)}</Row>}
+  </>
 }

@@ -1,3 +1,4 @@
+import StoryFavoriteButton from '../components/StoryFavoriteButton'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import StoryPanel from '../components/StoryPanel'
@@ -35,6 +36,7 @@ export default function StoryDetail() {
             onSceneChange={setSceneIndex}
             hasQuizPuzzle={hasQuizPuzzle}
           />
+          <StoryFavoriteButton storyId={story.id} storyTitle={story.title} />
           {hasQuizPuzzle && (
             <MythQuizPuzzleSection
               key={story.id}

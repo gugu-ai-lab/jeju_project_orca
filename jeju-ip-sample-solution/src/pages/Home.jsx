@@ -1,3 +1,4 @@
+import StoryFavoriteButton from '../components/StoryFavoriteButton'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
@@ -553,6 +554,8 @@ export default function Home() {
           hasQuizPuzzle={hasPuzzleForSelected}
         />
       </section>
+
+      <StoryFavoriteButton storyId={selected.id} storyTitle={selected.title} />
 
       {/* 5. 제주 신화 퀴즈로 그림 퍼즐 완성하기 (설문대할망 3문제·3조각 보존) */}
       {hasPuzzleForSelected && (
