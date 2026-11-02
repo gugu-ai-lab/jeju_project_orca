@@ -18,25 +18,32 @@ function baseDateTime() {
 
 export async function getWeather({ place = '제주시' } = {}) {
   const [nx, ny] = GRID[place] ?? GRID['제주시'];
+  const key = process.env.DATA_GO_KR_KEY?.trim()
+  if (!key) throw new Error('DATA_KEY_MISSING')
   const params = new URLSearchParams({
-    serviceKey: process.env.DATA_GO_KR_KEY,
+    serviceKey: key,
     dataType: 'JSON', numOfRows: '300', pageNo: '1',
     nx: String(nx), ny: String(ny), ...baseDateTime(),
   });
-  const r = await fetch(`${BASE}?${params}`);
+  let r
+  try { r = await fetch(BASE + '?' + params, { signal: AbortSignal.timeout(12000) }) }
+  catch { throw new Error('UPSTREAM_UNAVAILABLE') }
+  if (!r.ok) throw new Error(r.status === 401 || r.status === 403 ? 'DATA_AUTH_REQUIRED' : 'UPSTREAM_UNAVAILABLE')
   const text = await r.text();
   let data;
   try { data = JSON.parse(text); }
-  catch { throw new Error('기상청 응답이 JSON이 아님: ' + text.slice(0, 120)); }
+  catch { throw new Error('UPSTREAM_UNAVAILABLE'); }
 
+  if (String(data?.response?.header?.resultCode) !== '00') throw new Error('UPSTREAM_UNAVAILABLE')
   const items = data?.response?.body?.items?.item ?? [];
+  if (!items.length) throw new Error('UPSTREAM_UNAVAILABLE')
   const slots = {}; // "날짜 시간" → { TMP, SKY, PTY, POP }
   for (const it of items) {
     const key = `${it.fcstDate} ${it.fcstTime}`;
     (slots[key] ??= {})[it.category] = it.fcstValue;
   }
   return Object.entries(slots).slice(0, 6).map(([time, v]) => ({
-    place, time, temp: Number(v.TMP), sky: SKY[v.SKY] ?? v.SKY,
-    rain: PTY[v.PTY] ?? v.PTY, pop: Number(v.POP), // pop = 강수확률(%)
+    id: time, title: place + ' ' + time + ' 예보', place, time, temp: v.TMP === undefined ? null : Number(v.TMP), sky: SKY[v.SKY] ?? v.SKY,
+    rain: PTY[v.PTY] ?? v.PTY, pop: v.POP === undefined ? null : Number(v.POP), // pop = 강수확률(%)
   }));
 }

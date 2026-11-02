@@ -22,7 +22,7 @@ export default function Home() {
 
     // ② 서버 함수(/api) 확인
     ping()
-      .then((d) => setApi({ state: 'ok', msg: `OK · 공공데이터 키 ${d.hasDataKey ? '있음' : '없음'} · Claude 키 ${d.hasClaudeKey ? '있음' : '없음'}` }))
+      .then((d) => setApi({ state: 'ok', msg: `OK · 공공데이터 키 ${d.hasDataKey ? '있음' : '없음'} · OpenAI 키 ${d.hasOpenAIKey ? '있음' : '없음'}` }))
       .catch(() => setApi({ state: 'fail', msg: 'npm run dev 가 아니라 vercel dev 로 실행했는지 확인' }))
   }, [])
 

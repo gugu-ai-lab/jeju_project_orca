@@ -6,7 +6,12 @@ async function readJson(r) {
   let data
   try { data = await r.json() }
   catch { throw new Error(`서버 응답이 JSON이 아님 (${r.status}) — vercel dev 로 실행했는지 확인`) }
-  if (!r.ok) throw new Error(data.error || r.statusText)
+  if (!r.ok) {
+    const error = new Error(data.error || '요청을 처리하지 못했습니다.')
+    error.steps = data.steps || []
+    error.code = data.code
+    throw error
+  }
   return data
 }
 
@@ -35,3 +40,6 @@ export const fetchHeritage = (keyword = '') =>
 
 // STEP 6: 에이전트
 export const askAgent = (message, history) => post('/api/agent', { message, history })
+
+export const fetchAgentStatus = () => get('/api/agent')
+export const queryTool = (tool, input) => post('/api/tools', { tool, input })

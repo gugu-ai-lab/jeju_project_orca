@@ -47,14 +47,18 @@ export const useAppStore = create(
       // ④ STEP 6: 에이전트 대화 — 페이지를 옮겨도 대화가 남도록 store 에 둡니다
       messages: [],          // { role: 'user' | 'assistant', text, steps }
       chatLoading: false,
+      chatError: null,
       sendMessage: async (text) => {
-        const history = get().messages.map((m) => ({ role: m.role, content: m.text }))  // Claude 형식
-        set({ messages: [...get().messages, { role: 'user', text }], chatLoading: true })
+        if (get().chatLoading) return false
+        const history = get().messages.slice(-6).map((m) => ({ role: m.role, content: m.text.slice(0, 600) }))  // 제한된 화면 대화 기록
+        set({ messages: [...get().messages, { role: 'user', text }], chatLoading: true, chatError: null })
         try {
           const { answer, steps } = await askAgent(text, history)
           set({ messages: [...get().messages, { role: 'assistant', text: answer, steps }] })
+          return true
         } catch (e) {
-          get().toast(e.message, 'danger')
+          set({ chatError: { message: e.message, steps: e.steps || [] }, messages: get().messages.slice(0, -1) })
+          return false
         } finally {
           set({ chatLoading: false })
         }
