@@ -96,8 +96,10 @@ h1, h2, h3, h4, .font-myth {
 .item-card-img { height: 160px; object-fit: cover; }
 .placeholder-img {
   display: flex; align-items: center; justify-content: center;
-  background: var(--jeju-sky-pastel); color: var(--jeju-sea); font-size: 2rem;
+  background: var(--jeju-sky-pastel); color: var(--jeju-sea); font-size: 1rem;
 }
+.placeholder-img > span:first-child { font-size: 2rem; line-height: 1; }
+.placeholder-img > span:last-child { font-size: .875rem; line-height: 1.3; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 
@@ -1686,7 +1688,7 @@ h1, h2, h3, h4, .font-myth {
 
 
 /* 공공 관광지·국가유산 상세 보기 */
-.item-card-image-trigger { display: block; width: 100%; padding: 0; border: 0; background: transparent; text-align: inherit; line-height: 0; cursor: pointer; }
+.item-card-image-trigger { display: block; width: 100%; padding: 0; border: 0; background: transparent; text-align: inherit; line-height: normal; cursor: pointer; }
 .item-card-image-trigger:disabled { cursor: default; }
 .item-card-title-trigger { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .item-card-subtitle-trigger { cursor: pointer; }
