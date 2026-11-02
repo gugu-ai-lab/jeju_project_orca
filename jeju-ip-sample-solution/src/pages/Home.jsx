@@ -27,6 +27,17 @@ export default function Home() {
     setSceneIndex(0)
   }
 
+  function handleSelectMythFromCard(id) {
+    handleSelectMyth(id)
+    requestAnimationFrame(() => {
+      const section = document.getElementById('story-reader-section')
+      if (!section) return
+      const navHeight = document.querySelector('.jeju-nav')?.getBoundingClientRect().height ?? 0
+      const top = window.scrollY + section.getBoundingClientRect().top - navHeight - 12
+      window.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'instant' })
+    })
+  }
+
   function handleJumpToStory() {
     document.getElementById('story-reader-section')?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -164,7 +175,7 @@ export default function Home() {
               <MythCard
                 myth={m}
                 selected={m.id === selectedId}
-                onSelect={handleSelectMyth}
+                onSelect={handleSelectMythFromCard}
               />
             </Col>
           ))}

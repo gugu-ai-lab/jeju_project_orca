@@ -11,7 +11,7 @@ export default function RootLayout() {
     <div className="d-flex flex-column min-vh-100">
       <Navbar expand="md" className="jeju-nav" collapseOnSelect sticky="top">
         <Container>
-          <Navbar.Brand as={NavLink} to="/">
+          <Navbar.Brand as={NavLink} to="/" end>
             <span className="brand-mark" aria-hidden="true" />
             <span className="font-myth">탐라 이야기길</span>
           </Navbar.Brand>

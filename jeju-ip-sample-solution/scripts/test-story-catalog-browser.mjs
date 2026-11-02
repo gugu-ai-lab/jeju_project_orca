@@ -17,21 +17,68 @@ try {
   assert.equal(await page.locator('.myth-card').count(), HOME_STORIES.length)
   assert.deepEqual(await page.locator('.myth-title').allTextContents(), HOME_STORIES.map(s => s.title))
   await page.getByRole('heading', { name: '신화전설이야기', exact: true }).waitFor()
+  assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['홈'])
   await page.getByText(/실제 지도 장소 6곳과 전체 이야기 수는 달라요/).waitFor()
   for (const story of HOME_STORIES) {
     const link = page.getByRole('link', { name: `${story.title} 자세히 보기`, exact: true })
     assert.equal(await link.getAttribute('href'), `/explore/${story.id}`)
   }
-  // 홈 카드의 장소 선택 동작을 보존한다. 상세 보기는 별도 링크로 제공한다.
-  await page.locator('.myth-card').filter({ hasText: '자청비' }).click()
-  assert.equal(await page.locator('.selected-place-map').count(), 0)
-  await page.getByRole('link', { name: '자청비 자세히 보기', exact: true }).click()
+  // 카드 본문 클릭은 선택 후 그림책으로 즉시 이동하고, 상세 링크는 라우트 이동만 한다.
+  await page.evaluate(() => {
+    const nativeScrollTo = window.scrollTo.bind(window)
+    window.__scrollBehaviors = []
+    window.scrollTo = (...args) => {
+      window.__scrollBehaviors.push(typeof args[0] === 'object' ? args[0].behavior || 'auto' : 'auto')
+      return nativeScrollTo(...args)
+    }
+  })
+  for (const story of HOME_STORIES) {
+    const card = page.locator('.myth-card').filter({ hasText: story.title })
+    await card.locator('.myth-card-select').click()
+    await page.locator('#story-reader-section h2').getByText(story.title, { exact: false }).waitFor()
+    assert.equal(await card.locator('.myth-card-select').getAttribute('aria-pressed'), 'true')
+    const scrollState = await page.evaluate(() => ({ behavior: window.__scrollBehaviors.at(-1), scrollY: window.scrollY }))
+    assert.equal(scrollState.behavior, 'instant', `${story.id} 카드 선택은 즉시 이동해야 함`)
+    const covered = await page.evaluate(() => {
+      const section = document.querySelector('#story-reader-section').getBoundingClientRect()
+      const nav = document.querySelector('.jeju-nav').getBoundingClientRect()
+      return section.top < nav.bottom
+    })
+    assert.equal(covered, false, `${story.id} 그림책 제목이 고정 메뉴에 가려지면 안 됨`)
+  }
+  assert.equal(new URL(page.url()).pathname, '/')
+  await page.locator('.myth-card').filter({ hasText: '자청비' }).getByRole('link', { name: '자청비 자세히 보기', exact: true }).click()
   assert.equal(new URL(page.url()).pathname, '/explore/jacheongbi')
   await page.locator('.story-heading').getByText('자청비', { exact: true }).waitFor()
+  await page.waitForFunction(() => window.scrollY === 0)
+  assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
+  assert.equal(await page.locator('.jeju-nav .navbar-brand.active').count(), 0)
+
+  // 설문대할망은 상세 첫 장면부터 열고, 사용자가 퀴즈 링크를 누를 때만 퍼즐로 이동한다.
+  await page.goto(origin)
+  await page.locator('.myth-card').filter({ hasText: '설문대할망' }).getByRole('link', { name: '설문대할망 자세히 보기', exact: true }).click()
+  assert.equal(new URL(page.url()).pathname, '/explore/seolmundae')
+  await page.locator('.story-heading').getByText('설문대할망', { exact: true }).waitFor()
+  await page.waitForFunction(() => window.scrollY === 0)
+  assert.equal(await page.locator('.story-caption').first().innerText(), STORY_CATALOG.find(story => story.id === 'seolmundae').scenes[0].caption)
+  assert.equal(await page.locator('.quiz-tab-btn').count(), 3)
+  assert.equal(await page.locator('.quiz-tab-btn.is-active').innerText().then(text => text.includes('1번 퀴즈')), true)
+  assert.ok(await page.locator('#myth-quiz-puzzle').evaluate(element => element.getBoundingClientRect().top > window.innerHeight))
+  await page.getByRole('button', { name: '2장면 이어서 읽기 →' }).click()
+  await page.getByRole('link', { name: /퀴즈 풀고 퍼즐 맞추기/ }).click()
+  await page.waitForFunction(() => {
+    const section = document.querySelector('#myth-quiz-puzzle')?.getBoundingClientRect()
+    return section && section.top < window.innerHeight && section.bottom > 0
+  })
+  assert.equal(await page.locator('.quiz-tab-btn').count(), 3)
+  assert.equal(await page.locator('.puzzle-tile').count(), 3)
+  await page.getByRole('tab', { name: /2번 퀴즈/ }).click()
+  assert.equal(await page.getByRole('tab', { name: /2번 퀴즈/ }).getAttribute('aria-selected'), 'true')
   await page.goto(origin)
   await page.getByRole('link', { name: /전체 이야기 보기/ }).click()
   assert.equal(new URL(page.url()).pathname, '/explore')
   await page.locator('.story-card').first().waitFor()
+  assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
   assert.deepEqual(await page.locator('.story-card-title').allTextContents(), STORY_CATALOG.map(s => s.title))
   assert.equal(await page.locator('.story-card').count(), 7)
   await page.getByText('전체 7개 중 7개 표시', { exact: true }).waitFor()
@@ -45,6 +92,8 @@ try {
     await page.locator('.story-card').filter({ has: page.getByText(story.title, { exact: true }) }).click()
     assert.equal(new URL(page.url()).pathname, `/explore/${story.id}`)
     await page.locator('.story-heading').getByText(story.title, { exact: true }).waitFor()
+    await page.waitForFunction(() => window.scrollY === 0)
+    assert.deepEqual(await page.locator('.jeju-nav .nav-link.active').allTextContents(), ['이야기 탐험'])
     assert.equal(await page.locator('.story-easy-p').count(), story.scenes[0].studentLines.length)
     await page.getByRole('button', { name: '장면 2', exact: true }).click()
     await page.locator('.story-caption').getByText(story.scenes[1].caption, { exact: true }).waitFor()

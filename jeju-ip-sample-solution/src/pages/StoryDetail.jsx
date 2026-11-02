@@ -1,5 +1,5 @@
 import StoryFavoriteButton from '../components/StoryFavoriteButton'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import StoryPanel from '../components/StoryPanel'
 import MythQuizPuzzleSection from '../components/puzzle/MythQuizPuzzleSection'
@@ -13,6 +13,10 @@ export default function StoryDetail() {
   return <StoryDetailContent key={storyId} storyId={storyId} />
 }
 function StoryDetailContent({ storyId }) {
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [storyId])
+
   const story = STORY_CATALOG.find((s) => s.id === storyId)
   const [sceneIndex, setSceneIndex] = useState(0)
   const hasQuizPuzzle = Boolean(story && getMythQuizPuzzle(story.id))
