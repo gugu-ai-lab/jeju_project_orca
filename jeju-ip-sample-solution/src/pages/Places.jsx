@@ -27,11 +27,11 @@ export default function Places() {
   const [detailError, setDetailError] = useState('')
   const detailRequest = useRef(0)
 
-  async function search(targetPage = 1, e) {
+  async function search(targetPage = 1, e, searchKeyword = keyword, searchType = type) {
     e?.preventDefault()                                  // 폼 제출 시 새로고침 막기
     setPage(targetPage); setLoading(true); setError('')
     try {
-      const result = await fetchPlaces(keyword, type, targetPage, PAGE_SIZE)
+      const result = await fetchPlaces(searchKeyword, searchType, targetPage, PAGE_SIZE)
       setPlaces(result.items); setTotalCount(result.totalCount)
     }
     catch (err) { setError(err.message) }
@@ -63,7 +63,11 @@ export default function Places() {
       <PageHeader icon="geo-alt" title="관광·문화" subtitle="제주 전체 관광·문화 정보" />
       <Form onSubmit={(e) => search(1, e)} className="mb-4">
         <InputGroup>
-          <Form.Select value={type} onChange={(e) => setType(e.target.value)} style={{ maxWidth: 140 }}>
+          <Form.Select value={type} onChange={(e) => {
+            const nextType = e.target.value
+            setType(nextType)
+            search(1, undefined, keyword, nextType)
+          }} style={{ maxWidth: 140 }}>
             <option value="">전체</option>
             {Object.entries(TYPES).map(([v, label]) => <option key={v} value={v}>{label}</option>)}
           </Form.Select>
