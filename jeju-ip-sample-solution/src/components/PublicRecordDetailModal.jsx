@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import VerifiedLocationMap from './VerifiedLocationMap'
 import { readVerifiedCoordinates } from '../lib/coordinates'
 
-const TOUR_INFO_URL = 'https://www.data.go.kr/data/15101578/openapi.do'
+const TOUR_INFO_URL = 'https://knto.or.kr/'
 function formatDesignationDate(value) {
   const digits = String(value || '').replace(/\D/g, '')
   return digits.length === 8 ? `${digits.slice(0, 4)}.${digits.slice(4, 6)}.${digits.slice(6, 8)}` : value
