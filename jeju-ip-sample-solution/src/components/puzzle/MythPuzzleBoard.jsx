@@ -12,6 +12,7 @@ export default function MythPuzzleBoard({
   grid,
   artwork,
   pieces,
+  storyTitle = '신화',
   unlockedPieceIds = [],
   activeQuestionId,
   onSelectPieceQuestion,
@@ -33,7 +34,9 @@ export default function MythPuzzleBoard({
           </span>
           <h4 className="puzzle-board-title mt-1 mb-0">
             {isCompleted
-              ? '✨ 설문대할망 신화 삽화가 하나로 완성되었어요!'
+              ? artwork.src
+                ? `✨ ${storyTitle} 신화 삽화가 하나로 완성되었어요!`
+                : `✨ ${storyTitle} 퀴즈를 모두 풀었어요! 삽화는 준비 중이에요.`
               : '퀴즈를 맞힐 때마다 가려진 신화 그림이 한 조각씩 나타나요'}
           </h4>
         </div>
@@ -86,26 +89,34 @@ export default function MythPuzzleBoard({
                 .join(' ')}
             >
               {isUnlocked ? (
-                <div className="puzzle-tile-art-slice">
-                  <img
-                    src={artwork.src}
-                    alt={`${artwork.alt} - ${piece.shortLabel}`}
-                    width={artwork.width}
-                    height={artwork.height}
-                    draggable={false}
-                    style={{
-                      width: `${cols * 100}%`,
-                      height: `${rows * 100}%`,
-                      left: `-${piece.col * 100}%`,
-                      top: `-${piece.row * 100}%`,
-                    }}
-                  />
-                  {!isCompleted && (
-                    <span className="puzzle-tile-opened-tag">
-                      ✔ {idx + 1}번 조각
-                    </span>
-                  )}
-                </div>
+                artwork.src ? (
+                  <div className="puzzle-tile-art-slice">
+                    <img
+                      src={artwork.src}
+                      alt={`${artwork.alt} - ${piece.shortLabel}`}
+                      width={artwork.width}
+                      height={artwork.height}
+                      draggable={false}
+                      style={{
+                        width: `${cols * 100}%`,
+                        height: `${rows * 100}%`,
+                        left: `-${piece.col * 100}%`,
+                        top: `-${piece.row * 100}%`,
+                      }}
+                    />
+                    {!isCompleted && (
+                      <span className="puzzle-tile-opened-tag">
+                        ✔ {idx + 1}번 조각
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <div className="puzzle-tile-art-pending" role="status" aria-label={`${storyTitle} 삽화 준비 중`}>
+                    <i className="bi bi-image" aria-hidden="true" />
+                    <strong>삽화 준비 중</strong>
+                    {!isCompleted && <span>{idx + 1}번 퀴즈 완료</span>}
+                  </div>
+                )
               ) : (
                 <button
                   type="button"
@@ -129,9 +140,7 @@ export default function MythPuzzleBoard({
       </div>
 
       <div className="puzzle-board-footer">
-        <span className="puzzle-caption-text">
-          🖼️ {artwork.caption}
-        </span>
+        <span className="puzzle-caption-text">🖼️ {artwork.src ? artwork.caption : `${storyTitle} 삽화 준비 중`}</span>
         <span className="puzzle-session-note">
           · 현재 체험 모드 (서버 저장 연결 전에는 새로고침 시 초기화됩니다)
         </span>

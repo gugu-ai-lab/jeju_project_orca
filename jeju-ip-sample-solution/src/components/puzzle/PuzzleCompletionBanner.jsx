@@ -15,6 +15,7 @@ export default function PuzzleCompletionBanner({
   onResetPuzzle,
 }) {
   if (!artwork) return null
+  const hasArtwork = Boolean(artwork.src)
 
   return (
     <>
@@ -32,19 +33,21 @@ export default function PuzzleCompletionBanner({
               {storyTitle} 신화 그림 퍼즐을 모두 맞췄어요!
             </h4>
             <p className="puzzle-complete-desc mb-0">
-              가려져 있던 세 조각이 하나로 이어졌어요. 완성된 제주 신화 삽화를 크게 펼쳐 감상해 보세요.
+              {hasArtwork
+                ? '가려져 있던 세 조각이 하나로 이어졌어요. 완성된 제주 신화 삽화를 크게 펼쳐 감상해 보세요.'
+                : '세 문제를 모두 맞혔어요! 대표 삽화가 준비되면 이 퍼즐 조각에 그림이 나타나요.'}
             </p>
           </div>
 
           <div className="d-flex flex-wrap gap-2">
-            <button
+            {hasArtwork && <button
               type="button"
               className="btn btn-primary btn-round"
               onClick={onOpenLargeView}
             >
               <i className="bi bi-arrows-fullscreen me-1" />
               완성된 그림 크게 감상하기
-            </button>
+            </button>}
             {onResetPuzzle && (
               <button
                 type="button"
@@ -74,7 +77,7 @@ export default function PuzzleCompletionBanner({
           >
             <div className="puzzle-lightbox-header">
               <div>
-                <span className="puzzle-step-badge">🖼️ 완성된 공식 신화 삽화</span>
+                <span className="puzzle-step-badge">🖼️ 완성된 신화 삽화</span>
                 <h4 className="puzzle-lightbox-title mt-1 mb-0">
                   {artwork.caption}
                 </h4>
@@ -100,7 +103,7 @@ export default function PuzzleCompletionBanner({
             <div className="puzzle-lightbox-footer">
               <p className="mb-1">{artwork.description}</p>
               <p className="puzzle-lightbox-source mb-0">
-                출처: {artwork.source?.label} ({artwork.source?.license})
+                {artwork.source && `출처: ${artwork.source.label} (${artwork.source.license})`}
               </p>
             </div>
           </div>

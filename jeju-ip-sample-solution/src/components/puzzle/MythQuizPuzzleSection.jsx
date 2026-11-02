@@ -142,6 +142,7 @@ export default function MythQuizPuzzleSection({
           grid={puzzleConfig.grid}
           artwork={puzzleConfig.artwork}
           pieces={puzzleConfig.pieces}
+          storyTitle={storyTitle}
           unlockedPieceIds={progress.unlockedPieceIds}
           activeQuestionId={activeQuestionId}
           onSelectPieceQuestion={(qId) => setActiveQuestionId(qId)}
@@ -151,6 +152,7 @@ export default function MythQuizPuzzleSection({
         {/* 오른쪽(또는 하단): 3지선다 신화 퀴즈 카드 */}
         <QuizQuestionCard
           questions={puzzleConfig.questions}
+          storyTitle={storyTitle}
           activeQuestionId={activeQuestionId}
           solvedQuestionIds={progress.solvedQuestionIds}
           onSelectQuestion={(qId) => setActiveQuestionId(qId)}

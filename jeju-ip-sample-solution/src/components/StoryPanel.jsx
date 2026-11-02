@@ -156,7 +156,7 @@ export default function StoryPanel({
               </span>
               <p className="story-puzzle-callout-text mb-0">
                 {isLastScene
-                  ? '이제 아래 3지선다 퀴즈를 풀고 가려진 설문대할망 신화 삽화 3조각을 완성해 보세요!'
+                  ? `이제 아래 3지선다 퀴즈를 풀고 가려진 ${title} 삽화 3조각을 완성해 보세요!`
                   : '2장면까지 모두 읽은 뒤, 아래 퀴즈 3문제를 맞히면 가려진 신화 삽화가 완성돼요.'}
               </p>
             </div>

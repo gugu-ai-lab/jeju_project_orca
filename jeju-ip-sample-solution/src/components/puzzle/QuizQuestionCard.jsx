@@ -11,6 +11,7 @@ import { useState } from 'react'
  */
 export default function QuizQuestionCard({
   questions = [],
+  storyTitle = '신화',
   activeQuestionId,
   solvedQuestionIds = [],
   onSelectQuestion,
@@ -71,7 +72,7 @@ export default function QuizQuestionCard({
   return (
     <div className="quiz-card-box">
       {/* 상단 문제 번호 탭 (순서를 바꿔 풀어도 각 문제-조각 연결이 유지됨) */}
-      <div className="quiz-tabs" role="tablist" aria-label="설문대할망 퀴즈 문제 선택">
+      <div className="quiz-tabs" role="tablist" aria-label={`${storyTitle} 퀴즈 문제 선택`}>
         {questions.map((q, idx) => {
           const solved = solvedSet.has(q.id)
           const active = q.id === question.id

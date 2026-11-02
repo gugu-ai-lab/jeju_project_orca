@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { getMythQuizPuzzle, evaluateQuizSubmission } from '../src/data/mythQuizPuzzles.js'
+import { MYTH_QUIZ_PUZZLES, getMythQuizPuzzle, evaluateQuizSubmission } from '../src/data/mythQuizPuzzles.js'
+import { STORY_CATALOG } from '../src/data/storyCatalog.js'
 test('Gemini three-piece puzzle completes out of order, once only, without duplicates', () => {
   const config = getMythQuizPuzzle('seolmundae')
   assert.equal(config.questions.length, 3); assert.equal(config.pieces.length, 3)
@@ -22,4 +23,60 @@ test('wrong answer retains already opened pieces', () => {
   const wrong = config.questions[1]
   const r = evaluateQuizSubmission(config, progress, wrong.id, wrong.options.find(o => o.id !== wrong.correctOptionId).id)
   assert.equal(r.isCorrect, false); assert.deepEqual(r.nextProgress.unlockedPieceIds, progress.unlockedPieceIds)
+})
+
+test('all seven story detail records have three evidence-based questions and matching puzzle pieces', () => {
+  const storyIds = ['seolmundae', 'samsinin', 'honinji', 'jacheongbi', 'suwolbong', 'sanbangdeok', 'yeongdeung']
+  assert.deepEqual(Object.keys(MYTH_QUIZ_PUZZLES).sort(), [...storyIds].sort())
+  for (const storyId of storyIds) {
+    assert.ok(STORY_CATALOG.some(story => story.id === storyId), `${storyId} remains in story catalog`)
+    const config = getMythQuizPuzzle(storyId)
+    assert.equal(config.questions.length, 3, `${storyId} has three questions`)
+    assert.equal(config.pieces.length, 3, `${storyId} has three pieces`)
+    assert.equal(config.grid.totalPieces, 3)
+    assert.equal(new Set(config.questions.map(question => question.id)).size, 3)
+    assert.equal(new Set(config.pieces.map(piece => piece.pieceId)).size, 3)
+    for (const question of config.questions) {
+      assert.equal(question.options.length, 3)
+      assert.equal(new Set(question.options.map(option => option.text)).size, 3)
+      assert.ok(question.options.some(option => option.id === question.correctOptionId))
+      assert.ok(question.pieceId)
+      assert.match(question.evidence, /CSV|csv/)
+      assert.ok(config.pieces.some(piece => piece.questionId === question.id && piece.pieceId === question.pieceId))
+    }
+  }
+})
+
+test('each myth awards exactly one piece per correct answer and never awards one for a wrong answer', () => {
+  const storyIds = ['seolmundae', 'samsinin', 'honinji', 'jacheongbi', 'suwolbong', 'sanbangdeok', 'yeongdeung']
+  for (const storyId of storyIds) {
+    const config = getMythQuizPuzzle(storyId)
+    let progress = {}
+    const wrong = config.questions[0]
+    const wrongOption = wrong.options.find(option => option.id !== wrong.correctOptionId)
+    const wrongResult = evaluateQuizSubmission(config, progress, wrong.id, wrongOption.id)
+    assert.equal(wrongResult.isCorrect, false, `${storyId} rejects a wrong answer`)
+    assert.equal(wrongResult.newlyUnlockedPieceId, null)
+    assert.deepEqual(wrongResult.nextProgress.unlockedPieceIds, [])
+
+    let completionCount = 0
+    for (const question of [config.questions[2], config.questions[0], config.questions[1]]) {
+      const result = evaluateQuizSubmission(config, progress, question.id, question.correctOptionId)
+      progress = result.nextProgress
+      completionCount += Number(result.justCompleted)
+      assert.equal(result.newlyUnlockedPieceId, question.pieceId, `${storyId} opens its mapped area`)
+    }
+    assert.equal(progress.isCompleted, true, `${storyId} completes after three correct answers`)
+    assert.equal(new Set(progress.unlockedPieceIds).size, 3)
+    assert.equal(completionCount, 1)
+  }
+})
+
+test('only Seolmundae has an image path until Gemini illustrations are supplied', () => {
+  assert.equal(getMythQuizPuzzle('seolmundae').artwork.src, '/myth/seolmundae-2.jpg')
+  for (const storyId of ['samsinin', 'honinji', 'jacheongbi', 'suwolbong', 'sanbangdeok', 'yeongdeung']) {
+    assert.equal(getMythQuizPuzzle(storyId).artwork.src, null)
+    assert.match(getMythQuizPuzzle(storyId).artwork.caption, /대표 삽화/)
+  }
+  assert.equal(getMythQuizPuzzle('unknown'), null)
 })
