@@ -84,3 +84,43 @@ h1, h2, h3, .font-myth {
 
 .jeju-nav .navbar-toggler { border-color: var(--jeju-sea); }
 .jeju-nav .navbar-toggler:focus { box-shadow: 0 0 0 3px rgba(79, 163, 183, .35); }
+
+/* ── 메인: 히어로, 신화 카드 ───────────────────── */
+.myth-hero {
+  position: relative; overflow: hidden; padding: 3rem 1.5rem; border-radius: 1.5rem;
+  background:
+    radial-gradient(60% 90% at 85% 0%, rgba(169, 215, 243, .75), transparent 70%),
+    linear-gradient(180deg, var(--jeju-mist), var(--jeju-ivory));
+  border: 1px solid var(--jeju-line);
+}
+.myth-hero .lead { color: var(--jeju-basalt); max-width: 36rem; }
+@media (min-width: 768px) { .myth-hero { padding: 4rem 3rem; } }
+
+.preview-badge {
+  display: inline-block; align-self: flex-start; font-size: .72rem; font-weight: 700;
+  padding: .15rem .6rem; border-radius: 999px;
+  background: #fff3e3; color: #8a4b05; border: 1px dashed var(--jeju-citrus);
+}
+
+.myth-card {
+  display: flex; flex-direction: column; width: 100%; height: 100%; padding: 0; text-align: left;
+  background: #fff; border: 1px solid var(--jeju-line); border-radius: var(--bs-border-radius-lg);
+  overflow: hidden; color: inherit; box-shadow: var(--jeju-shadow); transition: transform .18s, border-color .18s;
+}
+.myth-card:hover { transform: translateY(-3px); }
+.myth-card.is-selected { border-color: var(--jeju-forest); box-shadow: 0 0 0 2px var(--jeju-forest), var(--jeju-shadow); }
+.myth-art {
+  display: flex; align-items: center; justify-content: center; height: 8rem; font-size: 2.6rem; color: #fff;
+}
+.tone-sea .myth-art { background: linear-gradient(150deg, var(--jeju-sky), var(--jeju-sea)); }
+.tone-forest .myth-art { background: linear-gradient(150deg, var(--jeju-sea), var(--jeju-forest)); }
+.tone-sky .myth-art { background: linear-gradient(150deg, #cfe9f8, var(--jeju-sky) 50%, var(--jeju-sea)); }
+.myth-body { display: flex; flex-direction: column; gap: .35rem; padding: 1rem 1.1rem 1.2rem; }
+.myth-title { font-size: 1.3rem; font-weight: 700; color: var(--jeju-forest); }
+.myth-place { font-size: .88rem; color: var(--jeju-basalt); }
+.myth-note { font-size: .8rem; color: #6b7377; }
+
+.story-empty {
+  padding: 1.25rem; border-radius: var(--bs-border-radius); background: var(--jeju-mist);
+  border: 1px dashed var(--jeju-sea); color: var(--jeju-forest);
+}
