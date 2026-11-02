@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import { Container, Nav, Navbar, Toast, ToastContainer } from 'react-bootstrap'
 import { NAV_ITEMS } from '../router'
 import { useAppStore } from '../store/useAppStore'
@@ -14,7 +14,7 @@ export default function RootLayout() {
       <PixelBackdrop />
       <Navbar expand="md" className="jeju-nav" collapseOnSelect sticky="top">
         <Container>
-          <Navbar.Brand as={NavLink} to="/home">
+          <Navbar.Brand as={Link} to="/" title="시작 화면으로">
             <span className="brand-mark" aria-hidden="true" />
             <span className="font-myth">탐라 이야기길</span>
           </Navbar.Brand>
