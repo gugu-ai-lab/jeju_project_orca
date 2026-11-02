@@ -25,3 +25,10 @@ test('photo outage preserves search result; unreviewed items need no photo reque
   const unknown = await searchHeritage({ fetchImpl: async () => { calls++; return new Response('<result><item>' + item.replace('1123903220000', '1123905470200') + '</item></result>') } })
   assert.equal(calls, 1); assert.equal(unknown[0].image, undefined)
 })
+
+test('reviewed photo file name and official photo ID can differ; no fuzzy matching', async () => {
+  const body = '<ccbaKdcd>12</ccbaKdcd><ccbaAsno>0019020000000</ccbaAsno><ccbaCtcd>50</ccbaCtcd><item><imageUrl>http://www.khs.go.kr/unisearch/images/treasure/2016061316550500.JPG</imageUrl><imageNuri>A/F</imageNuri></item>'
+  const rows = await searchHeritage({ fetchImpl: async url => new Response('<result>' + (url.includes('SearchImage') ? body : '<item>' + item.replace('1123903220000', '1125019020000').replace('0003220000000', '0019020000000') + '</item>') + '</result>') })
+  assert.match(rows[0].image, /2016061316550500.JPG$/)
+  assert.match(rows[0].imageSourceUrl, /ccimId=3487850/)
+})

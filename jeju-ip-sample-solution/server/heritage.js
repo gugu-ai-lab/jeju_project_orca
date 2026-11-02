@@ -2,9 +2,15 @@
 import { XMLParser } from 'fast-xml-parser'
 // 유산번호의 선행 0을 보존해야 동일 유산의 사진을 조회할 수 있다.
 const parser = new XMLParser({ parseTagValue: false })
+// 개별 공식 사진 원문과 공공누리 1유형을 확인한 사진만 연결한다.
 const approved = new Map([
-  ['1123903220000', '1623059'], // 제주 관덕정: 공식 사진 원문의 공공누리 1유형 확인
-  ['1123911870000', '1623086'], // 제주 불탑사 오층석탑: 탑신 및 상륜부, 1유형 확인
+  ['1123903220000', { id: '1623059', file: 'treasure/1623059.jpg' }],
+  ['1123911870000', { id: '1623086', file: 'treasure/1623086.jpg' }],
+  ['1125019020000', { id: '3487850', file: 'treasure/2016061316550500.JPG' }],
+  ['1125020020000', { id: '5111859', file: 'treasure/2018103014165501.JPG' }],
+  ['1333901340000', { id: '1628519', file: 'history_site/1628519.jpg' }],
+  ['1333903800000', { id: '1628522', file: 'history_site/1628522.jpg' }],
+  ['1333903960000', { id: '1628558', file: 'history_site/1628558.jpg' }],
 ])
 const cache = new Map()
 const array = value => value == null ? [] : Array.isArray(value) ? value : [value]
@@ -14,8 +20,9 @@ async function readXml(url, fetchImpl) {
   return parser.parse(await r.text())?.result
 }
 async function approvedImage(h, fetchImpl) {
-  const imageId = approved.get(h.ccbaCpno)
-  if (!imageId) return {}
+  const photo = approved.get(h.ccbaCpno)
+  if (!photo) return {}
+  const imageId = photo.id
   const key = [h.ccbaKdcd, h.ccbaAsno, h.ccbaCtcd, imageId].join(':')
   if (fetchImpl === globalThis.fetch && cache.get(key)?.expires > Date.now()) return cache.get(key).value
   try {
@@ -28,7 +35,7 @@ async function approvedImage(h, fetchImpl) {
       try {
         const u = new URL(url)
         return u.hostname === 'www.khs.go.kr' && ['http:', 'https:'].includes(u.protocol)
-          && u.pathname === '/unisearch/images/treasure/' + imageId + '.jpg' && !u.search && !u.username && !u.password
+          && u.pathname === '/unisearch/images/' + photo.file && !u.search && !u.username && !u.password
           && licenses[i] === 'A/F'
       } catch { return false }
     })

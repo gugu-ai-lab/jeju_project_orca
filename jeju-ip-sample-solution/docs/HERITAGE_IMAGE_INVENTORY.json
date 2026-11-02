@@ -1,0 +1,258 @@
+{
+  "totalHeritage": 479,
+  "scope": "기본 검색 첫 페이지 10건",
+  "checkedAt": "2026-11-02T05:11:07.743Z",
+  "items": [
+    {
+      "name": "제주 관덕정",
+      "id": "1123903220000",
+      "codes": [
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "A/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "A/F"
+      ],
+      "photoCount": 16,
+      "chosen": {
+        "image": "https://www.khs.go.kr/unisearch/images/treasure/1623059.jpg",
+        "id": "1623059",
+        "caption": "제주 관덕정 (촬영:문화재청)",
+        "sourceUrl": "https://www.heritage.go.kr/heri/cul/imgHeritage.do?ccimId=1623059&ccbaKdcd=12&ccbaAsno=0003220000000&ccbaCtcd=50",
+        "type1Confirmed": true,
+        "httpStatus": 200,
+        "contentType": "image/jpg"
+      }
+    },
+    {
+      "name": "김정희 종가 유물 일괄",
+      "id": "1123905470200",
+      "codes": [
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F"
+      ],
+      "photoCount": 5
+    },
+    {
+      "name": "안중근의사 유묵 - 천여불수반수기앙이",
+      "id": "1123905692400",
+      "codes": [
+        "D/F"
+      ],
+      "photoCount": 1
+    },
+    {
+      "name": "제주 불탑사 오층석탑",
+      "id": "1123911870000",
+      "codes": [
+        "D/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F"
+      ],
+      "photoCount": 10,
+      "chosen": {
+        "image": "https://www.khs.go.kr/unisearch/images/treasure/1623086.jpg",
+        "id": "1623086",
+        "caption": "탑신 및 상륜부",
+        "sourceUrl": "https://www.heritage.go.kr/heri/cul/imgHeritage.do?ccimId=1623086&ccbaKdcd=12&ccbaAsno=0011870000000&ccbaCtcd=50",
+        "type1Confirmed": true,
+        "httpStatus": 200,
+        "contentType": "image/jpg"
+      }
+    },
+    {
+      "name": "동여비고",
+      "id": "1123815960000",
+      "codes": [
+        "D/F"
+      ],
+      "photoCount": 1
+    },
+    {
+      "name": "제주향교 대성전",
+      "id": "1125019020000",
+      "codes": [
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F"
+      ],
+      "photoCount": 5,
+      "chosen": {
+        "image": "https://www.khs.go.kr/unisearch/images/treasure/2016061316550500.JPG",
+        "id": "3487850",
+        "caption": "제주향교 대성전 정면",
+        "sourceUrl": "https://www.heritage.go.kr/heri/cul/imgHeritage.do?ccimId=3487850&ccbaKdcd=12&ccbaAsno=0019020000000&ccbaCtcd=50",
+        "type1Confirmed": true,
+        "httpStatus": 200,
+        "contentType": "image/jpg"
+      }
+    },
+    {
+      "name": "이익태 지영록",
+      "id": "1125020020000",
+      "codes": [
+        "A/F",
+        "A/F"
+      ],
+      "photoCount": 2,
+      "chosen": {
+        "image": "https://www.khs.go.kr/unisearch/images/treasure/2018103014165501.JPG",
+        "id": "5111859",
+        "caption": "보물 이익태 지영록",
+        "sourceUrl": "https://www.heritage.go.kr/heri/cul/imgHeritage.do?ccimId=5111859&ccbaKdcd=12&ccbaAsno=0020020000000&ccbaCtcd=50",
+        "type1Confirmed": true,
+        "httpStatus": 200,
+        "contentType": "image/jpg"
+      }
+    },
+    {
+      "name": "제주 삼성혈",
+      "id": "1333901340000",
+      "codes": [
+        "D/F",
+        "A/F",
+        "A/F",
+        "A/F"
+      ],
+      "photoCount": 4,
+      "chosen": {
+        "image": "https://www.khs.go.kr/unisearch/images/history_site/1628519.jpg",
+        "id": "1628519",
+        "caption": "삼성혈",
+        "sourceUrl": "https://www.heritage.go.kr/heri/cul/imgHeritage.do?ccimId=1628519&ccbaKdcd=13&ccbaAsno=0001340000000&ccbaCtcd=50",
+        "type1Confirmed": true,
+        "httpStatus": 200,
+        "contentType": "image/jpg"
+      }
+    },
+    {
+      "name": "제주목 관아",
+      "id": "1333903800000",
+      "codes": [
+        "D/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "A/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "A/F",
+        "D/F"
+      ],
+      "photoCount": 37,
+      "chosen": {
+        "image": "https://www.khs.go.kr/unisearch/images/history_site/1628522.jpg",
+        "id": "1628522",
+        "caption": "제주목 관아 (촬영:문화재청)",
+        "sourceUrl": "https://www.heritage.go.kr/heri/cul/imgHeritage.do?ccimId=1628522&ccbaKdcd=13&ccbaAsno=0003800000000&ccbaCtcd=50",
+        "type1Confirmed": true,
+        "httpStatus": 200,
+        "contentType": "image/jpg"
+      }
+    },
+    {
+      "name": "제주 항파두리 항몽 유적",
+      "id": "1333903960000",
+      "codes": [
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "D/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "A/F",
+        "D/F",
+        "A/F"
+      ],
+      "photoCount": 36,
+      "chosen": {
+        "image": "https://www.khs.go.kr/unisearch/images/history_site/1628558.jpg",
+        "id": "1628558",
+        "caption": "순의비",
+        "sourceUrl": "https://www.heritage.go.kr/heri/cul/imgHeritage.do?ccimId=1628558&ccbaKdcd=13&ccbaAsno=0003960000000&ccbaCtcd=50",
+        "type1Confirmed": true,
+        "httpStatus": 200,
+        "contentType": "image/jpg"
+      }
+    }
+  ],
+  "connectedCount": 7
+}
