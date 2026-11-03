@@ -66,7 +66,6 @@ export default function Account() {
       if (sessionError) setClientError('Supabase 계정 상태를 확인할 수 없어요. 환경 설정과 네트워크를 확인해 주세요.')
       else {
         setSession(data.session)
-        if (data.session?.user?.is_anonymous) setMode(current => current === 'set-password' ? current : 'signup')
         if (data.session?.user?.email) setEmail(data.session.user.email)
       }
     }).catch(() => {
