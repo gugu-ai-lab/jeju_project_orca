@@ -49,6 +49,7 @@ export default function RootLayout() {
             <Nav className="me-auto">
               {NAV_ITEMS.map((item) => (
                 <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/home'} eventKey={item.to}
+                  className={item.to === '/account' ? 'ms-md-3 mt-2 mt-md-0' : undefined}
                   title={item.to === '/account' ? accountNavLabel : undefined}
                   aria-label={item.to === '/account' ? accountNavLabel : undefined}>
                   {item.to === '/account' ? <>
