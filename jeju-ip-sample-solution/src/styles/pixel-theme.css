@@ -29,7 +29,12 @@ h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 7
 .jeju-nav .nav-link { color: #cfe9e3; border-radius: 0; }
 .jeju-nav .nav-link:hover { background: #2c6b63; color: #fff; }
 .jeju-nav .nav-link.active { background: #F28C28; color: #2b1a05; }
-.jeju-nav .nav-link.ms-md-3 { margin-left: 1rem; }
+.jeju-nav .nav-icon-links { display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: .25rem; }
+.jeju-nav .nav-icon-links .nav-link { display: inline-flex; align-items: center; justify-content: center; min-width: 2.6rem; }
+@media (max-width: 767.98px) {
+  .jeju-nav .nav-main-links { margin-right: 0 !important; }
+  .jeju-nav .nav-icon-links { width: 100%; margin: .35rem 0 0 !important; justify-content: flex-end; }
+}
 .jeju-nav .navbar-toggler { border-color: #fffdf7; border-radius: 0; }
 .jeju-nav .navbar-toggler-icon { filter: invert(1); }
 

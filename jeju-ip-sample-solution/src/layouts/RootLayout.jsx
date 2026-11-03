@@ -8,6 +8,9 @@ import MotionToggle from '../components/MotionToggle'
 import CartNavLink from '../components/CartNavLink'
 import CartToast from '../components/CartToast'
 
+const MAIN_NAV_ITEMS = NAV_ITEMS.filter((item) => !['/my', '/guestbook'].includes(item.to))
+const ICON_NAV_ITEMS = NAV_ITEMS.filter((item) => ['/my', '/guestbook'].includes(item.to))
+
 export default function RootLayout() {
   const location = useLocation()
   const [showBackToTop, setShowBackToTop] = useState(false)
@@ -35,28 +38,27 @@ export default function RootLayout() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="main-nav" />
           <Navbar.Collapse id="main-nav">
-            <Nav className="me-auto" activeKey={activeKey}>
-              {NAV_ITEMS.map((item) => (
-                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to !== '/explore'} eventKey={item.to}
-                  className={item.to === '/my' ? 'ms-md-3 mt-2 mt-md-0' : undefined}
-                  title={item.to === '/guestbook' ? '방명록' : item.to === '/my' ? '내 즐겨찾기' : undefined}
-                  aria-label={item.to === '/guestbook' ? '방명록' : item.to === '/my' ? '내 즐겨찾기' : undefined}>
-                  {item.to === '/guestbook' ? <>
-                    <i className={`bi bi-${item.icon} nav-icon-strong`} aria-hidden="true" />
-                    <span className="visually-hidden">방명록</span>
-                  </> : item.to === '/my' ? <>
-                    <i className={`bi bi-${item.icon} nav-icon-strong`} aria-hidden="true" />
-                    <span className="visually-hidden">내 즐겨찾기</span>
-                  </> : <>
-                    <i className={`bi bi-${item.icon} me-1`} aria-hidden="true" />{item.label}
-                  </>}
+            <Nav className="me-auto nav-main-links" activeKey={activeKey}>
+              {MAIN_NAV_ITEMS.map((item) => (
+                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to !== '/explore'} eventKey={item.to}>
+                  <i className={`bi bi-${item.icon} me-1`} aria-hidden="true" />{item.label}
+                </Nav.Link>
+              ))}
+            </Nav>
+            {nickname && (
+              <Navbar.Text className="me-md-3"><i className="bi bi-person-circle me-1" />{nickname}</Navbar.Text>
+            )}
+            <Nav className="nav-icon-links ms-md-auto" activeKey={activeKey}>
+              {ICON_NAV_ITEMS.map((item) => (
+                <Nav.Link key={item.to} as={NavLink} to={item.to} eventKey={item.to}
+                  title={item.to === '/guestbook' ? '방명록' : '내 즐겨찾기'}
+                  aria-label={item.to === '/guestbook' ? '방명록' : '내 즐겨찾기'}>
+                  <i className={`bi bi-${item.icon} nav-icon-strong`} aria-hidden="true" />
+                  <span className="visually-hidden">{item.to === '/guestbook' ? '방명록' : '내 즐겨찾기'}</span>
                 </Nav.Link>
               ))}
               <CartNavLink />
             </Nav>
-            {nickname && (
-              <Navbar.Text><i className="bi bi-person-circle me-1" />{nickname}</Navbar.Text>
-            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
