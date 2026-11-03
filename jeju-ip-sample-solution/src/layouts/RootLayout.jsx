@@ -52,15 +52,15 @@ export default function RootLayout() {
                   title={item.to === '/account' ? accountNavLabel : undefined}
                   aria-label={item.to === '/account' ? accountNavLabel : undefined}>
                   {item.to === '/account' ? <>
-                    <i className={`bi bi-${item.icon}`} aria-hidden="true" />
+                    <i className={`bi bi-${item.icon} nav-icon-strong`} aria-hidden="true" />
                     <span className="visually-hidden">{accountNavLabel}</span>
                   </> : <>
                     <i className={`bi bi-${item.icon} me-1`} aria-hidden="true" />{item.label}
                   </>}
                 </Nav.Link>
               ))}
+              <CartNavLink />
             </Nav>
-            <Nav><CartNavLink /></Nav>
             {nickname && (
               <Navbar.Text><i className="bi bi-person-circle me-1" />{nickname}</Navbar.Text>
             )}
