@@ -10,6 +10,7 @@ const getData = () => (cachedData ||= buildJejuMapData())
 
 const FLAT_TILT = Math.PI / 2 * 0.9999
 const TILT_3D = 38 * Math.PI / 180
+const ROTATE_SPEED = 0.3 // 자동 회전 속도(rad/초, 약 21초에 한 바퀴)
 const MIN_GAP_X = 34 // 이보다 가까운 핀은 화면에서 좌우로 벌린다(px)
 const MIN_GAP_Y = 26
 
@@ -53,10 +54,16 @@ export default function JejuPixelMap3D({ pins, selectedPinId, bouncingPinId, onP
       ro = new ResizeObserver(() => r.resize())
       ro.observe(stage)
 
+      // '동작 줄이기'가 켜져 있으면 처음엔 멈춘 채로 시작한다. 그래도 사용자가 직접 누른 "회전 시작"은 그대로 동작한다.
+      const reducedAtStart = systemReducesMotion() && !document.documentElement.classList.contains('allow-motion')
+      if (reducedAtStart) { view.current.auto = false; setAuto(false) }
+      let prev = 0
       const loop = (t) => {
         const v = view.current
+        const dt = prev ? Math.min(0.1, (t - prev) / 1000) : 0
+        prev = t
         v.reduce = systemReducesMotion() && !document.documentElement.classList.contains('allow-motion')
-        if (v.auto && !v.reduce) v.yaw = Math.sin(t / 4000) * 0.35
+        if (v.auto && !v.flat) v.yaw += dt * ROTATE_SPEED
         v.tilt = v.flat ? FLAT_TILT : TILT_3D
         r.frame(t)
         // 실제 위치를 화면 좌표로 투영한 뒤, 서로 너무 가까운 핀은 말풍선만 옆으로 살짝 벌려 겹침을 피한다
