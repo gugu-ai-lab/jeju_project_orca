@@ -310,6 +310,10 @@ body { background: #cfe9f8; }
   paint-order: stroke fill;
   text-shadow: .25px 0 currentColor, -.25px 0 currentColor, 0 .25px currentColor, 0 -.25px currentColor;
 }
+
+.guestbook-admin-password {
+  -webkit-text-security: disc;
+}
 .nav-icon-strong { display: inline-block; font-size: 1.2rem; line-height: 1; -webkit-text-stroke: .55px currentColor; vertical-align: -.12em; }
 .cart-badge { display: inline-block; min-width: 1.35rem; margin-left: .35rem; padding: 0 .3rem; text-align: center; font-size: .78rem; line-height: 1.35rem; background: #F28C28; color: #2b1a05; border: 2px solid #fffdf7; }
 .cart-toast { position: fixed; top: 4.6rem; right: .9rem; z-index: 1040; display: flex; align-items: center; gap: .25rem; max-width: calc(100vw - 1.8rem); padding: .6rem .8rem; background: #fffdf7; border: var(--px-border); box-shadow: var(--px-shadow); animation: scene-fade .25s ease-out; }

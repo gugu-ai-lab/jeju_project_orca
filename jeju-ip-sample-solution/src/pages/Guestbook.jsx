@@ -147,7 +147,7 @@ export default function Guestbook() {
       <Form onSubmit={signInAdmin} className="d-flex flex-wrap align-items-end gap-2">
         <Form.Group controlId="guestbook-admin-password" className="flex-grow-1">
           <Form.Label>관리자 비밀번호</Form.Label>
-          <Form.Control type="password" autoComplete="current-password" required value={adminPassword} onChange={event => setAdminPassword(event.target.value)} placeholder="관리자 비밀번호를 입력해 주세요" />
+          <Form.Control type="password" className="guestbook-admin-password" autoComplete="current-password" required value={adminPassword} onChange={event => setAdminPassword(event.target.value)} placeholder="관리자 비밀번호를 입력해 주세요" />
         </Form.Group>
         <Button type="submit" disabled={adminBusy}>{adminBusy ? '확인 중…' : '관리자 확인'}</Button>
       </Form>
