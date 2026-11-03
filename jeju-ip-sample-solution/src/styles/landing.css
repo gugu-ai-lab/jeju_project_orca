@@ -9,7 +9,10 @@
 .pixel-scene { position: absolute; inset: 0; }
 .pixel-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; image-rendering: pixelated; }
 .pixel-landing-boat {
-  position: absolute; left: 73%; top: 59%; width: calc(var(--s) * 14px); height: calc(var(--s) * 8px);
+  position: absolute; left: 73%;
+  /* 바다 시작선(SCENE y=110)에 선체가 닿도록 cover 확대와 70% 세로 잘림을 함께 계산한다. */
+  top: max(0px, calc(var(--s) * 102px - max(0px, calc(var(--s) * 126px - 70dvh))));
+  width: calc(var(--s) * 14px); height: calc(var(--s) * 8px);
   image-rendering: pixelated; animation: landing-boat-sail 32s ease-in-out infinite alternate;
 }
 @keyframes landing-boat-sail {
