@@ -25,12 +25,14 @@ export default function RootLayout() {
             <Nav className="me-auto">
               {NAV_ITEMS.map((item) => (
                 <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/home'} eventKey={item.to}
-                  className={item.to === '/guestbook' ? 'ms-md-3 mt-2 mt-md-0' : undefined}
-                  title={item.to === '/guestbook' ? '방명록' : undefined}
-                  aria-label={item.to === '/guestbook' ? '방명록' : undefined}>
+                  title={item.to === '/guestbook' ? '방명록' : item.to === '/my' ? '내 즐겨찾기' : undefined}
+                  aria-label={item.to === '/guestbook' ? '방명록' : item.to === '/my' ? '내 즐겨찾기' : undefined}>
                   {item.to === '/guestbook' ? <>
                     <i className={`bi bi-${item.icon} nav-icon-strong`} aria-hidden="true" />
                     <span className="visually-hidden">방명록</span>
+                  </> : item.to === '/my' ? <>
+                    <i className={`bi bi-${item.icon} nav-icon-strong`} aria-hidden="true" />
+                    <span className="visually-hidden">내 즐겨찾기</span>
                   </> : <>
                     <i className={`bi bi-${item.icon} me-1`} aria-hidden="true" />{item.label}
                   </>}
