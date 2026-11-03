@@ -83,6 +83,9 @@ h1, h2, h3, h4, h5, h6, .font-myth { font-family: var(--px-font); font-weight: 7
 .chat-input { border-top: var(--px-border); }
 .tool-steps { border-radius: 0; border: 2px dashed var(--px-ink); }
 .tool-name { border-radius: 0; }
+.agent-tools-disclosure { border: 2px solid var(--px-ink); background: #fffdf7; box-shadow: 3px 3px 0 var(--px-ink); }
+.agent-tools-disclosure > summary { padding: .75rem 1rem; color: var(--px-ink); cursor: pointer; font-weight: 700; }
+.agent-tools-content { padding: 0 1rem 1rem; }
 
 /* 푸터: 풀밭 줄 */
 .jeju-footer { background: var(--px-ink); color: #cfe9e3; border-top: 8px solid var(--px-grass); }
