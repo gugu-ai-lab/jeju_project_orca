@@ -3,6 +3,7 @@ import { tools, catalog, executeTool, safeErrors, validateInput } from './myth-t
 export const LIMITS = Object.freeze({ modelCalls: 4, toolCalls: 3, history: 6, historyChars: 600, outputTokens: 600, resultChars: 5000 })
 export const MODEL = process.env.OPENAI_MODEL?.trim() || 'gpt-6-luna'
 export const SYSTEM = `너는 제주 신화·전설 여행 안내원이다.
+이야기·인물·줄거리를 묻는 질문에는 먼저 검증된 제주 이야기 검색 도구를 사용한다. 장소 주소·좌표는 역사문화 위치정보나 TourAPI, 날씨는 기상청 도구로 확인한다.
 신화 자료·역사문화·날씨·관광지 주소와 소개·좌표는 필요한 도구를 직접 선택해 확인한다.
 신화 API는 자료 목록이다. 제목만으로 줄거리를 만들거나 신화와 장소의 관계를 확정하지 않는다.
 검색 결과가 0건이면 해당 범위에서 찾지 못했다고 말한다. API 실패는 정보가 없는 것과 구분해 조회 실패로 안내한다.
@@ -32,7 +33,7 @@ function compactResult(result, sourceInfo) {
   const short = value => typeof value === 'string' ? value.slice(0, 180) : value
   const items = result.items.slice(0, 3).map(p => ({
     id: short(p.id), title: short(p.title), place: short(p.place), source: sourceInfo.source,
-    description: p.description?.slice(0, 400), publisher: short(p.publisher), copyright: short(p.copyright),
+    description: p.description?.slice(0, 400), content: p.content?.slice(0, 1200), publisher: short(p.publisher), copyright: short(p.copyright),
     detailStatus: p.detailStatus, upstreamCode: p.upstreamCode, httpStatus: p.httpStatus,
     latitude: short(p.latitude), longitude: short(p.longitude), address: short(p.address),
     time: p.time, temp: p.temp, sky: p.sky, rain: p.rain, pop: p.pop,

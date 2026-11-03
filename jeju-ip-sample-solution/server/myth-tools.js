@@ -1,10 +1,12 @@
 import { searchTourPlaces } from './tour.js'
 import { getWeather } from './weather.js'
+import { searchStoryContent } from './story-search.js'
 import { XMLParser } from 'fast-xml-parser'
 
 const parser = new XMLParser({ parseTagValue: false })
 const cache = new Map()
 const definitions = [
+  ['search_story_content', '검증된 제주 신화·전설 이야기', '공통 이야기 목록에서 검증된 신화·전설의 줄거리, 인물, 장소 연결 내용을 검색한다. 이야기 질문에 우선 사용한다.'],
   ['search_myths', '제주신화정보', '제주 신화·전설 자료의 제목과 출처를 검색한다. 줄거리 제공 도구가 아니다.'],
   ['search_culture', '제주역사문화일반정보', '제주 역사문화 자료의 내용과 참고문헌을 검색한다.'],
   ['search_locations', '제주역사문화위치정보', '관련 장소의 위치와 좌표를 검색한다.'],
@@ -33,7 +35,7 @@ const sourceUrls = {
 }
 export function catalog() {
   return definitions.map(([name, source]) => ({
-    name, source, sourceUrl: sourceUrls[name], configured: name === 'search_myths' || Boolean(process.env.DATA_GO_KR_KEY?.trim()),
+    name, source, sourceUrl: sourceUrls[name], configured: name === 'search_myths' || name === 'search_story_content' || Boolean(process.env.DATA_GO_KR_KEY?.trim()),
   }))
 }
 export function validateInput(input, name = 'search_myths') {
@@ -108,6 +110,10 @@ export const safeErrors = {
 export async function executeTool(name, input) {
   if (!tools.some(t => t.name === name)) throw new Error('UNKNOWN_TOOL')
   const args = validateInput(input, name)
+  if (name === 'search_story_content') {
+    const items = searchStoryContent(args.keyword)
+    return { source: '검증된 제주 신화·전설 이야기', items, count: items.length, complete: true, fetchedAt: new Date().toISOString() }
+  }
   if (name === 'search_tour_places') return searchTourPlaces(args)
   if (name === 'get_weather') {
     const items = await getWeather(args)

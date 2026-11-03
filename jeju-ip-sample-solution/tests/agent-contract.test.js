@@ -5,8 +5,8 @@ const call = (name, args, id) => ({ type: 'function_call', name, arguments: JSON
 const final = text => ({ output: [{ type: 'message', content: [{ type: 'output_text', text }] }] })
 const populated = () => ({ items: [{ title: '확인된 자료' }], count: 1, complete: true, fetchedAt: '2026-11-02T00:00:00Z' })
 
-test('five tools use automatic selection; provenance stays in steps, not answer context', async () => {
-  assert.deepEqual(openAITools.map(t => t.name).sort(), ['get_weather', 'search_culture', 'search_locations', 'search_myths', 'search_tour_places'])
+test('six tools use automatic selection; provenance stays in steps, not answer context', async () => {
+  assert.deepEqual(openAITools.map(t => t.name).sort(), ['get_weather', 'search_culture', 'search_locations', 'search_myths', 'search_story_content', 'search_tour_places'])
   for (const tool of openAITools) {
     let turn = 0
     const args = tool.name === 'get_weather' ? { place: '제주시' } : { keyword: '삼성혈' }
@@ -29,7 +29,8 @@ test('five tools use automatic selection; provenance stays in steps, not answer 
     assert.equal(transported.steps[0].outcome, 'success')
     assert.equal(transported.steps[0].preview[0].title, '확인된 자료')
     assert.ok(transported.steps[0].source)
-    assert.ok(transported.steps[0].sourceUrl)
+    if (tool.name === 'search_story_content') assert.equal(transported.steps[0].sourceUrl, undefined)
+    else assert.ok(transported.steps[0].sourceUrl)
     assert.equal(transported.steps[0].fetchedAtKst, '2026-11-02 09:00:00 KST')
     assert.equal(transported.answerOrigin, 'model')
   }

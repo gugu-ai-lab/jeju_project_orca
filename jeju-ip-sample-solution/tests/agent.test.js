@@ -22,7 +22,7 @@ test('missing OpenAI key: loads independently of Claude; POST makes no network c
     const status=response();await handler({method:'GET'},status)
     assert.equal(status.body.available,false)
     assert.equal(status.body.provider,'OpenAI')
-    assert.equal(status.body.tools.length,5)
+    assert.equal(status.body.tools.length,6)
     const reply=response();await handler({method:'POST',body:{message:'질문'}},reply)
     assert.equal(reply.statusCode,503);assert.equal(requests,0)
   } finally {restore('OPENAI_API_KEY',previous);globalThis.fetch=fetchImpl}
