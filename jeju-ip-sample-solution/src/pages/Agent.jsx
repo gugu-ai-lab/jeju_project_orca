@@ -61,14 +61,6 @@ export default function Agent() {
       <summary>공공데이터 도구와 직접 자료 조회</summary>
       <div className="agent-tools-content">
         <Card className="mb-3"><Card.Body>
-          <Card.Title>연결된 공공데이터</Card.Title>
-          {status?.model && <p className="small text-muted">질문당 모델 요청 최대 4회 · 도구 실행 최대 3회</p>}
-          <ul>{status?.tools.map(t => <li key={t.name}><code>{t.name}</code> · {t.source}
-            <Badge bg={t.configured ? 'secondary' : 'warning'} className="ms-2">{t.configured ? '조회 설정 준비됨 · 응답 검증 별도' : '인증 설정 대기'}</Badge>
-          </li>)}</ul>
-          <p className="small text-muted mb-0">신화안내원은 질문에 따라 필요한 자료를 찾아 출처와 함께 답합니다.</p>
-        </Card.Body></Card>
-        <Card><Card.Body>
           <Card.Title>직접 자료 조회</Card.Title>
           <p>OpenAI 호출 없이 공공데이터를 직접 조회합니다.</p>
           <Form onSubmit={onLookup}>
@@ -95,6 +87,14 @@ export default function Agent() {
                 {p.latitude && p.longitude && <span> · 좌표 {p.latitude}, {p.longitude}</span>}
                 <div className="small text-muted">{p.publisher || p.source}{p.copyright && ' · 저작권: ' + p.copyright}</div></li>)}</ul>}
           </div>}
+        </Card.Body></Card>
+        <Card><Card.Body>
+          <Card.Title>연결된 공공데이터</Card.Title>
+          {status?.model && <p className="small text-muted">질문당 모델 요청 최대 4회 · 도구 실행 최대 3회</p>}
+          <ul>{status?.tools.map(t => <li key={t.name}><code>{t.name}</code> · {t.source}
+            <Badge bg={t.configured ? 'secondary' : 'warning'} className="ms-2">{t.configured ? '조회 설정 준비됨 · 응답 검증 별도' : '인증 설정 대기'}</Badge>
+          </li>)}</ul>
+          <p className="small text-muted mb-0">신화안내원은 질문에 따라 필요한 자료를 찾아 출처와 함께 답합니다.</p>
         </Card.Body></Card>
       </div>
     </details>
