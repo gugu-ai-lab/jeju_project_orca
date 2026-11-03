@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react'
 import { Alert, Button, Card, Form, Spinner } from 'react-bootstrap'
-import { useLocation } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
-import { addGuestbookPost, deleteGuestbookPost, listGuestbookPosts, verifyGuestbookAdmin } from '../../services/browser-guestbook.js'
+import { addGuestbookPost, deleteGuestbookPost, listGuestbookPosts } from '../../services/browser-guestbook.js'
 import { isSupabasePreviewReadOnly } from '../../services/browser-favorites.js'
+import { clearGuestbookAdminPassword, getGuestbookAdminPassword, subscribeGuestbookAdmin } from '../../services/guestbook-admin-session.js'
 
 const COOLDOWN_SECONDS = 30
 
 export default function Guestbook() {
-  const location = useLocation()
+  const adminPassword = useSyncExternalStore(subscribeGuestbookAdmin, getGuestbookAdminPassword, getGuestbookAdminPassword)
   const [nickname, setNickname] = useState('')
   const [message, setMessage] = useState('')
   const [posts, setPosts] = useState([])
@@ -17,10 +17,8 @@ export default function Guestbook() {
   const [cooldown, setCooldown] = useState(0)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
-  const [adminOpen, setAdminOpen] = useState(false)
-  const [adminPassword, setAdminPassword] = useState('')
-  const [adminAuthorized, setAdminAuthorized] = useState(false)
   const [adminBusy, setAdminBusy] = useState(false)
+  const adminAuthorized = Boolean(adminPassword)
   const readOnly = isSupabasePreviewReadOnly()
 
   const refresh = useCallback(async () => {
@@ -42,9 +40,6 @@ export default function Guestbook() {
     })
     return () => { active = false }
   }, [])
-  useEffect(() => {
-    if (location.state?.openGuestbookAdmin) setAdminOpen(true)
-  }, [location.state])
   useEffect(() => {
     if (cooldown < 1) return undefined
     const timer = setTimeout(() => setCooldown(value => Math.max(0, value - 1)), 1000)
@@ -69,22 +64,6 @@ export default function Guestbook() {
     }
   }
 
-  async function signInAdmin(event) {
-    event.preventDefault()
-    setError('')
-    setNotice('')
-    setAdminBusy(true)
-    try {
-      await verifyGuestbookAdmin(adminPassword)
-      setAdminAuthorized(true)
-      setNotice('관리자 모드가 켜졌어요. 삭제할 글을 선택해 주세요.')
-    } catch (cause) {
-      setError(cause?.message || '관리자 확인에 실패했어요.')
-    } finally {
-      setAdminBusy(false)
-    }
-  }
-
   async function removePost(post) {
     if (!window.confirm(`'${post.nickname}'님이 남긴 글을 삭제할까요? 삭제 후 복구할 수 없어요.`)) return
     setError('')
@@ -96,19 +75,14 @@ export default function Guestbook() {
       setNotice('선택한 글을 삭제했어요.')
     } catch (cause) {
       setError(cause?.message || '글을 삭제하지 못했어요.')
-      if (cause?.message?.includes('비밀번호')) {
-        setAdminAuthorized(false)
-        setAdminPassword('')
-      }
+      if (cause?.message?.includes('비밀번호')) clearGuestbookAdminPassword()
     } finally {
       setAdminBusy(false)
     }
   }
 
   function closeAdmin() {
-    setAdminOpen(false)
-    setAdminAuthorized(false)
-    setAdminPassword('')
+    clearGuestbookAdminPassword()
   }
 
   return <>
@@ -143,16 +117,6 @@ export default function Guestbook() {
         <Button variant="outline-primary" size="sm" onClick={refresh} disabled={loading}>새로고침</Button>
       </div>
     </div>
-    {adminOpen && !adminAuthorized && <Card className="myth-panel mb-3"><Card.Body>
-      <Form onSubmit={signInAdmin} className="d-flex flex-wrap align-items-end gap-2">
-        <Form.Group controlId="guestbook-admin-password" className="flex-grow-1">
-          <Form.Label>관리자 비밀번호</Form.Label>
-          <Form.Control type="password" className="guestbook-admin-password" autoComplete="current-password" required value={adminPassword} onChange={event => setAdminPassword(event.target.value)} placeholder="관리자 비밀번호를 입력해 주세요" />
-        </Form.Group>
-        <Button type="submit" disabled={adminBusy}>{adminBusy ? '확인 중…' : '관리자 확인'}</Button>
-      </Form>
-      <Form.Text>관리자 비밀번호는 이 브라우저에 저장되지 않아요.</Form.Text>
-    </Card.Body></Card>}
     {loading ? <div className="py-4 text-center"><Spinner animation="border" role="status"><span className="visually-hidden">방명록 불러오는 중</span></Spinner></div>
       : error ? <Alert variant="warning">방명록 목록을 표시할 수 없어요. 위 안내를 확인해 주세요.</Alert>
         : posts.length === 0 ? <Card className="myth-panel"><Card.Body className="text-center text-secondary">아직 남겨진 이야기가 없어요. 첫 번째 이야기를 적어 볼까요?</Card.Body></Card>

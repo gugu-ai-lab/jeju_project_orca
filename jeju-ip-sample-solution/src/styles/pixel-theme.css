@@ -314,6 +314,32 @@ body { background: #cfe9f8; }
 .guestbook-admin-password {
   -webkit-text-security: disc;
 }
+.nav-admin-control { position: relative; display: flex; align-items: center; }
+.nav-admin-toggle { border: 0; background: transparent; cursor: pointer; }
+.guestbook-admin-popover {
+  position: absolute;
+  top: calc(100% + .65rem);
+  right: 0;
+  z-index: 1100;
+  width: min(20rem, calc(100vw - 2rem));
+  padding: .9rem;
+  color: var(--px-ink);
+  background: #fffdf7;
+  border: var(--px-border);
+  box-shadow: var(--px-shadow);
+}
+.guestbook-admin-popover::before {
+  position: absolute;
+  top: -.55rem;
+  right: .9rem;
+  width: .85rem;
+  height: .85rem;
+  content: '';
+  background: #fffdf7;
+  border-top: 3px solid var(--px-ink);
+  border-left: 3px solid var(--px-ink);
+  transform: rotate(45deg);
+}
 .nav-icon-strong { display: inline-block; font-size: 1.2rem; line-height: 1; -webkit-text-stroke: .55px currentColor; vertical-align: -.12em; }
 .cart-badge { display: inline-block; min-width: 1.35rem; margin-left: .35rem; padding: 0 .3rem; text-align: center; font-size: .78rem; line-height: 1.35rem; background: #F28C28; color: #2b1a05; border: 2px solid #fffdf7; }
 .cart-toast { position: fixed; top: 4.6rem; right: .9rem; z-index: 1040; display: flex; align-items: center; gap: .25rem; max-width: calc(100vw - 1.8rem); padding: .6rem .8rem; background: #fffdf7; border: var(--px-border); box-shadow: var(--px-shadow); animation: scene-fade .25s ease-out; }
