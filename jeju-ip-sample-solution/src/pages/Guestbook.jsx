@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Alert, Button, Card, Form, Spinner } from 'react-bootstrap'
+import { useLocation } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import { addGuestbookPost, deleteGuestbookPost, listGuestbookPosts, verifyGuestbookAdmin } from '../../services/browser-guestbook.js'
 import { isSupabasePreviewReadOnly } from '../../services/browser-favorites.js'
@@ -7,6 +8,7 @@ import { isSupabasePreviewReadOnly } from '../../services/browser-favorites.js'
 const COOLDOWN_SECONDS = 30
 
 export default function Guestbook() {
+  const location = useLocation()
   const [nickname, setNickname] = useState('')
   const [message, setMessage] = useState('')
   const [posts, setPosts] = useState([])
@@ -40,6 +42,9 @@ export default function Guestbook() {
     })
     return () => { active = false }
   }, [])
+  useEffect(() => {
+    if (location.state?.openGuestbookAdmin) setAdminOpen(true)
+  }, [location.state])
   useEffect(() => {
     if (cooldown < 1) return undefined
     const timer = setTimeout(() => setCooldown(value => Math.max(0, value - 1)), 1000)
@@ -134,9 +139,7 @@ export default function Guestbook() {
     <div className="d-flex justify-content-between align-items-center mb-3">
       <h2 className="h4 mb-0 guestbook-list-title">친구들이 남긴 이야기</h2>
       <div className="d-flex gap-2">
-        {adminAuthorized
-          ? <Button variant="outline-secondary" size="sm" onClick={closeAdmin}>관리자 종료</Button>
-          : <Button variant="outline-secondary" size="sm" onClick={() => { setAdminOpen(value => !value); setError(''); setNotice('') }}>관리자 삭제</Button>}
+        {adminAuthorized && <Button variant="outline-secondary" size="sm" onClick={closeAdmin}>관리자 종료</Button>}
         <Button variant="outline-primary" size="sm" onClick={refresh} disabled={loading}>새로고침</Button>
       </div>
     </div>
@@ -157,12 +160,16 @@ export default function Guestbook() {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-start gap-3 mb-2">
                 <strong>{post.nickname}</strong>
-                <time className="small text-secondary text-end" dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
+                <div className="d-flex align-items-center gap-2 ms-auto">
+                  <time className="small text-secondary text-end" dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
+                  {adminAuthorized && <Button variant="outline-danger" size="sm" className="guestbook-delete-icon"
+                    aria-label={`${post.nickname}님의 글 삭제`} title="이 글 삭제" disabled={adminBusy}
+                    onClick={() => removePost(post)}>
+                    <i className="bi bi-x-lg" aria-hidden="true" />
+                  </Button>}
+                </div>
               </div>
               <p className="mb-0 text-break" style={{ whiteSpace: 'pre-wrap' }}>{post.message}</p>
-              {adminAuthorized && <div className="d-flex justify-content-end mt-3">
-                <Button variant="outline-danger" size="sm" disabled={adminBusy} onClick={() => removePost(post)}>이 글 삭제</Button>
-              </div>}
             </Card.Body>
           </Card>)}</div>}
   </>

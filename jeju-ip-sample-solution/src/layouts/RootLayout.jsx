@@ -57,6 +57,11 @@ export default function RootLayout() {
                 </Nav.Link>
               ))}
               <CartNavLink />
+              <Nav.Link as={Link} to="/guestbook" state={{ openGuestbookAdmin: true }}
+                title="관리자 로그인" aria-label="방명록 관리자 로그인">
+                <i className="bi bi-shield-lock nav-icon-strong" aria-hidden="true" />
+                <span className="visually-hidden">관리자 로그인</span>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
