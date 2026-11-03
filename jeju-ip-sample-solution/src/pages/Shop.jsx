@@ -6,6 +6,7 @@ import VirtualShopNotice from '../components/VirtualShopNotice'
 import { PRODUCTS } from '../data/shopProducts'
 import { formatWon, summarize } from '../lib/cart'
 import { useCartStore } from '../store/useCartStore'
+import ShopCartCloudSync from '../components/ShopCartCloudSync'
 
 // 기념품 가게 — 상품을 장바구니에 담는 화면. 결제는 없다.
 export default function Shop() {
@@ -16,6 +17,7 @@ export default function Shop() {
     <>
       <PageHeader title="탐라 기념품 가게" subtitle="이야기 속 장면을 닮은 도트 기념품을 장바구니에 담아 보세요" />
       <VirtualShopNotice />
+      <ShopCartCloudSync />
       <Row className="g-3 mt-1">
         {PRODUCTS.map((p) => (
           <Col key={p.id} xs={12} sm={6} lg={4}><ProductCard product={p} inCart={items[p.id] || 0} onAdd={add} /></Col>

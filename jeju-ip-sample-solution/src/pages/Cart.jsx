@@ -7,6 +7,7 @@ import VirtualShopNotice from '../components/VirtualShopNotice'
 import { PRODUCTS } from '../data/shopProducts'
 import { FREE_SHIPPING_FROM, formatWon, summarize } from '../lib/cart'
 import { useCartStore } from '../store/useCartStore'
+import ShopCartCloudSync from '../components/ShopCartCloudSync'
 
 // 장바구니 — 담은 상품과 가격 합계를 보여준다. "결제하기"는 체험용 안내만 띄우고 아무것도 보내거나 저장하지 않는다.
 export default function Cart() {
@@ -22,6 +23,7 @@ export default function Cart() {
     <>
       <PageHeader title="장바구니" subtitle="담은 기념품과 가격을 확인해 보세요" />
       <VirtualShopNotice compact />
+      <ShopCartCloudSync />
       {sum.lines.length === 0 ? (
         <div className="story-empty mt-3 text-center py-4">
           <i className="bi bi-bag me-2" aria-hidden="true" />장바구니가 비어 있어요.

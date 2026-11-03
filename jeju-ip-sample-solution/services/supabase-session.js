@@ -31,6 +31,7 @@ export function createMythSupabaseClient({
     const allowed = target.origin === FAVORITES_PROJECT_URL
       && (target.pathname.startsWith('/auth/v1/')
         || target.pathname === '/rest/v1/' + FAVORITES_TABLE
+        || target.pathname === '/rest/v1/jeju_shop_cart_items'
         || target.pathname === '/rest/v1/jeju_guestbook')
     if (!allowed) throw new FavoritesError('REQUEST_BLOCKED')
     return fetchImpl(input, { ...options, redirect: 'error' })
