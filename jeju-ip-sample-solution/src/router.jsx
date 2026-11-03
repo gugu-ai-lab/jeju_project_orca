@@ -11,6 +11,7 @@ import StoryDetail from './pages/StoryDetail'
 import My from './pages/My'
 import Shop from './pages/Shop'
 import Cart from './pages/Cart'
+import Account from './pages/Account'
 import NotFound from './pages/NotFound'
 
 // ── 메뉴 목록 ────────────────────────────────────────────
@@ -25,6 +26,7 @@ export const NAV_ITEMS = [
   { to: '/agent', label: '신화안내원', icon: 'robot' },
   { to: '/shop', label: '기념품 가게', icon: 'shop' },
   { to: '/my', label: '내 즐겨찾기', icon: 'star' },
+  { to: '/account', label: '로그인', icon: 'person-circle' },
 ]
 
 export const router = createBrowserRouter([
@@ -43,6 +45,7 @@ export const router = createBrowserRouter([
       { path: 'shop', element: <Shop /> },
       { path: 'cart', element: <Cart /> },
       { path: 'my', element: <My /> },
+      { path: 'account', element: <Account /> },
       { path: '*', element: <NotFound /> },
     ],
   },

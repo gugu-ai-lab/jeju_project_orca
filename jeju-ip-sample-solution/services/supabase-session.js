@@ -20,7 +20,7 @@ export class FavoritesError extends Error {
 }
 export function createMythSupabaseClient({
   url, publishableKey, storage, fetchImpl = globalThis.fetch,
-  persistSession = true, autoRefreshToken = true,
+  persistSession = true, autoRefreshToken = true, detectSessionInUrl = true,
 }) {
   if (typeof url !== 'string' || url.trim().replace(/\/$/, '') !== FAVORITES_PROJECT_URL) throw new FavoritesError('WRONG_PROJECT')
   if (typeof publishableKey !== 'string' || !/^sb_publishable_[A-Za-z0-9_-]+$/.test(publishableKey.trim())) {
@@ -34,7 +34,7 @@ export function createMythSupabaseClient({
     return fetchImpl(input, { ...options, redirect: 'error' })
   }
   return createClient(FAVORITES_PROJECT_URL, publishableKey.trim(), {
-    auth: { persistSession, autoRefreshToken, detectSessionInUrl: false, storageKey: FAVORITES_STORAGE_KEY,
+    auth: { persistSession, autoRefreshToken, detectSessionInUrl, storageKey: FAVORITES_STORAGE_KEY,
       debug: false, ...(storage ? { storage } : {}) },
     global: { fetch: guardedFetch },
   })

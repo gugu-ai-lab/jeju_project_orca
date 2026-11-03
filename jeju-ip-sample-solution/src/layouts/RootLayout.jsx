@@ -1,4 +1,5 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { Container, Nav, Navbar, Toast, ToastContainer } from 'react-bootstrap'
 import { NAV_ITEMS } from '../router'
 import { useAppStore } from '../store/useAppStore'
@@ -6,10 +7,32 @@ import PixelBackdrop from '../components/PixelBackdrop'
 import MotionToggle from '../components/MotionToggle'
 import CartNavLink from '../components/CartNavLink'
 import CartToast from '../components/CartToast'
+import { getMythSupabaseClient } from '../../services/browser-favorites'
 
 export default function RootLayout() {
   const toasts = useAppStore((s) => s.toasts)
   const nickname = useAppStore((s) => s.nickname)
+  const [authUser, setAuthUser] = useState(null)
+
+  useEffect(() => {
+    let alive = true
+    let subscription
+    try {
+      const client = getMythSupabaseClient()
+      const listener = client.auth.onAuthStateChange((_event, session) => {
+        if (alive) setAuthUser(session?.user || null)
+      })
+      subscription = listener.data?.subscription
+      client.auth.getSession().then(({ data, error }) => {
+        if (alive && !error) setAuthUser(data.session?.user || null)
+      }).catch(() => {})
+    } catch {
+      // 환경 설정이 없을 때도 나머지 페이지는 계속 사용할 수 있다.
+    }
+    return () => { alive = false; subscription?.unsubscribe() }
+  }, [])
+
+  const accountNavLabel = authUser?.is_anonymous ? '회원가입' : authUser?.email ? '내 계정' : '로그인'
 
   return (
     <div className="d-flex flex-column min-vh-100 has-pixel-backdrop">
@@ -26,7 +49,7 @@ export default function RootLayout() {
             <Nav className="me-auto">
               {NAV_ITEMS.map((item) => (
                 <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/home'} eventKey={item.to}>
-                  <i className={`bi bi-${item.icon} me-1`} />{item.label}
+                  <i className={`bi bi-${item.icon} me-1`} />{item.to === '/account' ? accountNavLabel : item.label}
                 </Nav.Link>
               ))}
             </Nav>
