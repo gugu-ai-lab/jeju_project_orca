@@ -2,8 +2,6 @@ const AUTH_MESSAGES = {
   SESSION: '계정 상태를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.',
   LOGIN: '로그인 정보를 확인해 주세요.',
   SIGNUP: '회원가입을 처리하지 못했습니다. 이메일 주소와 비밀번호를 확인해 주세요.',
-  LINK: '이메일 연결을 시작하지 못했습니다. Supabase에서 익명 사용자 계정 연결 설정을 확인해 주세요.',
-  PASSWORD: '비밀번호를 설정하지 못했습니다. 이메일 인증을 완료했는지 확인해 주세요.',
   LOGOUT: '로그아웃하지 못했습니다. 잠시 후 다시 시도해 주세요.',
 }
 
@@ -34,15 +32,6 @@ export function createSupabaseAccount(client) {
         password,
         options: { emailRedirectTo },
       }), 'SIGNUP')
-    },
-    async linkAnonymousEmail(email, emailRedirectTo) {
-      return resultOrThrow(await client.auth.updateUser(
-        { email },
-        { emailRedirectTo },
-      ), 'LINK')
-    },
-    async setPassword(password) {
-      return resultOrThrow(await client.auth.updateUser({ password }), 'PASSWORD')
     },
     async signOut() {
       resultOrThrow(await client.auth.signOut({ scope: 'local' }), 'LOGOUT')

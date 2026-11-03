@@ -27,18 +27,6 @@ test('account registration, sign-in, and logout use the intended Supabase auth m
   ])
 })
 
-test('anonymous account conversion links email first and sets password after verification', async () => {
-  const { client, calls } = fakeClient()
-  const account = createSupabaseAccount(client)
-  await account.linkAnonymousEmail('student@example.test', 'https://example.test/account?finish=password')
-  await account.setPassword('password-123')
-
-  assert.deepEqual(calls, [
-    ['updateUser', { email: 'student@example.test' }, { emailRedirectTo: 'https://example.test/account?finish=password' }],
-    ['updateUser', { password: 'password-123' }],
-  ])
-})
-
 test('account service returns only safe Korean errors, never provider error text', async () => {
   const client = { auth: { signInWithPassword: async () => ({ error: new Error('private token or endpoint') }) } }
   await assert.rejects(createSupabaseAccount(client).signIn('x@example.test', 'bad'), error => {
