@@ -8,12 +8,11 @@ import MotionToggle from '../components/MotionToggle'
 import CartNavLink from '../components/CartNavLink'
 import CartToast from '../components/CartToast'
 
-const MAIN_NAV_ITEMS = NAV_ITEMS.filter((item) => !['/my', '/guestbook'].includes(item.to))
-const ICON_NAV_ITEMS = NAV_ITEMS.filter((item) => ['/my', '/guestbook'].includes(item.to))
-
 export default function RootLayout() {
   const location = useLocation()
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const mainNavItems = NAV_ITEMS.filter((item) => !['/my', '/guestbook'].includes(item.to))
+  const iconNavItems = NAV_ITEMS.filter((item) => ['/my', '/guestbook'].includes(item.to))
   const activeItem = NAV_ITEMS.find((item) => location.pathname === item.to || (item.to === '/explore' && location.pathname.startsWith('/explore/')))
   const activeKey = activeItem?.to || (location.pathname === '/cart' ? '/cart' : '__none__')
   const toasts = useAppStore((s) => s.toasts)
@@ -39,7 +38,7 @@ export default function RootLayout() {
           <Navbar.Toggle aria-controls="main-nav" />
           <Navbar.Collapse id="main-nav">
             <Nav className="me-auto nav-main-links" activeKey={activeKey}>
-              {MAIN_NAV_ITEMS.map((item) => (
+              {mainNavItems.map((item) => (
                 <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to !== '/explore'} eventKey={item.to}>
                   <i className={`bi bi-${item.icon} me-1`} aria-hidden="true" />{item.label}
                 </Nav.Link>
@@ -49,7 +48,7 @@ export default function RootLayout() {
               <Navbar.Text className="me-md-3"><i className="bi bi-person-circle me-1" />{nickname}</Navbar.Text>
             )}
             <Nav className="nav-icon-links ms-md-auto" activeKey={activeKey}>
-              {ICON_NAV_ITEMS.map((item) => (
+              {iconNavItems.map((item) => (
                 <Nav.Link key={item.to} as={NavLink} to={item.to} eventKey={item.to}
                   title={item.to === '/guestbook' ? '방명록' : '내 즐겨찾기'}
                   aria-label={item.to === '/guestbook' ? '방명록' : '내 즐겨찾기'}>
