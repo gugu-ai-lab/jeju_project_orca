@@ -3,7 +3,7 @@ import { useCartStore } from '../store/useCartStore'
 import { getShopCart } from '../../services/browser-shop-cart'
 import { mergeCartItems } from '../../services/shop-cart'
 
-export default function ShopCartCloudSync() {
+export default function ShopCartCloudSync({ showStatus = true }) {
   const items = useCartStore(state => state.items)
   const setItems = useCartStore.setState
   const [phase, setPhase] = useState('loading')
@@ -35,6 +35,8 @@ export default function ShopCartCloudSync() {
     }, 350)
     return () => { alive = false; clearTimeout(timer) }
   }, [items, phase])
+
+  if (!showStatus) return null
 
   return (
     <p className="small text-muted mt-2 mb-0" role="status">

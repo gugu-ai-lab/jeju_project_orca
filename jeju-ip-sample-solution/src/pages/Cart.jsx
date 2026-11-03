@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 import CartLine from '../components/CartLine'
 import PageHeader from '../components/PageHeader'
-import VirtualShopNotice from '../components/VirtualShopNotice'
 import { PRODUCTS } from '../data/shopProducts'
 import { FREE_SHIPPING_FROM, formatWon, summarize } from '../lib/cart'
 import { useCartStore } from '../store/useCartStore'
@@ -22,8 +21,7 @@ export default function Cart() {
   return (
     <>
       <PageHeader title="장바구니" subtitle="담은 기념품과 가격을 확인해 보세요" />
-      <VirtualShopNotice compact />
-      <ShopCartCloudSync />
+      <ShopCartCloudSync showStatus={false} />
       {sum.lines.length === 0 ? (
         <div className="story-empty mt-3 text-center py-4">
           <i className="bi bi-bag me-2" aria-hidden="true" />장바구니가 비어 있어요.
