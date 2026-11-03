@@ -75,8 +75,15 @@ function sea(p, rand) {
     const x = rand() * SCENE_W, y = y0 + 2 + rand() * (y1 - y0 - 4)
     p(x, y, rand() > 0.4 ? '#c9f0fa' : '#ffffff', 2 + Math.floor(rand() * 3), 1)
   }
-  // 작은 돛단배
-  p(228, 116, '#7a4b2a', 8, 2); p(231, 108, '#ffffff', 1, 8); p(232, 109, '#ffffff', 4, 5); p(233, 110, '#f6f6f6', 3, 3)
+}
+
+// 랜딩 바다 위를 움직이는 작은 돛단배를 투명 캔버스에 그린다.
+export function drawSailboat(canvas) {
+  const p = pen(canvas.getContext('2d'))
+  p(2, 6, '#69462b', 10, 1); p(3, 7, '#8b5a32', 8, 1)
+  p(6, 1, '#69462b', 1, 5)
+  p(7, 1, '#fffdf7', 4, 1); p(7, 2, '#fffdf7', 3, 1); p(7, 3, '#fffdf7', 2, 1); p(7, 4, '#fffdf7', 1, 1)
+  p(3, 3, '#cfe9f8', 2, 1); p(4, 4, '#cfe9f8', 1, 1)
 }
 
 function grass(p, rand) {
@@ -158,8 +165,8 @@ export function drawScene(canvas, seed = 20261102) {
   const rand = rng(seed)
   sky(p, rand); hallasan(p, rand); sea(p, rand); grass(p, rand); canola(p, rand)
   stoneWall(p, rand); path(p, rand)
-  tangerineTree(p, rand, 78, 160, 11); tangerineTree(p, rand, 244, 160, 11)
-  tangerineTree(p, rand, 22, 172, 16); tangerineTree(p, rand, 298, 172, 16)
+  tangerineTree(p, rand, 42, 163, 9); tangerineTree(p, rand, 110, 169, 9)
+  tangerineTree(p, rand, 218, 169, 9); tangerineTree(p, rand, 286, 163, 9)
   dolhareubang(p, 153, 150)
   for (let n = 0; n < 70; n++) { // 앞쪽 유채꽃
     const x = rand() * SCENE_W, y = 166 + rand() * 13

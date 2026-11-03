@@ -8,6 +8,15 @@
 /* 장면: 320x180 캔버스를 화면에 꽉 채워 확대(픽셀 유지) */
 .pixel-scene { position: absolute; inset: 0; }
 .pixel-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; image-rendering: pixelated; }
+.pixel-landing-boat {
+  position: absolute; left: 73%; top: 59%; width: calc(var(--s) * 14px); height: calc(var(--s) * 8px);
+  image-rendering: pixelated; animation: landing-boat-sail 32s ease-in-out infinite alternate;
+}
+@keyframes landing-boat-sail {
+  from { transform: translate(0, 0); }
+  50% { transform: translate(-7vw, calc(var(--s) * -1px)); }
+  to { transform: translate(-14vw, 0); }
+}
 /* 구름은 풍경과 같은 배율(--s = cover 확대 비율)로 놓아 어떤 화면비에서도 찌그러지지 않는다 */
 .landing { --s: max(calc(100vw / 320), calc(100dvh / 180)); }
 .pixel-clouds {
