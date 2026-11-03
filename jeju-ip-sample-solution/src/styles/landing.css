@@ -34,7 +34,9 @@
 }
 /* 제목 아래가 한라산 봉우리와 만나는 높이에 오도록 배경 배율에 맞춰 함께 내린다. */
 @media (min-width: 1024px) {
-  .landing-ui { padding-top: max(3.5rem, calc(70dvh - var(--s) * 60 - 151px)); }
+  .landing-ui {
+    padding-top: max(3.5rem, calc(70dvh - var(--s) * 60 - 151px + clamp(2.5rem, calc(var(--s) * 58 - 216px), 8rem)));
+  }
 }
 .landing-tag {
   margin: 0; padding: .25rem .8rem; font-size: clamp(.8rem, 2.2vw, 1rem); color: #fff6d8;
