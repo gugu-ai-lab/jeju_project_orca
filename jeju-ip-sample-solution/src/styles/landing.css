@@ -8,17 +8,23 @@
 /* 장면: 320x180 캔버스를 화면에 꽉 채워 확대(픽셀 유지) */
 .pixel-scene { position: absolute; inset: 0; }
 .pixel-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; image-rendering: pixelated; }
-.pixel-landing-boat {
+.pixel-landing-haenyeo {
   position: absolute; left: 73%;
-  /* 바다 시작선(SCENE y=110)에 선체가 닿도록 cover 확대와 70% 세로 잘림을 함께 계산한다. */
-  top: max(0px, calc(var(--s) * 102px - max(0px, calc(var(--s) * 126px - 70dvh))));
-  width: calc(var(--s) * 14px); height: calc(var(--s) * 8px);
-  image-rendering: pixelated; animation: landing-boat-sail 32s ease-in-out infinite alternate;
+  /* 화면 비율에 맞춰 물 위로 어깨만 보이도록 배치한다. */
+  top: 55.5556dvh;
+  width: 11.1111dvh; height: 10dvh;
+  image-rendering: pixelated; animation: landing-haenyeo-float 7s ease-in-out infinite alternate;
 }
-@keyframes landing-boat-sail {
+@media (min-aspect-ratio: 16/9) {
+  .pixel-landing-haenyeo {
+    top: calc(70dvh - 8.125vw);
+    width: 6.25vw; height: 5.625vw;
+  }
+}
+@keyframes landing-haenyeo-float {
   from { transform: translate(0, 0); }
-  50% { transform: translate(-7vw, calc(var(--s) * -1px)); }
-  to { transform: translate(-14vw, 0); }
+  50% { transform: translate(-1.5vw, -2px); }
+  to { transform: translate(-3vw, 0); }
 }
 /* 구름은 풍경과 같은 배율(--s = cover 확대 비율)로 놓아 어떤 화면비에서도 찌그러지지 않는다 */
 .landing { --s: max(calc(100vw / 320), calc(100dvh / 180)); }

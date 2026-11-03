@@ -77,13 +77,31 @@ function sea(p, rand) {
   }
 }
 
-// 랜딩 바다 위를 움직이는 작은 돛단배를 투명 캔버스에 그린다.
-export function drawSailboat(canvas) {
-  const p = pen(canvas.getContext('2d'))
-  p(2, 6, '#69462b', 10, 1); p(3, 7, '#8b5a32', 8, 1)
-  p(6, 1, '#69462b', 1, 5)
-  p(7, 1, '#fffdf7', 4, 1); p(7, 2, '#fffdf7', 3, 1); p(7, 3, '#fffdf7', 2, 1); p(7, 4, '#fffdf7', 1, 1)
-  p(3, 3, '#cfe9f8', 2, 1); p(4, 4, '#cfe9f8', 1, 1)
+// 랜딩 바다에 어깨까지 나온 해녀를 그린다. 손 위치를 바꾸면 손 흔드는 두 프레임이 된다.
+export function drawHaenyeo(canvas, wave = false) {
+  const ctx = canvas.getContext('2d')
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  const p = pen(ctx)
+
+  // 물안경과 머리수건
+  p(7, 1, '#1d4a45', 7, 1); p(6, 2, '#1d4a45', 9, 1)
+  p(6, 3, '#27343a', 9, 3)
+  p(7, 3, '#9edcf0', 2, 1); p(11, 3, '#9edcf0', 2, 1)
+  p(9, 5, '#d89b71', 3, 2); p(8, 6, '#d89b71', 5, 1)
+  // 잠수복과 물 위에 드러난 어깨
+  p(8, 8, '#d89b71', 5, 1); p(6, 9, '#1d4a45', 9, 1)
+  p(4, 10, '#1d4a45', 13, 4); p(2, 12, '#1d4a45', 17, 2)
+  p(0, 14, '#4fa3b7', 20, 4)
+
+  // 한 손을 번갈아 위아래로 움직인다.
+  p(5, 9, '#d89b71', 2, 2)
+  if (wave) {
+    p(3, 7, '#d89b71', 2, 2); p(2, 5, '#d89b71', 2, 2)
+    p(1, 3, '#d89b71', 2, 2); p(0, 2, '#d89b71', 2, 2)
+  } else {
+    p(3, 7, '#d89b71', 2, 2); p(2, 6, '#d89b71', 2, 2)
+    p(1, 5, '#d89b71', 2, 2); p(0, 4, '#d89b71', 2, 2)
+  }
 }
 
 function grass(p, rand) {
