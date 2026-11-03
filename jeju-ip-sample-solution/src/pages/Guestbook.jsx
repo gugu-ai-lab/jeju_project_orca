@@ -86,7 +86,7 @@ export default function Guestbook() {
     </Card>
 
     <div className="d-flex justify-content-between align-items-center mb-3">
-      <h2 className="h4 mb-0">친구들이 남긴 이야기</h2>
+      <h2 className="h4 mb-0 guestbook-list-title">친구들이 남긴 이야기</h2>
       <Button variant="outline-primary" size="sm" onClick={refresh} disabled={loading}>새로고침</Button>
     </div>
     {loading ? <div className="py-4 text-center"><Spinner animation="border" role="status"><span className="visually-hidden">방명록 불러오는 중</span></Spinner></div>
