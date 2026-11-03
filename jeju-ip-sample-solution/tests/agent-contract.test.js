@@ -5,7 +5,7 @@ const call = (name, args, id) => ({ type: 'function_call', name, arguments: JSON
 const final = text => ({ output: [{ type: 'message', content: [{ type: 'output_text', text }] }] })
 const populated = () => ({ items: [{ title: '확인된 자료' }], count: 1, complete: true, fetchedAt: '2026-11-02T00:00:00Z' })
 
-test('five tools use automatic selection; ordered results and sources survive JSON transport', async () => {
+test('five tools use automatic selection; provenance stays in steps, not answer context', async () => {
   assert.deepEqual(openAITools.map(t => t.name).sort(), ['get_weather', 'search_culture', 'search_locations', 'search_myths', 'search_tour_places'])
   for (const tool of openAITools) {
     let turn = 0
@@ -14,9 +14,14 @@ test('five tools use automatic selection; ordered results and sources survive JS
       assert.equal(request.tool_choice, 'auto')
       if (turn++ === 0) return { output: [call(tool.name, args, 'one')] }
       const payload = JSON.parse(request.input.at(-1).output)
-      assert.ok(payload.sourceUrl.startsWith('https://www.data.go.kr/'))
-      assert.equal(payload.fetchedAtKst, '2026-11-02 09:00:00 KST')
+      assert.equal(payload.source, undefined)
+      assert.equal(payload.sourceUrl, undefined)
+      assert.equal(payload.fetchedAtKst, undefined)
+      assert.equal(payload.items[0].source, undefined)
+      assert.equal(payload.items[0].publisher, undefined)
+      assert.equal(payload.items[0].copyright, undefined)
       assert.match(SYSTEM, /정확히 같은 이름의 항목이 없는 것과 관련 자료가 없는 것을 구분/)
+      assert.match(SYSTEM, /출처 이름·주소와 자료 조회 시각을 넣지 않는다/)
       return final('확인된 자료를 안내합니다.')
     } })
     const transported = JSON.parse(JSON.stringify(result))
@@ -25,6 +30,7 @@ test('five tools use automatic selection; ordered results and sources survive JS
     assert.equal(transported.steps[0].preview[0].title, '확인된 자료')
     assert.ok(transported.steps[0].source)
     assert.ok(transported.steps[0].sourceUrl)
+    assert.equal(transported.steps[0].fetchedAtKst, '2026-11-02 09:00:00 KST')
     assert.equal(transported.answerOrigin, 'model')
   }
 })
@@ -43,8 +49,8 @@ test('empty and failed tools retain sources; ungrounded final text is replaced',
   assert.ok(result.steps.every(s => s.source && s.sourceUrl))
   assert.equal(result.warnings.length, 2)
   assert.equal(result.answerOrigin, 'safe_fallback')
-  assert.match(result.answer, /찾지 못했습니다/)
-  assert.match(result.answer, /조회에 실패/)
+  assert.match(result.answer, /찾지 못하고 조회에도 실패/)
+  assert.doesNotMatch(result.answer, /검증용 출처|제주신화정보|제주역사문화/)
   assert.doesNotMatch(JSON.stringify(result), /private upstream|줄거리를 만들어/)
 })
 
