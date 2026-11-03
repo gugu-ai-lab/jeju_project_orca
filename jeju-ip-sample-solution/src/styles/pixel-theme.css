@@ -291,7 +291,7 @@ body { background: #cfe9f8; }
 
 .cart-nav { position: relative; }
 .guestbook-list-title {
-  -webkit-text-stroke: 1px #fff;
+  -webkit-text-stroke: 1.5px #fff;
   paint-order: stroke fill;
   text-shadow: .25px 0 currentColor, -.25px 0 currentColor, 0 .25px currentColor, 0 -.25px currentColor;
 }
