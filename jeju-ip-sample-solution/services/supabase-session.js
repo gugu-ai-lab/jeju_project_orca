@@ -20,7 +20,7 @@ export class FavoritesError extends Error {
 }
 export function createMythSupabaseClient({
   url, publishableKey, storage, fetchImpl = globalThis.fetch,
-  persistSession = true, autoRefreshToken = true, detectSessionInUrl = true,
+  persistSession = true, autoRefreshToken = true, detectSessionInUrl = false,
 }) {
   if (typeof url !== 'string' || url.trim().replace(/\/$/, '') !== FAVORITES_PROJECT_URL) throw new FavoritesError('WRONG_PROJECT')
   if (typeof publishableKey !== 'string' || !/^sb_publishable_[A-Za-z0-9_-]+$/.test(publishableKey.trim())) {
@@ -29,7 +29,9 @@ export function createMythSupabaseClient({
   const guardedFetch = (input, options = {}) => {
     const target = new URL(typeof input === 'string' || input instanceof URL ? input : input.url)
     const allowed = target.origin === FAVORITES_PROJECT_URL
-      && (target.pathname.startsWith('/auth/v1/') || target.pathname === '/rest/v1/' + FAVORITES_TABLE)
+      && (target.pathname.startsWith('/auth/v1/')
+        || target.pathname === '/rest/v1/' + FAVORITES_TABLE
+        || target.pathname === '/rest/v1/jeju_guestbook')
     if (!allowed) throw new FavoritesError('REQUEST_BLOCKED')
     return fetchImpl(input, { ...options, redirect: 'error' })
   }
