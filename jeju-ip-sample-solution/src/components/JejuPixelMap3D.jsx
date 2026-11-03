@@ -24,11 +24,11 @@ export default function JejuPixelMap3D({ pins, selectedPinId, bouncingPinId, onP
   const canvasRef = useRef(null)
   const pinEls = useRef({})
   const pinsRef = useRef(pins)
-  const view = useRef({ tilt: TILT_3D, yaw: 0, hScale: 14, px: 2, reduce: false, auto: true, flat: false })
+  const view = useRef({ tilt: TILT_3D, yaw: 0, hScale: 14, px: 2, reduce: false, auto: false, flat: false })
   const rendererRef = useRef(null)
   const dragRef = useRef(null)
   const [flat, setFlat] = useState(false)
-  const [auto, setAuto] = useState(true)
+  const [auto, setAuto] = useState(false)
   const [engine, setEngine] = useState('')
   const [loadFailed, setLoadFailed] = useState(false)
 
@@ -54,9 +54,6 @@ export default function JejuPixelMap3D({ pins, selectedPinId, bouncingPinId, onP
       ro = new ResizeObserver(() => r.resize())
       ro.observe(stage)
 
-      // '동작 줄이기'가 켜져 있으면 처음엔 멈춘 채로 시작한다. 그래도 사용자가 직접 누른 "회전 시작"은 그대로 동작한다.
-      const reducedAtStart = systemReducesMotion() && !document.documentElement.classList.contains('allow-motion')
-      if (reducedAtStart) { view.current.auto = false; setAuto(false) }
       let prev = 0
       const loop = (t) => {
         const v = view.current

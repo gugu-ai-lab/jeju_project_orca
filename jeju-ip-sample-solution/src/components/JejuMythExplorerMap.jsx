@@ -1,20 +1,13 @@
 import { useState } from 'react'
 import mapPinsData from '../data/jejuMapPins.json'
-import { PIXEL_MAP, PIXEL_MAP_COORDS } from '../data/pixelMapCoords'
+import { PIXEL_MAP_COORDS } from '../data/pixelMapCoords'
 import JejuPixelMap3D from './JejuPixelMap3D'
 const verifiedPins = mapPinsData.filter(p => p.hasVerifiedLocation && PIXEL_MAP_COORDS[p.pinId])
 // 도트 3D 지도의 핀은 실제 위경도(realGeoCoords)로 놓는다
 const geoPins = verifiedPins.filter(p => p.realGeoCoords)
 
 /**
- * JejuMythExplorerMap — 픽셀 아트 제주 신화 탐험 지도(기본) + 카카오맵 연동
- *
- * 배경 그림과 핀은 같은 16:9 영역(.pastel-jeju-map-wrap)에 놓이고, 핀 위치는 %(pixelMapCoords.js)라서
- * 화면 크기가 바뀌어도 어긋나지 않는다.
- *
- * 참고:
- * - Three.js 기반 미니어처 컴포넌트(`src/components/JejuMiniature3D.jsx`)는 추후 재검토를 위해 파일로 보존하되,
- *   현재 화면과 지도 모드 선택 탭에서는 제외하여 밝고 깔끔한 SVG 일러스트 지도에 집중한다.
+ * JejuMythExplorerMap — 도트 제주 신화 탐험 지도 + 카카오맵 연동
  */
 export default function JejuMythExplorerMap({
   selectedMythId,
@@ -22,10 +15,8 @@ export default function JejuMythExplorerMap({
 }) {
   const [bouncingPinId, setBouncingPinId] = useState(null)
   const [focusOnly, setFocusOnly] = useState(false)
-  const [mapMode, setMapMode] = useState('dot3d') // 'dot3d' 도트 3D 지도 | 'picture' 그림 지도
   const selectedPin = mapPinsData.find(p => p.mythId === selectedMythId) || verifiedPins[0]
   const isGlobalMythSelected = selectedPin && !selectedPin.hasVerifiedLocation
-  const visiblePins = focusOnly ? verifiedPins.filter(pin => pin.mythId === selectedMythId) : verifiedPins
   const visibleGeoPins = focusOnly ? geoPins.filter(pin => pin.mythId === selectedMythId) : geoPins
   function handlePinClick(pin) {
     setBouncingPinId(pin.pinId)
@@ -39,7 +30,7 @@ export default function JejuMythExplorerMap({
 
   return (
     <div className="explorer-map-card">
-      {/* 지도 상단 컨트롤 바 (3D 미니어처 탭 숨김 처리) */}
+      {/* 지도 상단 안내와 길찾기 */}
       <div className="explorer-map-topbar">
         <div className="d-flex align-items-center gap-2 flex-wrap">
           <span className="map-badge-pill">
@@ -63,12 +54,6 @@ export default function JejuMythExplorerMap({
               실제 위치·길찾기
             </a>
           )}
-          <div className="map-mode-tabs" role="group" aria-label="지도 보기 방식">
-            <button type="button" className={`map-mode-tab ${mapMode === 'dot3d' ? 'is-active' : ''}`}
-              aria-pressed={mapMode === 'dot3d'} onClick={() => setMapMode('dot3d')}>도트 3D 지도</button>
-            <button type="button" className={`map-mode-tab ${mapMode === 'picture' ? 'is-active' : ''}`}
-              aria-pressed={mapMode === 'picture'} onClick={() => setMapMode('picture')}>그림 지도</button>
-          </div>
         </div>
       </div>
 
@@ -88,69 +73,13 @@ export default function JejuMythExplorerMap({
               </div>
             )}
 
-            {mapMode === 'dot3d' ? (
-              <JejuPixelMap3D
-                pins={visibleGeoPins}
-                selectedPinId={selectedPin?.pinId}
-                bouncingPinId={bouncingPinId}
-                onPinClick={handlePinClick}
-                onBounceEnd={() => setBouncingPinId(null)}
-              />
-            ) : (
-              <>
-            {/* 픽셀 아트 제주 지도 배경 — 장소명·핀이 없는 그림이므로 아래 핀 레이어를 겹쳐 사용 */}
-            <img
-              src={PIXEL_MAP.src}
-              width={PIXEL_MAP.width}
-              height={PIXEL_MAP.height}
-              className="pixel-map-bg"
-              alt="한라산 백록담과 오름, 유채꽃밭, 돌담 마을이 있는 제주도를 위에서 본 픽셀 아트 지도"
-              draggable="false"
+            <JejuPixelMap3D
+              pins={visibleGeoPins}
+              selectedPinId={selectedPin?.pinId}
+              bouncingPinId={bouncingPinId}
+              onPinClick={handlePinClick}
+              onBounceEnd={() => setBouncingPinId(null)}
             />
-
-            {/* 6. JSON 기반 클릭 가능한 스탠드형 신화 장소 핀 오버레이 */}
-            <div className="pastel-map-pins-layer">
-              {visiblePins.map((pin) => {
-                const isSelected = selectedPin?.pinId === pin.pinId
-                const isBouncing = bouncingPinId === pin.pinId
-                return (
-                  <button
-                    key={pin.pinId}
-                    type="button"
-                    className={[
-                      'jeju-map-pin',
-                      `tone-${pin.pinTone || 'sky'}`,
-                      isSelected ? 'is-selected' : '',
-                      isBouncing ? 'is-bouncing' : '',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                    style={{
-                      left: `${PIXEL_MAP_COORDS[pin.pinId].x}%`,
-                      top: `${PIXEL_MAP_COORDS[pin.pinId].y}%`,
-                    }}
-                    onClick={() => handlePinClick(pin)}
-                    onAnimationEnd={() => setBouncingPinId(null)}
-                    aria-pressed={isSelected}
-                    title={`${pin.mythTitle} · ${pin.placeName}`}
-                    aria-label={`${pin.placeName} (${pin.mythTitle}) 신화 선택`}
-                  >
-                    {isSelected && <span className="pin-pulse-ring" aria-hidden="true" />}
-                    <span className="pin-ground-shadow" aria-hidden="true" />
-                    <span className="pin-marker-bubble">
-                      <span className="pin-emoji" aria-hidden="true">
-                        {pin.emoji}
-                      </span>
-                      <span className="pin-myth-name">{pin.mythTitle}</span>
-                    </span>
-                    <span className="pin-place-sub">{pin.placeName}</span>
-                    <span className="pin-tail" aria-hidden="true" />
-                  </button>
-                )
-              })}
-            </div>
-              </>
-            )}
           </div>
 
       </div>
