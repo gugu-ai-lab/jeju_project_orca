@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import mapPinsData from '../data/jejuMapPins.json'
 import { PIXEL_MAP, PIXEL_MAP_COORDS } from '../data/pixelMapCoords'
+import JejuPixelMap3D from './JejuPixelMap3D'
 const verifiedPins = mapPinsData.filter(p => p.hasVerifiedLocation && PIXEL_MAP_COORDS[p.pinId])
+// 도트 3D 지도의 핀은 실제 위경도(realGeoCoords)로 놓는다
+const geoPins = verifiedPins.filter(p => p.realGeoCoords)
 
 /**
  * JejuMythExplorerMap — 픽셀 아트 제주 신화 탐험 지도(기본) + 카카오맵 연동
@@ -19,9 +22,11 @@ export default function JejuMythExplorerMap({
 }) {
   const [bouncingPinId, setBouncingPinId] = useState(null)
   const [focusOnly, setFocusOnly] = useState(false)
+  const [mapMode, setMapMode] = useState('dot3d') // 'dot3d' 도트 3D 지도 | 'picture' 그림 지도
   const selectedPin = mapPinsData.find(p => p.mythId === selectedMythId) || verifiedPins[0]
   const isGlobalMythSelected = selectedPin && !selectedPin.hasVerifiedLocation
   const visiblePins = focusOnly ? verifiedPins.filter(pin => pin.mythId === selectedMythId) : verifiedPins
+  const visibleGeoPins = focusOnly ? geoPins.filter(pin => pin.mythId === selectedMythId) : geoPins
   function handlePinClick(pin) {
     setBouncingPinId(pin.pinId)
     onSelectMyth?.(pin.mythId)
@@ -58,7 +63,12 @@ export default function JejuMythExplorerMap({
               실제 위치·길찾기
             </a>
           )}
-          <span className="map-badge-pill">🎨 그림책지도</span>
+          <div className="map-mode-tabs" role="group" aria-label="지도 보기 방식">
+            <button type="button" className={`map-mode-tab ${mapMode === 'dot3d' ? 'is-active' : ''}`}
+              aria-pressed={mapMode === 'dot3d'} onClick={() => setMapMode('dot3d')}>도트 3D 지도</button>
+            <button type="button" className={`map-mode-tab ${mapMode === 'picture' ? 'is-active' : ''}`}
+              aria-pressed={mapMode === 'picture'} onClick={() => setMapMode('picture')}>그림 지도</button>
+          </div>
         </div>
       </div>
 
@@ -78,6 +88,16 @@ export default function JejuMythExplorerMap({
               </div>
             )}
 
+            {mapMode === 'dot3d' ? (
+              <JejuPixelMap3D
+                pins={visibleGeoPins}
+                selectedPinId={selectedPin?.pinId}
+                bouncingPinId={bouncingPinId}
+                onPinClick={handlePinClick}
+                onBounceEnd={() => setBouncingPinId(null)}
+              />
+            ) : (
+              <>
             {/* 픽셀 아트 제주 지도 배경 — 장소명·핀이 없는 그림이므로 아래 핀 레이어를 겹쳐 사용 */}
             <img
               src={PIXEL_MAP.src}
@@ -129,6 +149,8 @@ export default function JejuMythExplorerMap({
                 )
               })}
             </div>
+              </>
+            )}
           </div>
 
       </div>
