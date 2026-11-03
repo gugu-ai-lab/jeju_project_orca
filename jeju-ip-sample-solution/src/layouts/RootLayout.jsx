@@ -48,8 +48,15 @@ export default function RootLayout() {
           <Navbar.Collapse id="main-nav">
             <Nav className="me-auto">
               {NAV_ITEMS.map((item) => (
-                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/home'} eventKey={item.to}>
-                  <i className={`bi bi-${item.icon} me-1`} />{item.to === '/account' ? accountNavLabel : item.label}
+                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/home'} eventKey={item.to}
+                  title={item.to === '/account' ? accountNavLabel : undefined}
+                  aria-label={item.to === '/account' ? accountNavLabel : undefined}>
+                  {item.to === '/account' ? <>
+                    <i className={`bi bi-${item.icon}`} aria-hidden="true" />
+                    <span className="visually-hidden">{accountNavLabel}</span>
+                  </> : <>
+                    <i className={`bi bi-${item.icon} me-1`} aria-hidden="true" />{item.label}
+                  </>}
                 </Nav.Link>
               ))}
             </Nav>
