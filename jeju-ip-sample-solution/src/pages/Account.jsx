@@ -225,9 +225,9 @@ export default function Account() {
             </Form>
           </> : <>
             {anonymous && <Alert variant="info">익명으로 사용 중이에요. 이메일을 연결하면 현재 이야기와 장소 즐겨찾기가 같은 계정에 이어져요.</Alert>}
-            <div className="d-flex gap-2 mb-4" role="tablist" aria-label="계정 메뉴">
-              <Button variant={mode === 'login' ? 'primary' : 'outline-primary'} onClick={() => { setMode('login'); clearMessages() }}>로그인</Button>
-              <Button variant={mode === 'signup' ? 'primary' : 'outline-primary'} onClick={() => { setMode('signup'); clearMessages() }}>회원가입</Button>
+            <div className="d-flex gap-2 mb-4" role="group" aria-label="계정 메뉴">
+              <Button type="button" variant="outline-primary" active={mode === 'login'} aria-pressed={mode === 'login'} className="flex-fill" onClick={() => { setMode('login'); clearMessages() }}>로그인</Button>
+              <Button type="button" variant="outline-primary" active={mode === 'signup'} aria-pressed={mode === 'signup'} className="flex-fill" onClick={() => { setMode('signup'); clearMessages() }}>회원가입</Button>
             </div>
             {mode === 'login' ? <Form onSubmit={submitLogin}>
               <Form.Group className="mb-3" controlId="account-login-email">
