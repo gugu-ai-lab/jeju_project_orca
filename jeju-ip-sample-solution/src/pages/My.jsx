@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Alert, Button, Col, Row } from 'react-bootstrap'
+import { Alert, Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ItemCard from '../components/ItemCard'
@@ -45,6 +45,8 @@ export default function My() {
         const media = favoriteMedia[f.storyId]
         return <Col key={f.id}>
         <ItemCard title={f.storyTitle} image={media?.image} isFavorite badge={f.storyId.startsWith('tour:') || f.storyId.startsWith('heritage:') ? '장소' : '이야기'}
+          onDelete={() => removeFavorite(f.storyId)}
+          deleteDisabled={favLoading}
           subtitle={<>
             <span>{new Date(f.createdAt).toLocaleString('ko-KR')}</span>
             {media?.imageCaption && <div className="mt-1">{media.imageCaption}</div>}
@@ -54,7 +56,6 @@ export default function My() {
             {media?.imageLicense && <div>이용 조건: <a href={media.imageLicenseUrl} target="_blank" rel="noopener noreferrer">{media.imageLicense}</a></div>}
           </>} />
         {STORY_CATALOG.some(story => story.id === f.storyId) && <Link className="btn btn-link btn-sm" to={`/explore/${encodeURIComponent(f.storyId)}`}>이야기 보기</Link>}
-        <Button size="sm" variant="outline-secondary" disabled={favLoading} onClick={() => removeFavorite(f.storyId)}>즐겨찾기 삭제</Button>
       </Col>
       })}</Row>}
   </>

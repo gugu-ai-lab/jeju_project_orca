@@ -82,10 +82,10 @@ function PastelMythIllustration({ id, icon }) {
 }
 
 // 신화 선택 카드 — 학생 눈높이에 맞춰 [부드러운 일러스트 + 신화 제목 + 호기심 질문] 3요소만 간결하게 표시한다.
-export default function MythCard({ myth, selected, onSelect }) {
+export default function MythCard({ myth }) {
   return (
-    <article className={`myth-card tone-${myth.tone || 'sky'}${selected ? ' is-selected' : ''}`}>
-      <button type="button" className="myth-card-select" aria-pressed={selected} onClick={() => onSelect(myth.id)}>
+    <article className={`myth-card tone-${myth.tone || 'sky'}`}>
+      <div className="myth-card-content">
       <span className="myth-art" aria-hidden="true">
         {myth.tag && <span className="myth-mini-tag">{myth.tag}</span>}
         {myth.mapPin ? (
@@ -105,9 +105,9 @@ export default function MythCard({ myth, selected, onSelect }) {
         <span className="myth-title">{myth.title}</span>
         <span className="myth-question">{myth.question || `${myth.place}에는 어떤 이야기가 숨어 있을까요?`}</span>
       </span>
-      </button>
-      <Link className="btn btn-outline-sea btn-sm mt-3 align-self-end" to={`/explore/${myth.id}`} aria-label={`${myth.title} 자세히 보기`}>
-        자세히 보기
+      </div>
+      <Link className="btn btn-outline-sea btn-sm mt-3 align-self-end" to={`/explore/${myth.id}`} aria-label={`${myth.title} 이야기로 들어가기`}>
+        이야기로 들어가기
       </Link>
     </article>
   )

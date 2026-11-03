@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Badge, Button, Card } from 'react-bootstrap'
 
 // 관광지·유산·즐겨찾기 등 목록에서 공통으로 사용하는 카드.
-export default function ItemCard({ title, subtitle, image, badge, onSave, onOpen, isFavorite = false }) {
+export default function ItemCard({ title, subtitle, image, badge, onSave, onDelete, deleteDisabled = false, onOpen, isFavorite = false }) {
   const [failedImage, setFailedImage] = useState(null)
   const showImage = Boolean(image && image !== failedImage)
   function handleCardClick(event) {
@@ -30,6 +30,11 @@ export default function ItemCard({ title, subtitle, image, badge, onSave, onOpen
         {onSave && (
           <Button size="sm" variant="outline-primary" className="mt-auto" aria-pressed={isFavorite} onClick={onSave}>
             <i className={`bi ${isFavorite ? 'bi-star-fill favorite-star' : 'bi-star'} me-1`} aria-hidden="true" />{isFavorite ? '즐겨찾기 취소' : '즐겨찾기'}
+          </Button>
+        )}
+        {onDelete && (
+          <Button size="sm" variant="outline-secondary" className="mt-auto align-self-end" disabled={deleteDisabled} onClick={onDelete}>
+            즐겨찾기 삭제
           </Button>
         )}
       </Card.Body>

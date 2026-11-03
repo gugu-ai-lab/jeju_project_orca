@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 import JejuMythExplorerMap from '../components/JejuMythExplorerMap'
 import MythCard from '../components/MythCard'
-import StoryPanel from '../components/StoryPanel'
 import mapPinsData from '../data/jejuMapPins.json'
 import { getMythQuizPuzzle } from '../data/mythQuizPuzzles'
 import { HOME_STORIES, VERIFIED_PLACE_COUNT } from '../data/storyCatalog'
@@ -14,7 +13,6 @@ const PIN_BY_MYTH_ID = Object.fromEntries(mapPinsData.map((p) => [p.mythId, p]))
 
 export default function Home() {
   const [selectedId, setSelectedId] = useState(HOME_STORIES[0].id)
-  const [sceneIndex, setSceneIndex] = useState(0)
   const selected = HOME_STORIES.find((m) => m.id === selectedId) || HOME_STORIES[0]
   const selectedPin = PIN_BY_MYTH_ID[selected.id] || selected.mapPin
   const hasPuzzleForSelected = Boolean(getMythQuizPuzzle(selected.id))
@@ -24,22 +22,6 @@ export default function Home() {
 
   function handleSelectMyth(id) {
     setSelectedId(id)
-    setSceneIndex(0)
-  }
-
-  function handleSelectMythFromCard(id) {
-    handleSelectMyth(id)
-    requestAnimationFrame(() => {
-      const section = document.getElementById('story-reader-section')
-      if (!section) return
-      const navHeight = document.querySelector('.jeju-nav')?.getBoundingClientRect().height ?? 0
-      const top = window.scrollY + section.getBoundingClientRect().top - navHeight - 12
-      window.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'instant' })
-    })
-  }
-
-  function handleJumpToStory() {
-    document.getElementById('story-reader-section')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -103,16 +85,12 @@ export default function Home() {
 
           <SelectedPlaceDetails key={selected.id} pin={selectedPin} />
 
-          {/* 핵심 기능 이동 버튼: 이야기 읽기 / 퀴즈 풀기 / AI에게 물어보기 / 카카오맵 길찾기 */}
+          {/* 핵심 기능 이동 버튼: 이야기 / 퀴즈 / AI 안내 / 카카오맵 길찾기 */}
           <div className="spot-action-grid">
-            <button
-              type="button"
-              className="btn btn-primary btn-round spot-action-btn"
-              onClick={handleJumpToStory}
-            >
+            <Link to={`/explore/${selected.id}`} className="btn btn-primary btn-round spot-action-btn">
               <i className="bi bi-book-half me-1" />
-              이야기 읽기
-            </button>
+              이야기로 들어가기
+            </Link>
 
             <Link
               to={`/explore/${hasPuzzleForSelected ? selected.id : 'seolmundae'}`}
@@ -150,6 +128,7 @@ export default function Home() {
               </Link>
             )}
           </div>
+          <StoryFavoriteButton storyId={selected.id} storyTitle={selected.title} />
         </aside>
       </section>
 
@@ -174,44 +153,12 @@ export default function Home() {
             <Col key={m.id} xs={12} sm={6} lg={3}>
               <MythCard
                 myth={m}
-                selected={m.id === selectedId}
-                onSelect={handleSelectMythFromCard}
               />
             </Col>
           ))}
         </Row>
       </section>
 
-      {/* 4. 선택한 이야기의 장면별 그림책 리더 */}
-      <section
-        id="story-reader-section"
-        className="mt-4 pt-3"
-        aria-live="polite"
-        aria-label="선택한 신화 이야기 읽기"
-      >
-        <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
-          <h2 className="section-cute-title mb-0">
-            📖 {selected.title} 이야기 그림책
-          </h2>
-          <span className="story-count-pill">장면별 쉬운 2~3문장 풀이</span>
-        </div>
-
-        <StoryPanel
-          key={selected.id}
-          storyId={selected.id}
-          title={selected.title}
-          question={selected.question}
-          scene={selected.scenes?.[sceneIndex]}
-          source={selected.source}
-          sceneIndex={sceneIndex}
-          sceneCount={selected.scenes?.length ?? 1}
-          onSceneChange={setSceneIndex}
-          placeBridge={selected.placeBridge}
-          preferPastelArt
-        />
-      </section>
-
-      <StoryFavoriteButton storyId={selected.id} storyTitle={selected.title} />
     </div>
   )
 }

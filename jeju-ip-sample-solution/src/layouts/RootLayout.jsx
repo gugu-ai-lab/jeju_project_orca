@@ -1,4 +1,5 @@
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { Container, Nav, Navbar, Toast, ToastContainer } from 'react-bootstrap'
 import { NAV_ITEMS } from '../router'
 import { useAppStore } from '../store/useAppStore'
@@ -8,8 +9,20 @@ import CartNavLink from '../components/CartNavLink'
 import CartToast from '../components/CartToast'
 
 export default function RootLayout() {
+  const location = useLocation()
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  const activeItem = NAV_ITEMS.find((item) => location.pathname === item.to || (item.to === '/explore' && location.pathname.startsWith('/explore/')))
+  const activeKey = activeItem?.to || (location.pathname === '/cart' ? '/cart' : '__none__')
   const toasts = useAppStore((s) => s.toasts)
   const nickname = useAppStore((s) => s.nickname)
+
+  useEffect(() => {
+    const updateVisibility = () => setShowBackToTop(window.scrollY > 320)
+    updateVisibility()
+    window.addEventListener('scroll', updateVisibility, { passive: true })
+    return () => window.removeEventListener('scroll', updateVisibility)
+  }, [])
+
   return (
     <div className="d-flex flex-column min-vh-100 has-pixel-backdrop">
       <PixelBackdrop />
@@ -22,9 +35,10 @@ export default function RootLayout() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="main-nav" />
           <Navbar.Collapse id="main-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto" activeKey={activeKey}>
               {NAV_ITEMS.map((item) => (
-                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to === '/home'} eventKey={item.to}
+                <Nav.Link key={item.to} as={NavLink} to={item.to} end={item.to !== '/explore'} eventKey={item.to}
+                  className={item.to === '/my' ? 'ms-md-3 mt-2 mt-md-0' : undefined}
                   title={item.to === '/guestbook' ? '방명록' : item.to === '/my' ? '내 즐겨찾기' : undefined}
                   aria-label={item.to === '/guestbook' ? '방명록' : item.to === '/my' ? '내 즐겨찾기' : undefined}>
                   {item.to === '/guestbook' ? <>
@@ -59,6 +73,10 @@ export default function RootLayout() {
           <MotionToggle className="ms-md-3" />
         </Container>
       </footer>
+
+      {showBackToTop && <button type="button" className="back-to-top" aria-label="맨 위로 이동" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <i className="bi bi-arrow-up" aria-hidden="true" /> 맨 위로
+      </button>}
 
       {/* 스토어의 toast() 로 띄운 알림 */}
       <ToastContainer position="bottom-end" className="p-3 position-fixed">
