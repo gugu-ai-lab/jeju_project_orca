@@ -8,25 +8,23 @@
 /* 장면: 320x180 캔버스를 화면에 꽉 채워 확대(픽셀 유지) */
 .pixel-scene { position: absolute; inset: 0; }
 .pixel-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; image-rendering: pixelated; }
-.pixel-landing-dolphin {
+.pixel-landing-boat {
   position: absolute; left: 73%;
-  /* 화면 비율에 맞춰 수면에서 뛰어오르는 위치와 도트 크기를 맞춘다. */
-  top: 50dvh;
-  width: 13.3333dvh; height: 11.1111dvh;
-  image-rendering: pixelated; animation: landing-dolphin-jump 5.6s ease-in-out infinite;
+  /* cover 비율에 맞춰 선체가 바다 수면에 닿도록 놓는다. */
+  top: 57.2222dvh;
+  width: 10dvh; height: 5.5556dvh;
+  image-rendering: pixelated; animation: landing-boat-drift 26s ease-in-out infinite alternate;
 }
 @media (min-aspect-ratio: 16/9) {
-  .pixel-landing-dolphin {
-    top: calc(70dvh - 11.25vw);
-    width: 7.5vw; height: 6.25vw;
+  .pixel-landing-boat {
+    top: calc(70dvh - 7.1875vw);
+    width: 5.625vw; height: 3.125vw;
   }
 }
-@keyframes landing-dolphin-jump {
-  0%, 72%, 100% { transform: translate(0, 0); }
-  18% { transform: translate(2vw, -11vh); }
-  34% { transform: translate(4vw, -17vh); }
-  52% { transform: translate(7vw, -8vh); }
-  62% { transform: translate(9vw, 1vh); }
+@keyframes landing-boat-drift {
+  from { transform: translate(0, 0); }
+  50% { transform: translate(-7vw, -1px); }
+  to { transform: translate(-14vw, 0); }
 }
 /* 구름은 풍경과 같은 배율(--s = cover 확대 비율)로 놓아 어떤 화면비에서도 찌그러지지 않는다 */
 .landing { --s: max(calc(100vw / 320), calc(100dvh / 180)); }
